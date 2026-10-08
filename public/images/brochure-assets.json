@@ -1,0 +1,1482 @@
+[
+  {
+    "file": "/images/brand/mutual-trust.png",
+    "page": 3,
+    "crop": [
+      0.841,
+      0.019,
+      0.127,
+      0.087
+    ]
+  },
+  {
+    "file": "/images/projects/claims-1.webp",
+    "page": 6,
+    "crop": [
+      0.048,
+      0.034,
+      0.441,
+      0.303
+    ]
+  },
+  {
+    "file": "/images/projects/claims-2.webp",
+    "page": 6,
+    "crop": [
+      0.512,
+      0.034,
+      0.44,
+      0.303
+    ]
+  },
+  {
+    "file": "/images/projects/claims-3.webp",
+    "page": 6,
+    "crop": [
+      0.048,
+      0.352,
+      0.441,
+      0.302
+    ]
+  },
+  {
+    "file": "/images/projects/claims-4.webp",
+    "page": 6,
+    "crop": [
+      0.512,
+      0.352,
+      0.44,
+      0.302
+    ]
+  },
+  {
+    "file": "/images/projects/claims-5.webp",
+    "page": 6,
+    "crop": [
+      0.048,
+      0.668,
+      0.441,
+      0.299
+    ]
+  },
+  {
+    "file": "/images/projects/claims-6.webp",
+    "page": 6,
+    "crop": [
+      0.512,
+      0.668,
+      0.44,
+      0.299
+    ]
+  },
+  {
+    "file": "/images/projects/equipment-overview.webp",
+    "page": 7,
+    "crop": [
+      0.047,
+      0.035,
+      0.433,
+      0.3
+    ]
+  },
+  {
+    "file": "/images/projects/assembly-overview.webp",
+    "page": 7,
+    "crop": [
+      0.048,
+      0.351,
+      0.431,
+      0.301
+    ]
+  },
+  {
+    "file": "/images/projects/building-overview.webp",
+    "page": 7,
+    "crop": [
+      0.048,
+      0.668,
+      0.429,
+      0.299
+    ]
+  },
+  {
+    "file": "/images/projects/transformer-inspection.webp",
+    "page": 9,
+    "crop": [
+      0.055,
+      0.036,
+      0.419,
+      0.469
+    ]
+  },
+  {
+    "file": "/images/projects/electrical-testing.webp",
+    "page": 9,
+    "crop": [
+      0.055,
+      0.514,
+      0.419,
+      0.451
+    ]
+  },
+  {
+    "file": "/images/projects/tg5-generator.webp",
+    "page": 10,
+    "crop": [
+      0.048,
+      0.066,
+      0.525,
+      0.211
+    ]
+  },
+  {
+    "file": "/images/projects/tg5-turbine.webp",
+    "page": 10,
+    "crop": [
+      0.582,
+      0.066,
+      0.369,
+      0.211
+    ]
+  },
+  {
+    "file": "/images/projects/trinitaria-plant.webp",
+    "page": 10,
+    "crop": [
+      0.05,
+      0.317,
+      0.275,
+      0.263
+    ]
+  },
+  {
+    "file": "/images/projects/trinitaria-turbine.webp",
+    "page": 10,
+    "crop": [
+      0.335,
+      0.317,
+      0.615,
+      0.263
+    ]
+  },
+  {
+    "file": "/images/projects/artefacta-damage.webp",
+    "page": 11,
+    "crop": [
+      0.048,
+      0.702,
+      0.474,
+      0.263
+    ]
+  },
+  {
+    "file": "/images/projects/artefacta-store.webp",
+    "page": 11,
+    "crop": [
+      0.536,
+      0.702,
+      0.415,
+      0.263
+    ]
+  },
+  {
+    "file": "/images/projects/excavator-field-1.webp",
+    "page": 12,
+    "crop": [
+      0.049,
+      0.035,
+      0.479,
+      0.276
+    ]
+  },
+  {
+    "file": "/images/projects/excavator-field-2.webp",
+    "page": 12,
+    "crop": [
+      0.548,
+      0.035,
+      0.403,
+      0.276
+    ]
+  },
+  {
+    "file": "/images/projects/excavator-field-3.webp",
+    "page": 12,
+    "crop": [
+      0.049,
+      0.324,
+      0.479,
+      0.274
+    ]
+  },
+  {
+    "file": "/images/projects/excavator-field-4.webp",
+    "page": 12,
+    "crop": [
+      0.548,
+      0.324,
+      0.403,
+      0.274
+    ]
+  },
+  {
+    "file": "/images/projects/excavator-field-5.webp",
+    "page": 12,
+    "crop": [
+      0.049,
+      0.617,
+      0.479,
+      0.349
+    ]
+  },
+  {
+    "file": "/images/projects/excavator-field-6.webp",
+    "page": 12,
+    "crop": [
+      0.548,
+      0.617,
+      0.403,
+      0.349
+    ]
+  },
+  {
+    "file": "/images/projects/equipment-inspection-1.webp",
+    "page": 13,
+    "crop": [
+      0.047,
+      0.371,
+      0.4,
+      0.197
+    ]
+  },
+  {
+    "file": "/images/projects/equipment-inspection-2.webp",
+    "page": 13,
+    "crop": [
+      0.474,
+      0.371,
+      0.472,
+      0.197
+    ]
+  },
+  {
+    "file": "/images/projects/equipment-inspection-3.webp",
+    "page": 13,
+    "crop": [
+      0.047,
+      0.581,
+      0.4,
+      0.208
+    ]
+  },
+  {
+    "file": "/images/projects/equipment-inspection-4.webp",
+    "page": 13,
+    "crop": [
+      0.474,
+      0.581,
+      0.472,
+      0.208
+    ]
+  },
+  {
+    "file": "/images/projects/equipment-inspection-5.webp",
+    "page": 13,
+    "crop": [
+      0.046,
+      0.796,
+      0.397,
+      0.166
+    ]
+  },
+  {
+    "file": "/images/projects/equipment-inspection-6.webp",
+    "page": 13,
+    "crop": [
+      0.474,
+      0.804,
+      0.472,
+      0.156
+    ]
+  },
+  {
+    "file": "/images/projects/crane-incident-1.webp",
+    "page": 14,
+    "crop": [
+      0.225,
+      0.025,
+      0.696,
+      0.224
+    ]
+  },
+  {
+    "file": "/images/projects/crane-incident-2.webp",
+    "page": 14,
+    "crop": [
+      0.225,
+      0.262,
+      0.696,
+      0.224
+    ]
+  },
+  {
+    "file": "/images/projects/crane-incident-3.webp",
+    "page": 14,
+    "crop": [
+      0.225,
+      0.5,
+      0.696,
+      0.224
+    ]
+  },
+  {
+    "file": "/images/projects/crane-incident-4.webp",
+    "page": 14,
+    "crop": [
+      0.225,
+      0.735,
+      0.696,
+      0.224
+    ]
+  },
+  {
+    "file": "/images/projects/marine-transformer-1.webp",
+    "page": 15,
+    "crop": [
+      0.042,
+      0.306,
+      0.438,
+      0.207
+    ]
+  },
+  {
+    "file": "/images/projects/marine-transformer-2.webp",
+    "page": 15,
+    "crop": [
+      0.498,
+      0.306,
+      0.441,
+      0.207
+    ]
+  },
+  {
+    "file": "/images/projects/marine-transformer-3.webp",
+    "page": 15,
+    "crop": [
+      0.112,
+      0.534,
+      0.24,
+      0.251
+    ]
+  },
+  {
+    "file": "/images/projects/marine-transformer-4.webp",
+    "page": 15,
+    "crop": [
+      0.493,
+      0.53,
+      0.427,
+      0.194
+    ]
+  },
+  {
+    "file": "/images/projects/marine-transformer-5.webp",
+    "page": 15,
+    "crop": [
+      0.06,
+      0.797,
+      0.36,
+      0.172
+    ]
+  },
+  {
+    "file": "/images/projects/marine-transformer-6.webp",
+    "page": 15,
+    "crop": [
+      0.498,
+      0.771,
+      0.426,
+      0.198
+    ]
+  },
+  {
+    "file": "/images/projects/power-modules-1.webp",
+    "page": 16,
+    "crop": [
+      0.123,
+      0.062,
+      0.761,
+      0.394
+    ]
+  },
+  {
+    "file": "/images/projects/power-modules-2.webp",
+    "page": 16,
+    "crop": [
+      0.123,
+      0.49,
+      0.758,
+      0.183
+    ]
+  },
+  {
+    "file": "/images/projects/power-modules-3.webp",
+    "page": 16,
+    "crop": [
+      0.115,
+      0.713,
+      0.762,
+      0.252
+    ]
+  },
+  {
+    "file": "/images/projects/cargo-unloading-1.webp",
+    "page": 18,
+    "crop": [
+      0.049,
+      0.036,
+      0.479,
+      0.3
+    ]
+  },
+  {
+    "file": "/images/projects/cargo-unloading-2.webp",
+    "page": 18,
+    "crop": [
+      0.54,
+      0.036,
+      0.41,
+      0.3
+    ]
+  },
+  {
+    "file": "/images/projects/cargo-unloading-3.webp",
+    "page": 18,
+    "crop": [
+      0.049,
+      0.357,
+      0.479,
+      0.295
+    ]
+  },
+  {
+    "file": "/images/projects/cargo-unloading-4.webp",
+    "page": 18,
+    "crop": [
+      0.54,
+      0.357,
+      0.41,
+      0.295
+    ]
+  },
+  {
+    "file": "/images/projects/cargo-unloading-5.webp",
+    "page": 18,
+    "crop": [
+      0.049,
+      0.663,
+      0.479,
+      0.302
+    ]
+  },
+  {
+    "file": "/images/projects/cargo-unloading-6.webp",
+    "page": 18,
+    "crop": [
+      0.54,
+      0.663,
+      0.41,
+      0.302
+    ]
+  },
+  {
+    "file": "/images/projects/land-transport-1.webp",
+    "page": 20,
+    "crop": [
+      0.171,
+      0.037,
+      0.678,
+      0.303
+    ]
+  },
+  {
+    "file": "/images/projects/land-transport-2.webp",
+    "page": 20,
+    "crop": [
+      0.171,
+      0.351,
+      0.678,
+      0.303
+    ]
+  },
+  {
+    "file": "/images/projects/land-transport-3.webp",
+    "page": 20,
+    "crop": [
+      0.171,
+      0.662,
+      0.678,
+      0.303
+    ]
+  },
+  {
+    "file": "/images/projects/cargo-shore-1.webp",
+    "page": 21,
+    "crop": [
+      0.088,
+      0.098,
+      0.428,
+      0.383
+    ]
+  },
+  {
+    "file": "/images/projects/cargo-shore-2.webp",
+    "page": 21,
+    "crop": [
+      0.53,
+      0.107,
+      0.38,
+      0.181
+    ]
+  },
+  {
+    "file": "/images/projects/cargo-shore-3.webp",
+    "page": 21,
+    "crop": [
+      0.53,
+      0.3,
+      0.38,
+      0.181
+    ]
+  },
+  {
+    "file": "/images/projects/cargo-shore-4.webp",
+    "page": 21,
+    "crop": [
+      0.198,
+      0.491,
+      0.595,
+      0.22
+    ]
+  },
+  {
+    "file": "/images/projects/cargo-shore-5.webp",
+    "page": 21,
+    "crop": [
+      0.198,
+      0.719,
+      0.595,
+      0.222
+    ]
+  },
+  {
+    "file": "/images/projects/cargo-assembly-1.webp",
+    "page": 22,
+    "crop": [
+      0.055,
+      0.289,
+      0.421,
+      0.215
+    ]
+  },
+  {
+    "file": "/images/projects/cargo-assembly-2.webp",
+    "page": 22,
+    "crop": [
+      0.491,
+      0.289,
+      0.431,
+      0.215
+    ]
+  },
+  {
+    "file": "/images/projects/cargo-assembly-3.webp",
+    "page": 22,
+    "crop": [
+      0.055,
+      0.515,
+      0.421,
+      0.213
+    ]
+  },
+  {
+    "file": "/images/projects/cargo-assembly-4.webp",
+    "page": 22,
+    "crop": [
+      0.491,
+      0.515,
+      0.431,
+      0.213
+    ]
+  },
+  {
+    "file": "/images/projects/cargo-assembly-5.webp",
+    "page": 22,
+    "crop": [
+      0.055,
+      0.739,
+      0.421,
+      0.213
+    ]
+  },
+  {
+    "file": "/images/projects/cargo-assembly-6.webp",
+    "page": 22,
+    "crop": [
+      0.491,
+      0.739,
+      0.431,
+      0.213
+    ]
+  },
+  {
+    "file": "/images/projects/power-barge-1.webp",
+    "page": 23,
+    "crop": [
+      0.051,
+      0.035,
+      0.46,
+      0.222
+    ]
+  },
+  {
+    "file": "/images/projects/barge-engine-1.webp",
+    "page": 23,
+    "crop": [
+      0.528,
+      0.035,
+      0.423,
+      0.22
+    ]
+  },
+  {
+    "file": "/images/projects/power-barge-2.webp",
+    "page": 23,
+    "crop": [
+      0.051,
+      0.267,
+      0.46,
+      0.232
+    ]
+  },
+  {
+    "file": "/images/projects/barge-engine-2.webp",
+    "page": 23,
+    "crop": [
+      0.528,
+      0.265,
+      0.423,
+      0.233
+    ]
+  },
+  {
+    "file": "/images/projects/power-barge-3.webp",
+    "page": 23,
+    "crop": [
+      0.051,
+      0.511,
+      0.46,
+      0.223
+    ]
+  },
+  {
+    "file": "/images/projects/barge-engine-3.webp",
+    "page": 23,
+    "crop": [
+      0.528,
+      0.508,
+      0.423,
+      0.239
+    ]
+  },
+  {
+    "file": "/images/projects/power-barge-4.webp",
+    "page": 23,
+    "crop": [
+      0.051,
+      0.747,
+      0.46,
+      0.22
+    ]
+  },
+  {
+    "file": "/images/projects/barge-engine-4.webp",
+    "page": 23,
+    "crop": [
+      0.528,
+      0.75,
+      0.423,
+      0.217
+    ]
+  },
+  {
+    "file": "/images/projects/power-barge-overview.webp",
+    "page": 24,
+    "crop": [
+      0.05,
+      0.37,
+      0.901,
+      0.247
+    ]
+  },
+  {
+    "file": "/images/projects/power-barge-detail.webp",
+    "page": 24,
+    "crop": [
+      0.055,
+      0.657,
+      0.499,
+      0.309
+    ]
+  },
+  {
+    "file": "/images/projects/barge-systems.webp",
+    "page": 24,
+    "crop": [
+      0.574,
+      0.658,
+      0.377,
+      0.308
+    ]
+  },
+  {
+    "file": "/images/projects/guayaquil-building-1.webp",
+    "page": 25,
+    "crop": [
+      0.049,
+      0.091,
+      0.441,
+      0.248
+    ]
+  },
+  {
+    "file": "/images/projects/guayaquil-building-2.webp",
+    "page": 25,
+    "crop": [
+      0.502,
+      0.091,
+      0.45,
+      0.248
+    ]
+  },
+  {
+    "file": "/images/projects/guayaquil-building-3.webp",
+    "page": 25,
+    "crop": [
+      0.049,
+      0.347,
+      0.441,
+      0.268
+    ]
+  },
+  {
+    "file": "/images/projects/guayaquil-building-4.webp",
+    "page": 25,
+    "crop": [
+      0.502,
+      0.347,
+      0.45,
+      0.268
+    ]
+  },
+  {
+    "file": "/images/projects/guayaquil-building-5.webp",
+    "page": 25,
+    "crop": [
+      0.049,
+      0.622,
+      0.441,
+      0.347
+    ]
+  },
+  {
+    "file": "/images/projects/guayaquil-building-6.webp",
+    "page": 25,
+    "crop": [
+      0.502,
+      0.622,
+      0.45,
+      0.347
+    ]
+  },
+  {
+    "file": "/images/projects/manta-building-1.webp",
+    "page": 26,
+    "crop": [
+      0.05,
+      0.346,
+      0.444,
+      0.303
+    ]
+  },
+  {
+    "file": "/images/projects/manta-building-2.webp",
+    "page": 26,
+    "crop": [
+      0.505,
+      0.346,
+      0.444,
+      0.303
+    ]
+  },
+  {
+    "file": "/images/projects/manta-building-3.webp",
+    "page": 26,
+    "crop": [
+      0.05,
+      0.662,
+      0.444,
+      0.307
+    ]
+  },
+  {
+    "file": "/images/projects/manta-building-4.webp",
+    "page": 26,
+    "crop": [
+      0.505,
+      0.662,
+      0.444,
+      0.307
+    ]
+  },
+  {
+    "file": "/images/projects/esmeraldas-roads-1.webp",
+    "page": 27,
+    "crop": [
+      0.049,
+      0.094,
+      0.433,
+      0.335
+    ]
+  },
+  {
+    "file": "/images/projects/esmeraldas-roads-2.webp",
+    "page": 27,
+    "crop": [
+      0.495,
+      0.094,
+      0.454,
+      0.335
+    ]
+  },
+  {
+    "file": "/images/projects/esmeraldas-roads-3.webp",
+    "page": 27,
+    "crop": [
+      0.049,
+      0.44,
+      0.433,
+      0.529
+    ]
+  },
+  {
+    "file": "/images/projects/esmeraldas-roads-4.webp",
+    "page": 27,
+    "crop": [
+      0.495,
+      0.44,
+      0.454,
+      0.529
+    ]
+  },
+  {
+    "file": "/images/projects/road-repairs-1.webp",
+    "page": 28,
+    "crop": [
+      0.049,
+      0.237,
+      0.434,
+      0.276
+    ]
+  },
+  {
+    "file": "/images/projects/road-repairs-2.webp",
+    "page": 28,
+    "crop": [
+      0.495,
+      0.237,
+      0.454,
+      0.276
+    ]
+  },
+  {
+    "file": "/images/projects/road-repairs-3.webp",
+    "page": 28,
+    "crop": [
+      0.294,
+      0.524,
+      0.444,
+      0.229
+    ]
+  },
+  {
+    "file": "/images/projects/road-repairs-4.webp",
+    "page": 28,
+    "crop": [
+      0.049,
+      0.763,
+      0.434,
+      0.203
+    ]
+  },
+  {
+    "file": "/images/projects/road-repairs-5.webp",
+    "page": 28,
+    "crop": [
+      0.495,
+      0.763,
+      0.454,
+      0.203
+    ]
+  },
+  {
+    "file": "/images/projects/urban-reconstruction-1.webp",
+    "page": 29,
+    "crop": [
+      0.053,
+      0.034,
+      0.428,
+      0.21
+    ]
+  },
+  {
+    "file": "/images/projects/urban-reconstruction-2.webp",
+    "page": 29,
+    "crop": [
+      0.497,
+      0.034,
+      0.459,
+      0.21
+    ]
+  },
+  {
+    "file": "/images/projects/urban-reconstruction-3.webp",
+    "page": 29,
+    "crop": [
+      0.053,
+      0.264,
+      0.428,
+      0.252
+    ]
+  },
+  {
+    "file": "/images/projects/urban-reconstruction-4.webp",
+    "page": 29,
+    "crop": [
+      0.497,
+      0.264,
+      0.459,
+      0.252
+    ]
+  },
+  {
+    "file": "/images/projects/urban-reconstruction-5.webp",
+    "page": 29,
+    "crop": [
+      0.053,
+      0.527,
+      0.428,
+      0.209
+    ]
+  },
+  {
+    "file": "/images/projects/urban-reconstruction-6.webp",
+    "page": 29,
+    "crop": [
+      0.497,
+      0.527,
+      0.459,
+      0.209
+    ]
+  },
+  {
+    "file": "/images/projects/urban-reconstruction-7.webp",
+    "page": 29,
+    "crop": [
+      0.053,
+      0.751,
+      0.428,
+      0.215
+    ]
+  },
+  {
+    "file": "/images/projects/urban-reconstruction-8.webp",
+    "page": 29,
+    "crop": [
+      0.497,
+      0.751,
+      0.459,
+      0.215
+    ]
+  },
+  {
+    "file": "/images/projects/urban-measurements-1.webp",
+    "page": 30,
+    "crop": [
+      0.092,
+      0.344,
+      0.423,
+      0.167
+    ]
+  },
+  {
+    "file": "/images/projects/urban-measurements-2.webp",
+    "page": 30,
+    "crop": [
+      0.092,
+      0.517,
+      0.423,
+      0.172
+    ]
+  },
+  {
+    "file": "/images/projects/urban-measurements-3.webp",
+    "page": 30,
+    "crop": [
+      0.549,
+      0.405,
+      0.379,
+      0.28
+    ]
+  },
+  {
+    "file": "/images/projects/urban-measurements-4.webp",
+    "page": 30,
+    "crop": [
+      0.082,
+      0.707,
+      0.846,
+      0.254
+    ]
+  },
+  {
+    "file": "/images/projects/highway-reconstruction-1.webp",
+    "page": 31,
+    "crop": [
+      0.475,
+      0.035,
+      0.475,
+      0.234
+    ]
+  },
+  {
+    "file": "/images/projects/highway-reconstruction-2.webp",
+    "page": 31,
+    "crop": [
+      0.475,
+      0.277,
+      0.475,
+      0.229
+    ]
+  },
+  {
+    "file": "/images/projects/highway-reconstruction-3.webp",
+    "page": 31,
+    "crop": [
+      0.475,
+      0.522,
+      0.475,
+      0.215
+    ]
+  },
+  {
+    "file": "/images/projects/highway-reconstruction-4.webp",
+    "page": 31,
+    "crop": [
+      0.475,
+      0.75,
+      0.475,
+      0.219
+    ]
+  },
+  {
+    "file": "/images/projects/highway-evidence-1.webp",
+    "page": 31,
+    "crop": [
+      0.048,
+      0.035,
+      0.405,
+      0.338
+    ]
+  },
+  {
+    "file": "/images/projects/highway-evidence-2.webp",
+    "page": 31,
+    "crop": [
+      0.048,
+      0.393,
+      0.405,
+      0.354
+    ]
+  },
+  {
+    "file": "/images/projects/highway-evidence-3.webp",
+    "page": 31,
+    "crop": [
+      0.048,
+      0.763,
+      0.405,
+      0.204
+    ]
+  },
+  {
+    "file": "/images/projects/highway-analysis-1.webp",
+    "page": 32,
+    "crop": [
+      0.109,
+      0.305,
+      0.79,
+      0.207
+    ]
+  },
+  {
+    "file": "/images/projects/highway-analysis-2.webp",
+    "page": 32,
+    "crop": [
+      0.109,
+      0.521,
+      0.79,
+      0.215
+    ]
+  },
+  {
+    "file": "/images/projects/highway-analysis-3.webp",
+    "page": 32,
+    "crop": [
+      0.109,
+      0.744,
+      0.79,
+      0.224
+    ]
+  },
+  {
+    "file": "/images/clients/aseguradora-del-sur.webp",
+    "page": 33,
+    "crop": [
+      0.071,
+      0.125,
+      0.385,
+      0.157
+    ]
+  },
+  {
+    "file": "/images/clients/colonial.webp",
+    "page": 33,
+    "crop": [
+      0.247,
+      0.32,
+      0.518,
+      0.077
+    ]
+  },
+  {
+    "file": "/images/clients/atlas.webp",
+    "page": 33,
+    "crop": [
+      0.573,
+      0.437,
+      0.384,
+      0.143
+    ]
+  },
+  {
+    "file": "/images/clients/sul-america.webp",
+    "page": 33,
+    "crop": [
+      0.334,
+      0.609,
+      0.375,
+      0.134
+    ]
+  },
+  {
+    "file": "/images/clients/el-fenix.webp",
+    "page": 33,
+    "crop": [
+      0.072,
+      0.782,
+      0.279,
+      0.18
+    ]
+  },
+  {
+    "file": "/images/clients/generali.webp",
+    "page": 33,
+    "crop": [
+      0.659,
+      0.782,
+      0.29,
+      0.169
+    ]
+  },
+  {
+    "file": "/images/clients/artefacta.webp",
+    "page": 34,
+    "crop": [
+      0.097,
+      0.091,
+      0.328,
+      0.139
+    ]
+  },
+  {
+    "file": "/images/clients/espol.webp",
+    "page": 34,
+    "crop": [
+      0.554,
+      0.081,
+      0.234,
+      0.177
+    ]
+  },
+  {
+    "file": "/images/clients/ciat.webp",
+    "page": 34,
+    "crop": [
+      0.13,
+      0.304,
+      0.254,
+      0.08
+    ]
+  },
+  {
+    "file": "/images/clients/puerto-esmeraldas.webp",
+    "page": 34,
+    "crop": [
+      0.57,
+      0.284,
+      0.312,
+      0.105
+    ]
+  },
+  {
+    "file": "/images/clients/transelectric.webp",
+    "page": 34,
+    "crop": [
+      0.069,
+      0.409,
+      0.398,
+      0.13
+    ]
+  },
+  {
+    "file": "/images/clients/cnel.webp",
+    "page": 34,
+    "crop": [
+      0.531,
+      0.445,
+      0.385,
+      0.097
+    ]
+  },
+  {
+    "file": "/images/clients/electroguayas.webp",
+    "page": 34,
+    "crop": [
+      0.07,
+      0.558,
+      0.396,
+      0.141
+    ]
+  },
+  {
+    "file": "/images/clients/termoesmeraldas.webp",
+    "page": 34,
+    "crop": [
+      0.529,
+      0.563,
+      0.395,
+      0.138
+    ]
+  },
+  {
+    "file": "/images/clients/hidroagoyan.webp",
+    "page": 34,
+    "crop": [
+      0.071,
+      0.711,
+      0.395,
+      0.115
+    ]
+  },
+  {
+    "file": "/images/clients/hidronacion.webp",
+    "page": 34,
+    "crop": [
+      0.53,
+      0.708,
+      0.395,
+      0.118
+    ]
+  },
+  {
+    "file": "/images/clients/hidroabanico.webp",
+    "page": 34,
+    "crop": [
+      0.317,
+      0.841,
+      0.393,
+      0.117
+    ]
+  },
+  {
+    "file": "/images/team/josue-gavilanez.webp",
+    "page": 35,
+    "crop": [
+      0.396,
+      0.058,
+      0.12,
+      0.12
+    ]
+  },
+  {
+    "file": "/images/team/ana-zambrano.webp",
+    "page": 35,
+    "crop": [
+      0.568,
+      0.058,
+      0.12,
+      0.12
+    ]
+  },
+  {
+    "file": "/images/team/cristian-chauca.webp",
+    "page": 35,
+    "crop": [
+      0.033,
+      0.321,
+      0.125,
+      0.108
+    ]
+  },
+  {
+    "file": "/images/team/andres-coronel.webp",
+    "page": 35,
+    "crop": [
+      0.73,
+      0.312,
+      0.142,
+      0.122
+    ]
+  },
+  {
+    "file": "/images/team/gustavo-gonzaga.webp",
+    "page": 35,
+    "crop": [
+      0.081,
+      0.571,
+      0.134,
+      0.119
+    ]
+  },
+  {
+    "file": "/images/team/manuel-patino.webp",
+    "page": 35,
+    "crop": [
+      0.815,
+      0.57,
+      0.111,
+      0.121
+    ]
+  },
+  {
+    "file": "/images/team/emily-quevedo.webp",
+    "page": 35,
+    "crop": [
+      0.227,
+      0.823,
+      0.13,
+      0.123
+    ]
+  },
+  {
+    "file": "/images/team/pablo-ramirez.webp",
+    "page": 35,
+    "crop": [
+      0.419,
+      0.823,
+      0.145,
+      0.123
+    ]
+  },
+  {
+    "file": "/images/team/carlos-quevedo.webp",
+    "page": 36,
+    "crop": [
+      0.099,
+      0.093,
+      0.131,
+      0.117
+    ]
+  },
+  {
+    "file": "/images/team/miguel-chavez.webp",
+    "page": 36,
+    "crop": [
+      0.124,
+      0.323,
+      0.102,
+      0.105
+    ]
+  },
+  {
+    "file": "/images/team/miguel-yapur.webp",
+    "page": 36,
+    "crop": [
+      0.465,
+      0.325,
+      0.094,
+      0.103
+    ]
+  },
+  {
+    "file": "/images/team/ricardo-gallegos.webp",
+    "page": 36,
+    "crop": [
+      0.125,
+      0.587,
+      0.114,
+      0.099
+    ]
+  },
+  {
+    "file": "/images/team/marco-leiva.webp",
+    "page": 36,
+    "crop": [
+      0.817,
+      0.583,
+      0.102,
+      0.113
+    ]
+  },
+  {
+    "file": "/images/team/jorge-loor.webp",
+    "page": 36,
+    "crop": [
+      0.505,
+      0.829,
+      0.107,
+      0.112
+    ]
+  },
+  {
+    "file": "/images/team/carla-garcia.webp",
+    "page": 36,
+    "crop": [
+      0.685,
+      0.829,
+      0.132,
+      0.113
+    ]
+  },
+  {
+    "file": "/images/brand/seajuste-logo.png",
+    "page": 39,
+    "crop": [
+      0.036,
+      0.036,
+      0.58,
+      0.081
+    ]
+  }
+]

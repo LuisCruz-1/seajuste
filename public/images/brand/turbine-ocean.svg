@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1140" viewBox="0 0 720 570" preserveAspectRatio="none" fill="none">
+  <defs>
+    <linearGradient id="sky" x1="100" y1="0" x2="480" y2="370" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#102f46"/>
+      <stop offset=".56" stop-color="#21536e"/>
+      <stop offset="1" stop-color="#78afc1"/>
+    </linearGradient>
+    <radialGradient id="daylight" cx="0" cy="0" r="1" gradientTransform="translate(334 226) rotate(90) scale(292 340)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#c7e6ec" stop-opacity=".62"/>
+      <stop offset="1" stop-color="#72cee8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="sea" x1="360" y1="338" x2="360" y2="570" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#507f91"/>
+      <stop offset=".1" stop-color="#235d79"/>
+      <stop offset=".5" stop-color="#104b69"/>
+      <stop offset="1" stop-color="#092f49"/>
+    </linearGradient>
+    <linearGradient id="shade" x1="0" y1="0" x2="0" y2="570" gradientUnits="userSpaceOnUse">
+      <stop offset=".65" stop-color="#092f49" stop-opacity="0"/>
+      <stop offset="1" stop-color="#092f49" stop-opacity=".9"/>
+    </linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="water" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".019 .28" numOctaves="2" seed="17"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope=".18"/></feComponentTransfer>
+      <feBlend in="SourceGraphic" mode="soft-light"/>
+    </filter>
+    <g id="wave" stroke="#b2dce5" stroke-linecap="round">
+      <path d="M-25 0Q3-4 33 0T91 0M115 1Q132-2 163 0M190 0Q233-5 277 0T361 0M405 0Q429-3 460 0T521 0M553 0Q580-4 615 0T747 0"/>
+      <path d="M12 8Q37 5 69 8M149 10Q188 6 223 10M271 7Q311 5 352 7M477 9Q499 5 536 9M607 8Q640 4 676 8" stroke-opacity=".6"/>
+    </g>
+  </defs>
+
+  <path fill="url(#sky)" d="M0 0h720v570H0z"/>
+  <path fill="url(#daylight)" d="M0 0h720v420H0z"/>
+  <g stroke="#c4e8ef" stroke-opacity=".09">
+    <circle cx="278" cy="258" r="207"/>
+    <circle cx="278" cy="258" r="224" stroke-dasharray="2 9"/>
+    <path d="M278 19v479M39 258h479"/>
+  </g>
+  <path d="M0 338H720V570H0Z" fill="url(#sea)"/>
+  <path d="M0 338H720" stroke="#c5e8ec" stroke-opacity=".5"/>
+  <path d="M0 343H720V570H0Z" fill="#245d77" opacity=".5" filter="url(#water)"/>
+  <g opacity=".34" stroke-width=".8">
+    <use href="#wave" transform="translate(0 344) scale(1 .32)"/>
+    <use href="#wave" transform="translate(-40 351) scale(1.2 .45)"/>
+    <use href="#wave" transform="translate(0 359) scale(1 .6)"/>
+    <use href="#wave" transform="translate(-95 370) scale(1.4 .7)"/>
+    <use href="#wave" transform="translate(-15 384) scale(1.1 .85)"/>
+    <use href="#wave" transform="translate(-165 402) scale(1.5 1)"/>
+    <use href="#wave" transform="translate(-35 425) scale(1.1 1.3)"/>
+    <use href="#wave" transform="translate(-105 453) scale(1.5 1.6)"/>
+    <use href="#wave" transform="translate(-45 488) scale(1.3 2)"/>
+    <use href="#wave" transform="translate(-155 533) scale(1.5 2.4)"/>
+  </g>
+  <ellipse cx="276" cy="464" rx="138" ry="12" fill="#041f32" opacity=".65" filter="url(#blur)"/>
+  <path d="M160 480Q266 468 385 482M191 492Q274 485 354 495" stroke="#8fc9d9" stroke-width="3" opacity=".2" filter="url(#blur)"/>
+
+  <path fill="url(#shade)" d="M0 0h720v570H0z"/>
+</svg>
