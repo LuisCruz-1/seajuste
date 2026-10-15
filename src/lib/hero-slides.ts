@@ -1,141 +1,89 @@
-import type { Locale } from "./i18n";
+import { text, type DetailId, type Locale, type Localized } from "./i18n";
 
 export type HeroSlide = {
-  visual: "turbine" | "specialties" | "trust" | "photo";
+  visual: "trust" | "turbine" | "coverage";
   topic: string;
-  eyebrow: string;
   title: string;
-  accent: string;
-  description: string;
-  action: string;
-  tags: string[];
-  caption: string;
-  captionDetail: string;
-  footTitle: string;
-  footDescription: string;
-  image?: string;
-  imageAlt?: string;
+  accent?: string;
+  statement?: string;
+  authority?: string;
+  services?: { label: string; detail: DetailId }[];
 };
+
+export type HeroSettlementSummary = { amount: number; caseCount: number };
+
+export type HeroProjectPhoto = { image: string; alt: Localized };
+
+export const heroProjectPhotos: HeroProjectPhoto[] = [
+  { image: "barge-systems", alt: text("Inspección de sistemas y tuberías industriales", "Inspection of industrial systems and pipework") },
+  { image: "trinitaria-turbine", alt: text("Evaluación de una turbina de generación eléctrica", "Assessment of a power generation turbine") },
+  { image: "cargo-assembly-1", alt: text("Montaje de un equipo Siemens Westinghouse", "Assembly of Siemens Westinghouse equipment") },
+  { image: "excavator-field-3", alt: text("Peritaje de maquinaria pesada en campo", "On-site survey of heavy machinery") },
+  { image: "power-barge-detail", alt: text("Inspección de una barcaza de generación", "Survey of a power generation barge") },
+  { image: "barge-engine-3", alt: text("Evaluación de motores y maquinaria naval", "Assessment of marine engines and machinery") },
+];
+
+export const heroCoveragePhotos: HeroProjectPhoto[] = [
+  { image: "electrical-testing", alt: text("Pruebas técnicas de un transformador de potencia", "Technical testing of a power transformer") },
+  { image: "cargo-unloading-2", alt: text("Supervisión de descarga de carga industrial en puerto", "Supervision of industrial cargo unloading at port") },
+];
+
+// Keep the authorised classes together in the same pairs as the reference layout.
+export const heroCoverageOrder = [0, 1, 2, 3, 13, 11, 5, 9, 4, 6, 8, 7, 15, 10, 14, 12];
 
 export const heroSlides: Record<Locale, HeroSlide[]> = {
   es: [
     {
-      visual: "turbine",
-      topic: "Diagnóstico integral",
-      eyebrow: "Peritaje técnico & ajuste de siniestros",
-      title: "Diagnóstico integral",
-      accent: "de vulnerabilidades.",
-      description: "Prevención y mitigación de riesgos críticos con criterio técnico, experiencia y solvencia en seguros.",
-      action: "Solicitar consulta",
-      tags: ["Calidad", "Experiencia", "Tecnología"],
-      caption: "Ingeniería técnica especializada aplicada a seguros.",
-      captionDetail: "Solvencia & confianza",
-      footTitle: "Defensa técnica legal de reclamos & siniestros.",
-      footDescription: "Ingeniería forense, causa raíz y evaluación de daños para reclamos complejos.",
-    },
-    {
-      visual: "specialties",
-      topic: "Especializaciones",
-      eyebrow: "Especializaciones sectoriales",
-      title: "Especializaciones sectoriales.",
-      accent: "Capacidad operativa.",
-      description: "Experiencia técnica para cada tipo de riesgo. Conozca los principales ramos atendidos por SEAJUSTE.",
-      action: "Consultar especialidad",
-      tags: [],
-      caption: "Ramos clave atendidos",
-      captionDetail: "38 años de experiencia & dominio técnico",
-      footTitle: "Criterio especializado para cada tipo de riesgo.",
-      footDescription: "Incendio, industria, transporte, marítimo y responsabilidad civil, entre otros ramos.",
-    },
-    {
       visual: "trust",
-      topic: "Reclamos complejos",
-      eyebrow: "Engineering for complex claims",
-      title: "Defensa técnica legal",
-      accent: "de reclamos & siniestros.",
-      description: "Ingeniería forense y causa raíz para activos críticos, fallas complejas y pérdidas de operación.",
-      action: "Evaluar un caso",
-      tags: ["Causa raíz", "Cuantificación", "Evidencia"],
-      caption: "Engineering for complex claims.",
-      captionDetail: "Energy & power loss adjusting",
-      footTitle: "Análisis técnico para activos críticos.",
-      footDescription: "Turbinas, generadores y transformadores donde una falla impacta la operación.",
+      topic: "EMPRESA",
+      title: "Ingeniería especializada\naplicada a seguros",
+      accent: "Peritaje técnico-legal\nde reclamos & siniestros",
     },
     {
-      visual: "photo",
-      topic: "Marine Cargo",
-      eyebrow: "Ship’s hull · Machinery · Marine cargo",
-      title: "Marine Cargo.",
-      accent: "De origen a destino.",
-      description: "Trazabilidad técnica de la carga: inspección, seguimiento y control en cada etapa del movimiento y puesta en servicio.",
-      action: "Coordinar inspección",
-      tags: ["Inspección", "Transporte", "Montaje"],
-      caption: "Ship’s hull, machinery & marine cargo.",
-      captionDetail: "Origen · tránsito · destino final",
-      footTitle: "Seguimiento técnico hasta el destino final.",
-      footDescription: "Descarga, izaje, transporte terrestre, montaje, pruebas y puesta en servicio.",
-      image: "marine-transformer-1",
-      imageAlt: "Inspección y transporte de un autotransformador en la bodega de un buque",
+      visual: "turbine",
+      topic: "ESPECIALIDADES",
+      title: "Servicios relevantes",
+      statement: "Survey\nReclamos & siniestros\nAlta complejidad",
+      services: [
+        { label: "Engineering for complex claims", detail: "engineering" },
+        { label: "Energy & power loss adjusting", detail: "energy" },
+        { label: "Marine: hull & machinery · cargo", detail: "marine" },
+        { label: "Business interruption | Lucro cesante", detail: "interruption" },
+      ],
+    },
+    {
+      visual: "coverage",
+      topic: "PÓLIZA",
+      title: "Pólizas de seguros con\ncertificación de autorización",
+      authority: "Superintendencia de Compañías, Valores y Seguros",
+      statement: "Ingeniería forense & causa raíz\nReclamos & siniestros",
     },
   ],
   en: [
     {
-      visual: "turbine",
-      topic: "Risk assessment",
-      eyebrow: "Technical expertise & loss adjusting",
-      title: "A complete view",
-      accent: "of your vulnerabilities.",
-      description: "Prevention and mitigation of critical risks through technical judgement, experience and insurance expertise.",
-      action: "Request a consultation",
-      tags: ["Quality", "Experience", "Technology"],
-      caption: "Specialist technical engineering for insurance.",
-      captionDetail: "Expertise & trust",
-      footTitle: "Technical and legal support for complex claims.",
-      footDescription: "Forensic engineering, root cause analysis and damage assessment for complex losses.",
-    },
-    {
-      visual: "specialties",
-      topic: "Sector expertise",
-      eyebrow: "Specialist sectors",
-      title: "Sector expertise.",
-      accent: "Operational capability.",
-      description: "Technical experience for each type of risk. Explore the principal insurance classes handled by SEAJUSTE.",
-      action: "Discuss a specialty",
-      tags: [],
-      caption: "Key insurance classes",
-      captionDetail: "38 years of experience & technical expertise",
-      footTitle: "Specialist judgement for each type of risk.",
-      footDescription: "Fire, industry, transport, marine and liability, among other insurance classes.",
-    },
-    {
       visual: "trust",
-      topic: "Complex claims",
-      eyebrow: "Engineering for complex claims",
-      title: "Technical & legal support.",
-      accent: "Complex claims.",
-      description: "Forensic engineering and root cause analysis for critical assets, complex failures and operational losses.",
-      action: "Discuss a case",
-      tags: ["Cause analysis", "Loss quantification", "Evidence"],
-      caption: "Engineering for complex claims.",
-      captionDetail: "Energy & power loss adjusting",
-      footTitle: "Technical analysis for critical assets.",
-      footDescription: "Turbines, generators and transformers where a failure affects operations.",
+      topic: "COMPANY",
+      title: "Specialist engineering\nfor insurance",
+      accent: "Technical & legal expertise\nfor claims & losses",
     },
     {
-      visual: "photo",
-      topic: "Marine Cargo",
-      eyebrow: "Ship’s hull · Machinery · Marine cargo",
-      title: "Marine Cargo.",
-      accent: "From origin to destination.",
-      description: "Technical cargo traceability: inspection, monitoring and control at every stage of transport and commissioning.",
-      action: "Arrange a survey",
-      tags: ["Inspection", "Transport", "Assembly"],
-      caption: "Ship’s hull, machinery & marine cargo.",
-      captionDetail: "Origin · transit · final destination",
-      footTitle: "Technical monitoring through to final delivery.",
-      footDescription: "Unloading, lifting, land transport, assembly, testing and commissioning.",
-      image: "marine-transformer-1",
-      imageAlt: "Survey and transport of an autotransformer in a ship’s hold",
+      visual: "turbine",
+      topic: "SPECIALTIES",
+      title: "Key services",
+      statement: "Survey\nClaims & losses\nHigh complexity",
+      services: [
+        { label: "Engineering for complex claims", detail: "engineering" },
+        { label: "Energy & power loss adjusting", detail: "energy" },
+        { label: "Marine: hull & machinery · cargo", detail: "marine" },
+        { label: "Business interruption", detail: "interruption" },
+      ],
+    },
+    {
+      visual: "coverage",
+      topic: "POLICY",
+      title: "Insurance classes with\ncertified authorisation",
+      authority: "Superintendency of Companies, Securities and Insurance",
+      statement: "Forensic engineering & root cause analysis\nClaims & losses",
     },
   ],
 };

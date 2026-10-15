@@ -1,23 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { ArrowLeft, ArrowRight, ArrowUpRight, ChartNoAxesCombined, CloudLightning, Cog, Factory, Flame, Pause, Play, ShieldCheck, Ship, Truck } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Pause, Play } from "lucide-react";
 import { href, type Locale } from "@/lib/i18n";
-import type { HeroSlide } from "@/lib/hero-slides";
+import { heroCoverageOrder, type HeroSettlementSummary, type HeroSlide } from "@/lib/hero-slides";
 import { HeroBrandVisual } from "./hero-brand-visuals";
-
-const specialties = [
-  { icon: Flame, es: "Incendio", en: "Fire", detail: "Property damage" },
-  { icon: CloudLightning, es: "Fenómenos naturales", en: "Natural perils", detail: "Cat risk" },
-  { icon: Cog, es: "Rotura de maquinaria", en: "Machinery breakdown", detail: "Industrial" },
-  { icon: ChartNoAxesCombined, es: "Lucro cesante", en: "Business interruption", detail: "Business interruption" },
-  { icon: Factory, es: "Equipo & maquinaria", en: "Plant & equipment", detail: "Operational assets" },
-  { icon: Truck, es: "Transporte", en: "Transport", detail: "Logistics" },
-  { icon: Ship, es: "Casco marítimo", en: "Marine hull", detail: "Marine hull" },
-  { icon: ShieldCheck, es: "Responsabilidad civil", en: "Civil liability", detail: "Liability" },
-];
 
 function subscribeMotion(callback: () => void) {
   const query = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -34,7 +22,7 @@ const getReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduc
 const getHidden = () => document.hidden;
 const serverPaused = () => true;
 
-export function HomeHero({ locale, slides, whatsapp }: { locale: Locale; slides: HeroSlide[]; whatsapp: string }) {
+export function HomeHero({ locale, slides, whatsapp, insuranceClasses, settlementSummary }: { locale: Locale; slides: HeroSlide[]; whatsapp: string; insuranceClasses: string[]; settlementSummary: HeroSettlementSummary }) {
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
   const [inView, setInView] = useState(true);
@@ -44,6 +32,9 @@ export function HomeHero({ locale, slides, whatsapp }: { locale: Locale; slides:
   const hidden = useSyncExternalStore(subscribeVisibility, getHidden, serverPaused);
   const running = !paused && !reducedMotion && !hidden && inView;
   const es = locale === "es";
+  const settlementFigure = new Intl.NumberFormat(es ? "es-EC" : "en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(settlementSummary.amount / 1_000_000);
+  const caseCountLabel = settlementSummary.caseCount === 4 ? (es ? "cuatro" : "four") : String(settlementSummary.caseCount);
+  const settlementCaption = es ? `Indemnizaciones logradas en ${caseCountLabel} casos destacados` : `Settlements secured across ${caseCountLabel} featured cases`;
 
   useEffect(() => {
     if (!running) return;
@@ -105,41 +96,39 @@ export function HomeHero({ locale, slides, whatsapp }: { locale: Locale; slides:
           const active = current === index;
           const Heading = index === 0 ? "h1" : "h2";
           return (
-            <div key={slide.topic} id={`hero-slide-${index}`} className={`hero-slide${active ? " is-active" : ""}`} role="group" aria-roledescription={es ? "diapositiva" : "slide"} aria-label={`${index + 1} ${es ? "de" : "of"} ${slides.length}: ${slide.topic}`} aria-hidden={!active} inert={!active}>
+            <div key={slide.topic} id={`hero-slide-${index}`} className={`hero-slide hero-slide-${slide.visual}${active ? " is-active" : ""}`} role="group" aria-roledescription={es ? "diapositiva" : "slide"} aria-label={`${index + 1} ${es ? "de" : "of"} ${slides.length}: ${slide.topic}`} aria-hidden={!active} inert={!active}>
               <div className="container home-hero-inner">
-                <div className="hero-copy">
-                  <p className="eyebrow"><span className="status-line" aria-hidden="true" />{slide.eyebrow}</p>
-                  <Heading className="hero-slide-title">{slide.title}<span>{slide.accent}</span></Heading>
-                  <p className="hero-description">{slide.description}</p>
-                  <div className="hero-actions">
-                    <a className="button button-light" href={whatsapp} target="_blank" rel="noopener noreferrer">{slide.action}<ArrowUpRight size={17} aria-hidden="true" /></a>
-                    <Link href={href(locale, "services")} className="hero-secondary">{es ? "Explorar especialidades" : "Explore our expertise"}<ArrowRight size={17} aria-hidden="true" /></Link>
-                  </div>
-                  <div className="hero-slide-note"><strong>{slide.footTitle}</strong><p>{slide.footDescription}</p></div>
-                </div>
                 <div className="hero-visual">
-                  <div className={`inspection-frame${slide.visual === "specialties" ? " specialty-frame" : ""}`}>
-                    {slide.visual === "turbine" || slide.visual === "trust" ? <HeroBrandVisual kind={slide.visual} locale={locale} /> : slide.visual === "photo" ? <>
-                      <div className="photo"><Image src={`/images/projects/${slide.image}.webp`} alt={slide.imageAlt ?? ""} fill sizes="(max-width: 760px) 90vw, 46vw" preload={index === 0} /></div>
-                      <div className="hero-image-tags">{slide.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
-                      <div className="inspection-reticle" aria-hidden="true"><span /><span /></div>
-                      <div className="inspection-caption"><span className="caption-cross" aria-hidden="true">+</span><div><strong>{slide.caption}</strong><span>{slide.captionDetail}</span></div></div>
-                    </> : <>
-                      <div className="specialty-heading"><p className="eyebrow">{slide.captionDetail}</p><h3>{slide.caption}</h3></div>
-                      <ul className="hero-specialties">{specialties.map(({ icon: Icon, ...specialty }) => <li key={specialty.en}><Icon size={26} strokeWidth={1.4} aria-hidden="true" /><div><strong>{specialty[locale]}</strong><span>{specialty.detail}</span></div></li>)}</ul>
-                    </>}
+                  <div className={`inspection-frame hero-frame-${slide.visual}`}>
+                    <HeroBrandVisual kind={slide.visual} locale={locale} />
                     <span className="inspection-corner corner-one" aria-hidden="true" /><span className="inspection-corner corner-two" aria-hidden="true" />
+                  </div>
+                </div>
+                <div className={`hero-copy hero-copy-${slide.visual}`}>
+                  {slide.visual === "coverage" ? <div className="hero-coverage-panel">
+                      <Heading className="hero-slide-title hero-coverage-title">{slide.title}</Heading>
+                      <p className="hero-coverage-authority">{slide.authority}</p>
+                      <ul className="hero-coverage-classes" aria-label={es ? "16 ramos de seguros autorizados" : "16 authorised insurance classes"}>{heroCoverageOrder.map((classIndex) => <li key={classIndex}>{insuranceClasses[classIndex]}</li>)}</ul>
+                  </div> : <>
+                    <Heading className="hero-slide-title">{slide.title}</Heading>
+                    {slide.accent && <p className="hero-primary-statement">{slide.accent}</p>}
+                    {slide.services && <ul className="hero-service-list">{slide.services.map(({ label, detail }) => <li key={detail}><Link href={href(locale, "services", detail)}><span>{label}</span><ArrowUpRight size={16} aria-hidden="true" /></Link></li>)}</ul>}
+                  </>}
+                  <div className="hero-conversion has-summary">
+                    <div className="hero-actions">
+                      <a className="button hero-consult-action" href={whatsapp} target="_blank" rel="noopener noreferrer">{es ? "Solicitar consulta profesional" : "Request a professional consultation"}<ArrowUpRight size={17} aria-hidden="true" /></a>
+                      <Link href={href(locale, "contact")} className="button hero-meeting-action">{es ? "Agendar reunión" : "Schedule a meeting"}<CalendarDays size={17} aria-hidden="true" /></Link>
+                    </div>
+                    {slide.visual === "trust" ? <Link href={href(locale, "experience")} className="hero-settlement" aria-label={es ? `Ver ${caseCountLabel} casos destacados: USD ${settlementFigure} millones en indemnizaciones` : `View ${caseCountLabel} featured cases: USD ${settlementFigure} million in settlements`}>
+                      <p className="hero-settlement-amount" aria-hidden="true"><span>USD</span><strong>{settlementFigure}</strong><span>M</span></p>
+                      <p className="hero-settlement-caption">{settlementCaption}</p>
+                    </Link> : slide.statement && <div className="hero-message-panel"><p>{slide.statement}</p></div>}
                   </div>
                 </div>
               </div>
             </div>
           );
         })}
-      </div>
-      <div className="container hero-engineering-statement">
-        <span className="engineering-statement-mark" aria-hidden="true">+</span>
-        <p>{es ? "Ingeniería técnica especializada" : "Specialist technical engineering"}<span>{es ? "aplicada a seguros." : "for insurance."}</span></p>
-        <span className="engineering-statement-fields">{es ? "Energía · Marítimo · Ingeniería" : "Energy · Marine · Engineering"}</span>
       </div>
       <p className="sr-only" aria-live={running ? "off" : "polite"} aria-atomic="true">{`${current + 1} ${es ? "de" : "of"} ${slides.length}: ${slides[current].topic}`}</p>
     </section>

@@ -16,9 +16,10 @@ import { Breadcrumbs, ButtonLink, ClientLogos, ContactBand, Methodology, PageHer
 export function HomePage({ locale }: { locale: Locale }) {
   const c = copy[locale];
   const featured = services.filter((service) => service.featured && service.id !== "adjusting");
+  const settledCases = cases.filter((item) => item.value);
+  const settlementSummary = { amount: settledCases.reduce((total, item) => total + (item.value ?? 0), 0), caseCount: settledCases.length };
   return <>
-    <HomeHero locale={locale} slides={heroSlides[locale]} whatsapp={company.whatsapp} />
-    <div className="hero-bottom home-hero-facts"><div className="container hero-bottom-inner"><div><span>{c.since}</span><strong>{c.sinceValue}</strong></div><div><span>{c.authorized}</span><strong>16 <BadgeCheck size={19} strokeWidth={1.6} aria-hidden="true" /></strong></div><div><span>{c.offices}</span><strong>{c.officeValue}</strong></div><Link href="#expertise" className="hero-scroll" aria-label={c.explore}><ArrowDown size={20} /></Link></div></div>
+    <HomeHero locale={locale} slides={heroSlides[locale]} whatsapp={company.whatsapp} insuranceClasses={authorizations.map((item) => t(item, locale))} settlementSummary={settlementSummary} />
 
     <section className="home-clients"><div className="container"><div className="clients-heading"><p>{c.clientsEyebrow}</p><Link href={href(locale, "experience")}>{c.clientsTitle}<ArrowUpRight size={15} aria-hidden="true" /></Link></div><ClientLogos locale={locale} /></div></section>
 
