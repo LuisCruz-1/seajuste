@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Globe2, Menu, X } from "lucide-react";
 import { href, sectionKeys, translatePath, type Locale, type Section } from "@/lib/i18n";
 import type { Copy } from "@/lib/copy";
+import handsMark from "../../public/images/brand/manos.png";
 
 type Labels = Pick<Copy, "nav" | "home" | "menu" | "closeMenu" | "language" | "brandDescriptor" | "topLine" | "location" | "contactAction">;
 
@@ -44,9 +45,12 @@ export function Header({ locale, labels }: { locale: Locale; labels: Labels }) {
     <header className="site-header">
       <div className="topline"><div className="container topline-inner"><span>{labels.topLine}</span><span>{labels.location}</span></div></div>
       <div className="container header-inner">
-        <Link href={href(locale)} className="brand" aria-label={`SEAJUSTE · ${labels.home}`} onClick={() => setOpenPath(null)}>
-          <Image src="/images/brand/seajuste-logo.png" alt="SEAJUSTE S.A." width={900} height={155} className="brand-image" loading="eager" />
-          <span>{labels.brandDescriptor}</span>
+        <Link href={href(locale)} className="header-brand-lockup" aria-label={`SEAJUSTE · ${labels.home}`} onClick={() => setOpenPath(null)}>
+          <Image src={handsMark} alt="" className="header-isologo" sizes="(max-width: 640px) 48px, 72px" loading="eager" />
+          <span className="brand">
+            <Image src="/images/brand/seajuste-logo.png" alt="SEAJUSTE S.A." width={900} height={155} className="brand-image" loading="eager" />
+            <span>{labels.brandDescriptor}</span>
+          </span>
         </Link>
         <nav aria-label={labels.menu} className={`primary-nav ${open ? "is-open" : ""}`} id="primary-navigation" ref={panelRef}>
           {sectionKeys.filter((section) => section !== "contact").map((section) => (

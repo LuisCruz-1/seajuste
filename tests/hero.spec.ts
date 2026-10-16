@@ -10,7 +10,7 @@ test("hero presents three bilingual reference-based slides with working media an
     await page.goto(`/${locale}`);
     const hero = page.locator(".home-slider");
     const next = hero.getByRole("button", { name: locale === "es" ? "Diapositiva siguiente" : "Next slide" });
-    const seal = hero.getByRole("img", { name: locale === "es" ? "38 años · Confianza mutua" : "38 years · Mutual trust" });
+    const seal = hero.getByRole("img", { name: locale === "es" ? "Confianza mutua" : "Mutual trust", exact: true });
     await expect(seal).toBeVisible();
     await expect(hero.locator("h1")).toHaveCount(1);
     await expect(hero.locator(".hero-slide")).toHaveCount(3);
@@ -32,9 +32,9 @@ test("hero presents three bilingual reference-based slides with working media an
       await expect(active).toHaveAttribute("id", `hero-slide-${index}`);
       await expect(hero.locator(".hero-slide[inert]")).toHaveCount(2);
       const actions = active.locator(".hero-actions");
-      await expect(actions.getByRole("link").first()).toHaveAttribute("href", "https://wa.me/593999666167");
+      await expect(actions.getByRole("link").first()).toHaveAttribute("href", locale === "es" ? "/es/contacto#consulta" : "/en/contact#consulta");
       await expect(actions.getByRole("link").first()).toHaveText(locale === "es" ? "Solicitar consulta profesional" : "Request a professional consultation");
-      await expect(actions.getByRole("link").last()).toHaveAttribute("href", locale === "es" ? "/es/contacto" : "/en/contact");
+      await expect(actions.getByRole("link").last()).toHaveAttribute("href", locale === "es" ? "/es/contacto#reunion" : "/en/contact#reunion");
       await expect(actions.getByRole("link").last()).toHaveText(locale === "es" ? "Agendar reunión" : "Schedule a meeting");
       const actionsBox = (await actions.boundingBox())!;
       const summary = active.locator(index === 0 ? ".hero-settlement" : ".hero-message-panel");
@@ -82,8 +82,10 @@ test("hero presents three bilingual reference-based slides with working media an
     }
     await expect(hero.locator(".hero-slide.is-active")).toHaveAttribute("id", "hero-slide-1");
     await hero.locator(".hero-slide.is-active .hero-actions").getByRole("link", { name: locale === "es" ? /Agendar reunión/i : /Schedule a meeting/i }).click();
-    await expect(page).toHaveURL(new RegExp(locale === "es" ? "/es/contacto$" : "/en/contact$"));
+    await expect(page).toHaveURL(new RegExp(locale === "es" ? "/es/contacto#reunion$" : "/en/contact#reunion$"));
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    await expect(page.getByRole("tab", { name: locale === "es" ? "Agendar reunión" : "Schedule a meeting" })).toHaveAttribute("aria-selected", "true");
+    await expect(page.getByRole("tabpanel").getByLabel(locale === "es" ? /Fecha preferida/ : /Preferred date/)).toBeVisible();
   }
   expect(errors).toEqual([]);
 });

@@ -38,7 +38,9 @@ Además, cada idioma tiene **9 páginas de especialidad** y **12 páginas de cas
 
 ## Contacto
 
-El formulario valida los campos y **prepara una consulta en WhatsApp o en el cliente de correo del visitante**. El visitante revisa y envía el mensaje en esa aplicación. El sitio informa este comportamiento y no almacena datos del formulario.
+La página de contacto ofrece dos pestañas: **Consulta profesional** y **Agendar reunión**. Los botones del hero abren la opción correspondiente mediante `#consulta` o `#reunion`. La pestaña de reunión permite indicar teléfono, fecha y hora preferidas (hora de Ecuador continental), modalidad y motivo; la consulta recoge la especialidad y el contexto del caso. Los datos escritos se conservan al cambiar de pestaña mientras se permanece en la página.
+
+Ambos formularios validan los campos y utilizan un único botón **«Continuar por WhatsApp»**, que abre un mensaje con los datos de la solicitud correspondiente. El visitante lo revisa y envía desde WhatsApp. Los formularios no envían correos y el sitio no almacena las solicitudes. La reunión se coordina con el equipo a partir de las preferencias indicadas.
 
 Los enlaces de ubicación abren búsquedas de las direcciones reales en Google Maps. La referencia de LinkedIn abre una búsqueda de Carlos Quevedo / SEAJUSTE, tal como se identifica en el brochure.
 
@@ -81,6 +83,22 @@ npm start
 ```
 
 El sitio incluye páginas prerenderizadas, URLs canónicas, equivalencias `hreflang`, sitemap, robots, tarjetas Open Graph por idioma y datos estructurados de la empresa. Las fuentes Barlow Condensed, Manrope e IBM Plex Mono se sirven desde el propio sitio mediante `next/font`.
+
+## Ajustar la tipografía
+
+La escala se configura en el bloque `:root` al inicio de `src/app/globals.css`. Los tamaños utilizan `rem` y respetan la preferencia de tamaño de fuente del navegador.
+
+| Variable | Uso | Tamaño predeterminado* |
+| --- | --- | --- |
+| `--text-body` | Párrafos y formularios | 18 px |
+| `--text-small` | Texto secundario, menús y enlaces | 16 px |
+| `--text-caption` | Etiquetas, notas y tablas compactas | 14 px |
+| `--text-heading` / `--text-display` | Títulos de sección y de página | Adaptable al ancho |
+| `--weight-regular` / `--weight-medium` / `--weight-bold` | Peso del texto, títulos y énfasis | 500 / 600 / 700 |
+
+\* Con el tamaño base habitual del navegador de 16 px.
+
+Para ampliar toda la tipografía un 10 % adicional, cambia únicamente `--type-scale: 1;` por `--type-scale: 1.1;`. Para ajustar solo una categoría, modifica su variable; por ejemplo, `--text-body: calc(1.25rem * var(--type-scale));` establece el texto principal en 20 px con la escala predeterminada. Después de un ajuste, comprueba los saltos de línea y los componentes compactos en móvil.
 
 ## Verificación
 

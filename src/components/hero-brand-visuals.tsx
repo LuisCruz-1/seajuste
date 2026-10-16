@@ -14,7 +14,7 @@ export function HeroBrandVisual({ kind, locale }: { kind: "trust" | "turbine" | 
       { value: "17", label: es ? "Especialistas en\nnuestro equipo" : "Specialists\nin our team" },
     ];
     return <div className="hero-trust-scene">
-      <div className="trust-scene-mark"><Image className="trust-scene-seal" src="/images/brand/confianza-mutua-38.png" alt={sealAlt} fill sizes="(max-width: 760px) 80vw, 38vw" preload /></div>
+      <div className="trust-scene-mark"><Image className="trust-scene-seal" src="/images/brand/manos-texto.png" alt={es ? "Confianza mutua" : "Mutual trust"} fill sizes="(max-width: 760px) 80vw, 38vw" preload /></div>
       <dl className="trust-scene-statistics">{statistics.map(({ value, label }) => <div key={value}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
       <p className="trust-scene-country">Ecuador</p>
     </div>;
@@ -31,7 +31,7 @@ export function HeroBrandVisual({ kind, locale }: { kind: "trust" | "turbine" | 
     { icon: Cpu, label: es ? "Tecnología" : "Technology" },
     { icon: Medal, label: es ? "Experiencia" : "Experience" },
     { icon: ShieldCheck, label: es ? "Calidad" : "Quality" },
-    { icon: BadgeCheck, label: es ? "Solvencia" : "Expertise" },
+    { icon: BadgeCheck, label: es ? "Solvencia técnica" : "Technical expertise" },
   ];
   return <div className="hero-turbine-scene">
     <div className="turbine-scene-media">

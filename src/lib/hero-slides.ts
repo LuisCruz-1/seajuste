@@ -15,17 +15,17 @@ export type HeroSettlementSummary = { amount: number; caseCount: number };
 export type HeroProjectPhoto = { image: string; alt: Localized };
 
 export const heroProjectPhotos: HeroProjectPhoto[] = [
-  { image: "barge-systems", alt: text("Inspección de sistemas y tuberías industriales", "Inspection of industrial systems and pipework") },
-  { image: "trinitaria-turbine", alt: text("Evaluación de una turbina de generación eléctrica", "Assessment of a power generation turbine") },
-  { image: "cargo-assembly-1", alt: text("Montaje de un equipo Siemens Westinghouse", "Assembly of Siemens Westinghouse equipment") },
-  { image: "excavator-field-3", alt: text("Peritaje de maquinaria pesada en campo", "On-site survey of heavy machinery") },
-  { image: "power-barge-detail", alt: text("Inspección de una barcaza de generación", "Survey of a power generation barge") },
-  { image: "barge-engine-3", alt: text("Evaluación de motores y maquinaria naval", "Assessment of marine engines and machinery") },
+  { image: "ramos-boiler-inspection", alt: text("Inspección técnica del interior de una caldera industrial", "Technical inspection inside an industrial boiler") },
+  { image: "ramos-power-turbine", alt: text("Turbina de generación eléctrica en una planta industrial", "Power generation turbine in an industrial plant") },
+  { image: "ramos-siemens-assembly", alt: text("Montaje de un equipo Siemens Westinghouse", "Assembly of Siemens Westinghouse equipment") },
+  { image: "ramos-earthmoving-equipment", alt: text("Peritaje de maquinaria pesada en campo", "On-site survey of heavy machinery") },
+  { image: "ramos-power-barge", alt: text("Inspección de una barcaza de generación", "Survey of a power generation barge") },
+  { image: "ramos-marine-engines", alt: text("Evaluación de motores y maquinaria naval", "Assessment of marine engines and machinery") },
 ];
 
 export const heroCoveragePhotos: HeroProjectPhoto[] = [
-  { image: "electrical-testing", alt: text("Pruebas técnicas de un transformador de potencia", "Technical testing of a power transformer") },
-  { image: "cargo-unloading-2", alt: text("Supervisión de descarga de carga industrial en puerto", "Supervision of industrial cargo unloading at port") },
+  { image: "ramos-transformer-damage", alt: text("Evaluación de daños en un transformador de potencia", "Damage assessment of a power transformer") },
+  { image: "ramos-cargo-unloading", alt: text("Supervisión de descarga de carga industrial en puerto", "Supervision of industrial cargo unloading at port") },
 ];
 
 // Keep the authorised classes together in the same pairs as the reference layout.
@@ -42,8 +42,8 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
     {
       visual: "turbine",
       topic: "ESPECIALIDADES",
-      title: "Servicios relevantes",
-      statement: "Survey\nReclamos & siniestros\nAlta complejidad",
+      title: "Nuestros servicios relevantes",
+      statement: "Marine & proyect cargo survey\nReclamos & siniestros\nAlta complejidad",
       services: [
         { label: "Engineering for complex claims", detail: "engineering" },
         { label: "Energy & power loss adjusting", detail: "energy" },
@@ -54,7 +54,7 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
     {
       visual: "coverage",
       topic: "PÓLIZA",
-      title: "Pólizas de seguros con\ncertificación de autorización",
+      title: "Ramos de seguros autorizados",
       authority: "Superintendencia de Compañías, Valores y Seguros",
       statement: "Ingeniería forense & causa raíz\nReclamos & siniestros",
     },
@@ -69,8 +69,8 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
     {
       visual: "turbine",
       topic: "SPECIALTIES",
-      title: "Key services",
-      statement: "Survey\nClaims & losses\nHigh complexity",
+      title: "Our key services",
+      statement: "Marine & project cargo survey\nClaims & losses\nHigh complexity",
       services: [
         { label: "Engineering for complex claims", detail: "engineering" },
         { label: "Energy & power loss adjusting", detail: "energy" },
@@ -81,7 +81,7 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
     {
       visual: "coverage",
       topic: "POLICY",
-      title: "Insurance classes with\ncertified authorisation",
+      title: "Authorised insurance classes",
       authority: "Superintendency of Companies, Securities and Insurance",
       statement: "Forensic engineering & root cause analysis\nClaims & losses",
     },

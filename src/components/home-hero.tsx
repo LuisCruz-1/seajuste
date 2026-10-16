@@ -22,7 +22,7 @@ const getReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduc
 const getHidden = () => document.hidden;
 const serverPaused = () => true;
 
-export function HomeHero({ locale, slides, whatsapp, insuranceClasses, settlementSummary }: { locale: Locale; slides: HeroSlide[]; whatsapp: string; insuranceClasses: string[]; settlementSummary: HeroSettlementSummary }) {
+export function HomeHero({ locale, slides, insuranceClasses, settlementSummary }: { locale: Locale; slides: HeroSlide[]; insuranceClasses: string[]; settlementSummary: HeroSettlementSummary }) {
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
   const [inView, setInView] = useState(true);
@@ -116,8 +116,8 @@ export function HomeHero({ locale, slides, whatsapp, insuranceClasses, settlemen
                   </>}
                   <div className="hero-conversion has-summary">
                     <div className="hero-actions">
-                      <a className="button hero-consult-action" href={whatsapp} target="_blank" rel="noopener noreferrer">{es ? "Solicitar consulta profesional" : "Request a professional consultation"}<ArrowUpRight size={17} aria-hidden="true" /></a>
-                      <Link href={href(locale, "contact")} className="button hero-meeting-action">{es ? "Agendar reunión" : "Schedule a meeting"}<CalendarDays size={17} aria-hidden="true" /></Link>
+                      <Link className="button hero-consult-action" href={`${href(locale, "contact")}#consulta`}>{es ? "Solicitar consulta profesional" : "Request a professional consultation"}<ArrowUpRight size={17} aria-hidden="true" /></Link>
+                      <Link href={`${href(locale, "contact")}#reunion`} className="button hero-meeting-action">{es ? "Agendar reunión" : "Schedule a meeting"}<CalendarDays size={17} aria-hidden="true" /></Link>
                     </div>
                     {slide.visual === "trust" ? <Link href={href(locale, "experience")} className="hero-settlement" aria-label={es ? `Ver ${caseCountLabel} casos destacados: USD ${settlementFigure} millones en indemnizaciones` : `View ${caseCountLabel} featured cases: USD ${settlementFigure} million in settlements`}>
                       <p className="hero-settlement-amount" aria-hidden="true"><span>USD</span><strong>{settlementFigure}</strong><span>M</span></p>

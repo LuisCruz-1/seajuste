@@ -19,7 +19,7 @@ export function HomePage({ locale }: { locale: Locale }) {
   const settledCases = cases.filter((item) => item.value);
   const settlementSummary = { amount: settledCases.reduce((total, item) => total + (item.value ?? 0), 0), caseCount: settledCases.length };
   return <>
-    <HomeHero locale={locale} slides={heroSlides[locale]} whatsapp={company.whatsapp} insuranceClasses={authorizations.map((item) => t(item, locale))} settlementSummary={settlementSummary} />
+    <HomeHero locale={locale} slides={heroSlides[locale]} insuranceClasses={authorizations.map((item) => t(item, locale))} settlementSummary={settlementSummary} />
 
     <section className="home-clients"><div className="container"><div className="clients-heading"><p>{c.clientsEyebrow}</p><Link href={href(locale, "experience")}>{c.clientsTitle}<ArrowUpRight size={15} aria-hidden="true" /></Link></div><ClientLogos locale={locale} /></div></section>
 
