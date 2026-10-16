@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, BadgeCheck, Check, FileText, Mail, MapPin, MessageCircle, Phone, Quote, ShieldCheck } from "lucide-react";
 import { authorizations, cases, clients, company, corporatePurpose, economicActivities, services, supplierProducts, team, timeline, type CaseStudy, type Service } from "@/lib/content";
 import { copy } from "@/lib/copy";
-import { heroSlides } from "@/lib/hero-slides";
+import { heroCoverageLabels, heroInterventionRows, heroSlides } from "@/lib/hero-slides";
 import { formatMoney, href, t, type Locale } from "@/lib/i18n";
 import { CaseCard } from "./cards";
 import { CaseGrid } from "./case-grid";
@@ -14,26 +14,14 @@ import { Registers } from "./registers";
 import { Breadcrumbs, ButtonLink, ClientLogos, ContactBand, Methodology, PageHero, Photo, SectionHeading, ServiceCard, ServiceIcon, toCaseCard, TrustItems } from "./site";
 
 export function HomePage({ locale }: { locale: Locale }) {
-  const c = copy[locale];
-  const featured = services.filter((service) => service.featured && service.id !== "adjusting");
   const settledCases = cases.filter((item) => item.value);
   const settlementSummary = { amount: settledCases.reduce((total, item) => total + (item.value ?? 0), 0), caseCount: settledCases.length };
-  return <>
-    <HomeHero locale={locale} slides={heroSlides[locale]} insuranceClasses={authorizations.map((item) => t(item, locale))} settlementSummary={settlementSummary} />
-
-    <section className="home-clients"><div className="container"><div className="clients-heading"><p>{c.clientsEyebrow}</p><Link href={href(locale, "experience")}>{c.clientsTitle}<ArrowUpRight size={15} aria-hidden="true" /></Link></div><ClientLogos locale={locale} /></div></section>
-
-    <section className="section expertise-section" id="expertise"><div className="container"><SectionHeading eyebrow={c.specialtyEyebrow} title={c.specialtyTitle} description={c.specialtyIntro} action={<Link href={href(locale, "services")} className="text-link">{c.allServices}<ArrowUpRight size={18} aria-hidden="true" /></Link>} /><div className="service-grid">{featured.map((service) => <ServiceCard service={service} locale={locale} key={service.id} />)}</div></div></section>
-
-    <section className="core-section"><div className="container core-inner"><div className="core-photo"><Photo name="transformer-inspection" alt={locale === "es" ? "Inspección técnica de un transformador de potencia" : "Technical inspection of a power transformer"} /><div className="photo-annotation"><FileText size={22} strokeWidth={1.5} aria-hidden="true" /><span>{locale === "es" ? "Evidencia, análisis y trazabilidad." : "Evidence, analysis and traceability."}</span></div></div><div className="core-copy"><p className="eyebrow">{c.coreLabel}</p><h2>{c.coreTitle}</h2><p>{c.coreIntro}</p><ul className="check-list">{services[0].scope.slice(0, 4).map((scope, index) => <li key={index}><Check size={17} aria-hidden="true" />{t(scope, locale)}</li>)}</ul><ButtonLink to={href(locale, "services", "adjusting")}>{c.viewService}</ButtonLink></div></div></section>
-
-    <section className="section home-cases"><div className="container"><SectionHeading eyebrow={c.caseEyebrow} title={c.caseTitle} description={c.caseIntro} action={<Link href={href(locale, "experience")} className="text-link">{c.allCases}<ArrowUpRight size={18} aria-hidden="true" /></Link>} /><div className="case-grid">{[cases[0], cases[4], cases[3]].map((item) => <CaseCard key={item.id} item={toCaseCard(item, locale)} action={c.viewCase} settlement={c.settlement} />)}</div><p className="source-note">{c.settlementNote}</p></div></section>
-
-    <Methodology locale={locale} />
-
-    <section className="section home-team"><div className="container home-team-inner"><div><p className="eyebrow">{c.teamEyebrow}</p><h2>{c.teamTitle}</h2><p>{c.teamIntro}</p><Link href={href(locale, "team")} className="text-link">{c.meetTeam}<ArrowUpRight size={18} aria-hidden="true" /></Link></div><div className="team-preview">{[team[0], team[1], team[2]].map((person) => <div key={person.id} className="team-preview-person"><div className="portrait"><Image src={`/images/team/${person.id}.webp`} alt={person.name} fill sizes="(max-width: 700px) 30vw, 17vw" /></div><h3>{person.name}</h3><p>{t(person.specialty, locale)}</p></div>)}</div></div></section>
-    <ContactBand locale={locale} />
-  </>;
+  const interventionCases = heroInterventionRows.map((row) => {
+    const item = cases.find((candidate) => candidate.id === row.id);
+    if (item?.value === undefined) throw new Error(`Missing documented settlement for ${row.id}`);
+    return { id: row.id, client: item.client, equipment: t(row.equipment, locale), unit: t(row.unit, locale), location: t(row.location, locale), value: item.value };
+  });
+  return <HomeHero locale={locale} slides={heroSlides[locale]} insuranceClasses={authorizations.map((item, index) => t(heroCoverageLabels[index] ?? item, locale))} settlementSummary={settlementSummary} interventionCases={interventionCases} />;
 }
 
 export function AboutPage({ locale }: { locale: Locale }) {

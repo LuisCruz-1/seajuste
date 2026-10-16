@@ -1,16 +1,22 @@
 import { text, type DetailId, type Locale, type Localized } from "./i18n";
 
 export type HeroSlide = {
-  visual: "trust" | "turbine" | "coverage";
+  visual: "trust" | "turbine" | "coverage" | "intervention";
   topic: string;
   title: string;
   accent?: string;
   statement?: string;
   authority?: string;
+  threshold?: string;
+  description?: string;
+  highlights?: string[];
+  closing?: string;
+  closingAccent?: string;
   services?: { label: string; detail: DetailId }[];
 };
 
 export type HeroSettlementSummary = { amount: number; caseCount: number };
+export type HeroInterventionCase = { id: DetailId; client: string; equipment: string; unit: string; location: string; value: number };
 
 export type HeroProjectPhoto = { image: string; alt: Localized };
 
@@ -30,6 +36,26 @@ export const heroCoveragePhotos: HeroProjectPhoto[] = [
 
 // Keep the authorised classes together in the same pairs as the reference layout.
 export const heroCoverageOrder = [0, 1, 2, 3, 13, 11, 5, 9, 4, 6, 8, 7, 15, 10, 14, 12];
+
+export const heroCoverageLabels: Partial<Record<number, Localized>> = {
+  13: text("MARÍTIMO: CASCO & MAQUINARIA", "MARINE: HULL & MACHINERY"),
+  11: text("TRANSPORTE MARÍTIMO Y TERRESTRE", "SEA AND LAND TRANSPORT"),
+};
+
+export const heroInterventionPhotos = [
+  { slot: "tg5", image: "intervention-tg5", caption: text("Unidad TG5", "TG5 unit"), alt: text("Intervención técnica en el generador de la unidad TG5", "Technical intervention on the TG5 generator") },
+  { slot: "tv1", image: "intervention-tv1", caption: text("Unidad TV1", "TV1 unit"), alt: text("Turbina de la unidad TV1 en planta", "TV1 turbine at the power plant") },
+  { slot: "tg4", image: "intervention-tg4", caption: text("Unidad TG4", "TG4 unit"), alt: text("Detalle del rotor y álabes de la unidad TG4", "TG4 rotor and turbine blade detail") },
+  { slot: "damage", image: "intervention-artefacta-damage", caption: text("Artefacta · Daños", "Artefacta · Damage"), alt: text("Daños documentados en un local de Artefacta", "Documented damage at an Artefacta retail property") },
+  { slot: "store", image: "intervention-artefacta-store", caption: text("Artefacta · Local comercial", "Artefacta · Retail property"), alt: text("Local comercial de Artefacta incluido en los casos destacados", "Artefacta retail property featured in the documented claims") },
+];
+
+export const heroInterventionRows: { id: DetailId; equipment: Localized; unit: Localized; location: Localized }[] = [
+  { id: "tg5", equipment: text("Turbina a gas", "Gas turbine"), unit: text("TG-5", "TG-5"), location: text("Dr. Enrique García", "Dr. Enrique García") },
+  { id: "tv1", equipment: text("Turbina a vapor", "Steam turbine"), unit: text("TV-1", "TV-1"), location: text("Trinitaria", "Trinitaria") },
+  { id: "tg4", equipment: text("Turbina a gas", "Gas turbine"), unit: text("TG-4", "TG-4"), location: text("Gonzalo Zevallos", "Gonzalo Zevallos") },
+  { id: "artefacta", equipment: text("Locales comerciales", "Retail premises"), unit: text("Varios", "Various"), location: text("Manabí y Esmeraldas", "Manabí & Esmeraldas") },
+];
 
 export const heroSlides: Record<Locale, HeroSlide[]> = {
   es: [
@@ -58,6 +84,16 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
       authority: "Superintendencia de Compañías, Valores y Seguros",
       statement: "Ingeniería forense & causa raíz\nReclamos & siniestros",
     },
+    {
+      visual: "intervention",
+      topic: "INTERVENCIÓN",
+      title: "Intervención técnica en siniestros complejos",
+      threshold: "Reclamos superiores a USD 1 millón",
+      description: "Experiencia en evaluación de daños, investigación de causas y cuantificación de pérdidas.",
+      highlights: ["Rotura de maquinaria y lucro cesante por rotura de maquinaria (Electroguayas).", "Incendio y lucro cesante a consecuencia de incendio (Artefacta)."],
+      closing: "La confianza se demuestra con experiencia.",
+      closingAccent: "RESULTADOS QUE NOS RESPALDAN",
+    },
   ],
   en: [
     {
@@ -84,6 +120,16 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
       title: "Authorised insurance classes",
       authority: "Superintendency of Companies, Securities and Insurance",
       statement: "Forensic engineering & root cause analysis\nClaims & losses",
+    },
+    {
+      visual: "intervention",
+      topic: "INTERVENTION",
+      title: "Technical intervention in complex losses",
+      threshold: "Claims exceeding USD 1 million",
+      description: "Experience in damage assessment, cause investigation and loss quantification.",
+      highlights: ["Machinery breakdown and resulting business interruption (Electroguayas).", "Fire and resulting business interruption (Artefacta)."],
+      closing: "Trust is demonstrated through experience.",
+      closingAccent: "RESULTS THAT SPEAK FOR US",
     },
   ],
 };

@@ -1,20 +1,19 @@
 import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
-test("hero presents three bilingual reference-based slides with working media and accessible controls", async ({ page }, testInfo) => {
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  const errors: string[] = [];
-  page.on("pageerror", (error) => errors.push(error.message));
-
-  for (const locale of ["es", "en"]) {
+for (const locale of ["es", "en"]) {
+  test(`hero presents four reference-based slides with working media and accessible controls (${locale})`, async ({ page }, testInfo) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    const errors: string[] = [];
+    page.on("pageerror", (error) => errors.push(error.message));
     await page.goto(`/${locale}`);
     const hero = page.locator(".home-slider");
     const next = hero.getByRole("button", { name: locale === "es" ? "Diapositiva siguiente" : "Next slide" });
     const seal = hero.getByRole("img", { name: locale === "es" ? "Confianza mutua" : "Mutual trust", exact: true });
     await expect(seal).toBeVisible();
     await expect(hero.locator("h1")).toHaveCount(1);
-    await expect(hero.locator(".hero-slide")).toHaveCount(3);
-    await expect(hero.locator(".hero-slide-tab")).toHaveCount(3);
+    await expect(hero.locator(".hero-slide")).toHaveCount(4);
+    await expect(hero.locator(".hero-slide-tab")).toHaveCount(4);
     const controlsBox = (await hero.locator(".hero-slider-controls").boundingBox())!;
     const slidesBox = (await hero.locator(".hero-slides").boundingBox())!;
     const mobileControls = page.viewportSize()!.width <= 760;
@@ -27,27 +26,27 @@ test("hero presents three bilingual reference-based slides with working media an
     }
     let height = 0;
 
-    for (let index = 0; index < 3; index++) {
+    for (let index = 0; index < 4; index++) {
       const active = hero.locator('.hero-slide[aria-hidden="false"]');
       await expect(active).toHaveAttribute("id", `hero-slide-${index}`);
-      await expect(hero.locator(".hero-slide[inert]")).toHaveCount(2);
+      await expect(hero.locator(".hero-slide[inert]")).toHaveCount(3);
       const actions = active.locator(".hero-actions");
       await expect(actions.getByRole("link").first()).toHaveAttribute("href", locale === "es" ? "/es/contacto#consulta" : "/en/contact#consulta");
       await expect(actions.getByRole("link").first()).toHaveText(locale === "es" ? "Solicitar consulta profesional" : "Request a professional consultation");
       await expect(actions.getByRole("link").last()).toHaveAttribute("href", locale === "es" ? "/es/contacto#reunion" : "/en/contact#reunion");
       await expect(actions.getByRole("link").last()).toHaveText(locale === "es" ? "Agendar reunión" : "Schedule a meeting");
       const actionsBox = (await actions.boundingBox())!;
-      const summary = active.locator(index === 0 ? ".hero-settlement" : ".hero-message-panel");
+      const summary = active.locator(index === 0 || index === 3 ? ".hero-settlement" : ".hero-message-panel");
       const summaryBox = (await summary.boundingBox())!;
       expect(actionsBox.x + actionsBox.width).toBeLessThanOrEqual(summaryBox.x + 1);
-      if (index === 0) {
-        await expect(active.locator(".trust-scene-statistics dd")).toHaveCount(3);
+      if (index === 0 || index === 3) {
         await expect(active.locator(".hero-settlement-amount strong")).toHaveText(locale === "es" ? "13,8" : "13.8");
         await expect(active.locator(".hero-settlement")).toHaveAttribute("href", locale === "es" ? "/es/experiencia" : "/en/experience");
       } else {
         await expect(active.locator(".hero-settlement")).toHaveCount(0);
         await expect(active.locator(".hero-message-panel")).toBeVisible();
       }
+      if (index === 0) await expect(active.locator(".trust-scene-statistics dd")).toHaveCount(3);
       if (index === 1) {
         await expect(active.locator(".hero-service-list > li")).toHaveCount(4);
         await expect(active.locator(".turbine-pillar")).toHaveCount(4);
@@ -55,6 +54,22 @@ test("hero presents three bilingual reference-based slides with working media an
       if (index === 2) {
         await expect(active.locator(".hero-coverage-classes > li")).toHaveCount(16);
         await expect(active.locator("img")).toHaveCount(8);
+      }
+      if (index === 3) {
+        await expect(active.locator("img")).toHaveCount(5);
+        await expect(active.locator(".intervention-case-row")).toHaveCount(4);
+        await expect(active.locator(".intervention-case-amount")).toHaveText(locale === "es" ? ["8.253.493,28", "1.947.668,80", "1.624.063,03", "2.000.000,00"] : ["8,253,493.28", "1,947,668.80", "1,624,063.03", "2,000,000.00"]);
+        const tableRegion = active.locator(".hero-intervention-table-scroll");
+        await tableRegion.focus();
+        await page.keyboard.press("ArrowLeft");
+        await expect(hero.locator(".hero-slide.is-active")).toHaveAttribute("id", "hero-slide-3");
+        await tableRegion.evaluate((element) => {
+          const start = new Touch({ identifier: 1, target: element, clientX: 300, clientY: 300 });
+          const end = new Touch({ identifier: 1, target: element, clientX: 100, clientY: 310 });
+          element.dispatchEvent(new TouchEvent("touchstart", { bubbles: true, touches: [start] }));
+          element.dispatchEvent(new TouchEvent("touchend", { bubbles: true, changedTouches: [end] }));
+        });
+        await expect(hero.locator(".hero-slide.is-active")).toHaveAttribute("id", "hero-slide-3");
       }
       await active.locator("img").evaluateAll(async (images) => {
         await Promise.all(images.map((image) => (image as HTMLImageElement).decode()));
@@ -73,7 +88,7 @@ test("hero presents three bilingual reference-based slides with working media an
     await expect(hero.locator(".hero-slide.is-active")).toHaveAttribute("id", "hero-slide-0");
     await next.focus();
     await page.keyboard.press("ArrowLeft");
-    await expect(hero.locator(".hero-slide.is-active")).toHaveAttribute("id", "hero-slide-2");
+    await expect(hero.locator(".hero-slide.is-active")).toHaveAttribute("id", "hero-slide-3");
     if (mobileControls) {
       await next.click();
       await next.click();
@@ -86,9 +101,9 @@ test("hero presents three bilingual reference-based slides with working media an
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     await expect(page.getByRole("tab", { name: locale === "es" ? "Agendar reunión" : "Schedule a meeting" })).toHaveAttribute("aria-selected", "true");
     await expect(page.getByRole("tabpanel").getByLabel(locale === "es" ? /Fecha preferida/ : /Preferred date/)).toBeVisible();
-  }
-  expect(errors).toEqual([]);
-});
+    expect(errors).toEqual([]);
+  });
+}
 
 test("autoplay keeps running on hover and respects pause, keyboard focus and reduced motion", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === "mobile", "Mouse hover and keyboard focus are checked on desktop.");
@@ -110,10 +125,10 @@ test("autoplay keeps running on hover and respects pause, keyboard focus and red
   await hero.getByRole("button", { name: "Reanudar carrusel" }).click();
   await page.mouse.move(0, 0);
   await page.clock.fastForward(8100);
-  await expect(active).toHaveAttribute("id", "hero-slide-0");
+  await expect(active).toHaveAttribute("id", "hero-slide-3");
   await hero.getByRole("button", { name: "Diapositiva siguiente" }).focus();
   await page.clock.fastForward(16000);
-  await expect(active).toHaveAttribute("id", "hero-slide-0");
+  await expect(active).toHaveAttribute("id", "hero-slide-3");
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/es");
   await page.clock.fastForward(24000);

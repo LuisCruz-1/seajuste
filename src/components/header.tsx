@@ -13,6 +13,7 @@ type Labels = Pick<Copy, "nav" | "home" | "menu" | "closeMenu" | "language" | "b
 
 export function Header({ locale, labels }: { locale: Locale; labels: Labels }) {
   const pathname = usePathname();
+  const homeActive = pathname === href(locale);
   const [openPath, setOpenPath] = useState<string | null>(null);
   const open = openPath === pathname;
   const toggleRef = useRef<HTMLButtonElement>(null);
@@ -53,6 +54,7 @@ export function Header({ locale, labels }: { locale: Locale; labels: Labels }) {
           </span>
         </Link>
         <nav aria-label={labels.menu} className={`primary-nav ${open ? "is-open" : ""}`} id="primary-navigation" ref={panelRef}>
+          <Link href={href(locale)} className={homeActive ? "nav-link is-active" : "nav-link"} aria-current={homeActive ? "page" : undefined} onClick={() => setOpenPath(null)}>{labels.home}</Link>
           {sectionKeys.filter((section) => section !== "contact").map((section) => (
             <Link key={section} href={href(locale, section)} className={active(section) ? "nav-link is-active" : "nav-link"} aria-current={active(section) ? "page" : undefined} onClick={() => setOpenPath(null)}>{labels.nav[section]}</Link>
           ))}

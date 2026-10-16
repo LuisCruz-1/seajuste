@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { Cpu, Medal, ShieldCheck, BadgeCheck } from "lucide-react";
 import { t, type Locale } from "@/lib/i18n";
-import { heroCoveragePhotos, heroProjectPhotos } from "@/lib/hero-slides";
+import { heroCoveragePhotos, heroInterventionPhotos, heroProjectPhotos, type HeroSlide } from "@/lib/hero-slides";
 
-export function HeroBrandVisual({ kind, locale }: { kind: "trust" | "turbine" | "coverage"; locale: Locale }) {
+export function HeroBrandVisual({ kind, locale }: { kind: HeroSlide["visual"]; locale: Locale }) {
   const es = locale === "es";
   const sealAlt = es ? "38 años · Confianza mutua" : "38 years · Mutual trust";
 
@@ -25,6 +25,13 @@ export function HeroBrandVisual({ kind, locale }: { kind: "trust" | "turbine" | 
       <div className="hero-project-mosaic">{heroProjectPhotos.map(({ image, alt }) => <div className="hero-project-photo" key={image}><Image src={`/images/projects/${image}.webp`} alt={t(alt, locale)} fill sizes="(max-width: 760px) calc(50vw - 64px), (max-width: 1100px) 20vw, 22vw" /></div>)}</div>
       <div className="hero-coverage-proof">{heroCoveragePhotos.map(({ image, alt }) => <div key={image}><Image src={`/images/projects/${image}.webp`} alt={t(alt, locale)} fill sizes="(max-width: 760px) 64px, (max-width: 1100px) 84px, 110px" /></div>)}</div>
     </div>;
+  }
+
+  if (kind === "intervention") {
+    return <div className="hero-intervention-gallery">{heroInterventionPhotos.map(({ slot, image, caption, alt }) => <figure key={slot} className={`hero-intervention-photo intervention-photo-${slot}`}>
+      <div className="intervention-image"><Image src={`/images/projects/${image}.webp`} alt={t(alt, locale)} fill sizes="(max-width: 760px) 44vw, 24vw" /></div>
+      <figcaption>{t(caption, locale)}</figcaption>
+    </figure>)}</div>;
   }
 
   const pillars = [

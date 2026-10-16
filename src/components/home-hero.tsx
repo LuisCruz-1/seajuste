@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Pause, Play } from "lucide-react";
-import { href, type Locale } from "@/lib/i18n";
-import { heroCoverageOrder, type HeroSettlementSummary, type HeroSlide } from "@/lib/hero-slides";
+import { ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Check, Pause, Play } from "lucide-react";
+import { formatMoney, href, type Locale } from "@/lib/i18n";
+import { heroCoverageOrder, type HeroInterventionCase, type HeroSettlementSummary, type HeroSlide } from "@/lib/hero-slides";
 import { HeroBrandVisual } from "./hero-brand-visuals";
 
 function subscribeMotion(callback: () => void) {
@@ -22,7 +22,7 @@ const getReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduc
 const getHidden = () => document.hidden;
 const serverPaused = () => true;
 
-export function HomeHero({ locale, slides, insuranceClasses, settlementSummary }: { locale: Locale; slides: HeroSlide[]; insuranceClasses: string[]; settlementSummary: HeroSettlementSummary }) {
+export function HomeHero({ locale, slides, insuranceClasses, settlementSummary, interventionCases }: { locale: Locale; slides: HeroSlide[]; insuranceClasses: string[]; settlementSummary: HeroSettlementSummary; interventionCases: HeroInterventionCase[] }) {
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
   const [inView, setInView] = useState(true);
@@ -61,13 +61,14 @@ export function HomeHero({ locale, slides, insuranceClasses, settlementSummary }
       aria-label={es ? "Servicios destacados de SEAJUSTE" : "SEAJUSTE featured services"}
       onFocusCapture={(event) => { if (!(event.target as HTMLElement).closest("[data-rotation]")) setPaused(true); }}
       onKeyDown={(event) => {
-        if (event.altKey || event.ctrlKey || event.metaKey || (event.target as HTMLElement).closest("a")) return;
+        if (event.altKey || event.ctrlKey || event.metaKey || (event.target as HTMLElement).closest("a, .hero-intervention-table-scroll")) return;
         if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
           event.preventDefault();
           goTo(current + (event.key === "ArrowRight" ? 1 : -1));
         }
       }}
       onTouchStart={(event) => {
+        if ((event.target as HTMLElement).closest(".hero-intervention-table-scroll")) { touchStart.current = null; return; }
         const touch = event.touches[0];
         touchStart.current = event.touches.length === 1 ? { x: touch.clientX, y: touch.clientY } : null;
       }}
@@ -109,7 +110,23 @@ export function HomeHero({ locale, slides, insuranceClasses, settlementSummary }
                       <Heading className="hero-slide-title hero-coverage-title">{slide.title}</Heading>
                       <p className="hero-coverage-authority">{slide.authority}</p>
                       <ul className="hero-coverage-classes" aria-label={es ? "16 ramos de seguros autorizados" : "16 authorised insurance classes"}>{heroCoverageOrder.map((classIndex) => <li key={classIndex}>{insuranceClasses[classIndex]}</li>)}</ul>
-                  </div> : <>
+                  </div> : slide.visual === "intervention" ? <>
+                    <Heading className="hero-slide-title hero-intervention-title">{slide.title}</Heading>
+                    <p className="hero-intervention-threshold">{slide.threshold}</p>
+                    <p className="hero-intervention-description">{slide.description}</p>
+                    <ul className="hero-intervention-highlights">{slide.highlights?.map((item) => <li key={item}><Check size={18} aria-hidden="true" /><span>{item}</span></li>)}</ul>
+                    <div className="hero-intervention-table-scroll" role="region" tabIndex={0} aria-label={es ? "Detalle de indemnizaciones en dólares estadounidenses" : "Documented settlement details in US dollars"}>
+                      <table className="hero-intervention-table">
+                        <caption className="sr-only">{es ? "Cuatro casos destacados de Electroguayas y Artefacta. Importes en USD." : "Four featured Electroguayas and Artefacta cases. Amounts in USD."}</caption>
+                        <thead><tr><th scope="col">{es ? "Equipo siniestrado" : "Affected equipment"}</th><th scope="col" className="intervention-secondary-column">{es ? "Unidad" : "Unit"}</th><th scope="col" className="intervention-secondary-column">{es ? "Central térmica / ubicación" : "Power plant / location"}</th><th scope="col">{es ? "Valor indemnizado (USD)" : "Settlement (USD)"}</th></tr></thead>
+                        {[...new Set(interventionCases.map((item) => item.client))].map((client) => <tbody key={client}>
+                          <tr className="intervention-client-row"><th colSpan={4} scope="rowgroup">{client}</th></tr>
+                          {interventionCases.filter((item) => item.client === client).map((item) => <tr className="intervention-case-row" key={item.id}><th scope="row"><Link href={href(locale, "experience", item.id)}>{item.equipment}</Link><span className="intervention-case-context">{item.unit} · {item.location}</span></th><td className="intervention-secondary-column">{item.unit}</td><td className="intervention-secondary-column">{item.location}</td><td className="intervention-case-amount">{formatMoney(item.value, locale).replace("USD ", "")}</td></tr>)}
+                        </tbody>)}
+                      </table>
+                    </div>
+                    <p className="hero-intervention-closing">{slide.closing}{slide.closingAccent && <em>{slide.closingAccent}</em>}</p>
+                  </> : <>
                     <Heading className="hero-slide-title">{slide.title}</Heading>
                     {slide.accent && <p className="hero-primary-statement">{slide.accent}</p>}
                     {slide.services && <ul className="hero-service-list">{slide.services.map(({ label, detail }) => <li key={detail}><Link href={href(locale, "services", detail)}><span>{label}</span><ArrowUpRight size={16} aria-hidden="true" /></Link></li>)}</ul>}
@@ -119,7 +136,7 @@ export function HomeHero({ locale, slides, insuranceClasses, settlementSummary }
                       <Link className="button hero-consult-action" href={`${href(locale, "contact")}#consulta`}>{es ? "Solicitar consulta profesional" : "Request a professional consultation"}<ArrowUpRight size={17} aria-hidden="true" /></Link>
                       <Link href={`${href(locale, "contact")}#reunion`} className="button hero-meeting-action">{es ? "Agendar reunión" : "Schedule a meeting"}<CalendarDays size={17} aria-hidden="true" /></Link>
                     </div>
-                    {slide.visual === "trust" ? <Link href={href(locale, "experience")} className="hero-settlement" aria-label={es ? `Ver ${caseCountLabel} casos destacados: USD ${settlementFigure} millones en indemnizaciones` : `View ${caseCountLabel} featured cases: USD ${settlementFigure} million in settlements`}>
+                    {slide.visual === "trust" || slide.visual === "intervention" ? <Link href={href(locale, "experience")} className="hero-settlement" aria-label={es ? `Ver ${caseCountLabel} casos destacados: USD ${settlementFigure} millones en indemnizaciones` : `View ${caseCountLabel} featured cases: USD ${settlementFigure} million in settlements`}>
                       <p className="hero-settlement-amount" aria-hidden="true"><span>USD</span><strong>{settlementFigure}</strong><span>M</span></p>
                       <p className="hero-settlement-caption">{settlementCaption}</p>
                     </Link> : slide.statement && <div className="hero-message-panel"><p>{slide.statement}</p></div>}
