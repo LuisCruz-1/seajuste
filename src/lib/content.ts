@@ -304,6 +304,37 @@ export const team = [
   { id: "carla-garcia", name: "Carla García L.", role: text("Ingeniera agrícola", "Agricultural engineer"), specialty: text("Sector agropecuario", "Agricultural sector"), background: text("Ex directora ejecutiva · Asociación Zamorano", "Former Executive Director · Asociación Zamorano") },
 ];
 
+export const companyHistoryDocuments = [
+  {
+    id: "paute-1990", date: "1990-12", dateLabel: text("Diciembre de 1990", "December 1990"), image: "/documents/history-paute-1990.webp",
+    title: text("Proyecto hidroeléctrico Paute", "Paute hydroelectric project"),
+    description: text("Informe elaborado para The Salvage Association, Londres, sobre equipos y carga del proyecto hidroeléctrico Paute. Su introducción menciona al Ing. Carlos Quevedo entre los profesionales que participaron en la revisión de equipos y reclamos.", "Report prepared for The Salvage Association, London, concerning equipment and cargo for the Paute hydroelectric project. Its introduction names engineer Carlos Quevedo among the professionals involved in reviewing equipment and claims."),
+    reference: text("The Salvage Association · Ewbank Preece Ltd.", "The Salvage Association · Ewbank Preece Ltd."),
+    alt: text("Portada e introducción del informe de diciembre de 1990 sobre el proyecto hidroeléctrico Paute", "Cover and introduction of the December 1990 report on the Paute hydroelectric project"),
+  },
+  {
+    id: "transelectric-2000", date: "2000-02-01", dateLabel: text("1 de febrero de 2000", "1 February 2000"), image: "/documents/history-transelectric-2000.webp",
+    title: text("Gestión de reclamos en Londres", "Claims coordination in London"),
+    description: text("Memorando de Transelectric que autoriza una comisión de servicio a Londres para gestionar reclamos de autotransformadores ante reaseguradores y ajustadores internacionales. El documento indica el acompañamiento del Ing. Carlos Quevedo, gerente de SEAJUSTE.", "Transelectric memorandum authorising an assignment in London to pursue autotransformer claims with international reinsurers and adjusters. The document records the participation of engineer Carlos Quevedo, SEAJUSTE’s manager."),
+    reference: text("Transelectric S.A. · Memorando N.º 09-00", "Transelectric S.A. · Memorandum No. 09-00"),
+    alt: text("Memorando de Transelectric del 1 de febrero de 2000 sobre una comisión de servicio a Londres con Carlos Quevedo", "Transelectric memorandum dated 1 February 2000 concerning an assignment in London with Carlos Quevedo"),
+  },
+  {
+    id: "settlement-2000", date: "2000-03", dateLabel: text("Marzo de 2000", "March 2000"), image: "/documents/history-settlement-2000.webp",
+    title: text("Cierre documentado de reclamos", "Documented claim settlement"),
+    description: text("Acta de finiquito y renuncia relativa a reclamos del sector eléctrico en Trinitaria, Santa Rosa y Quito. Registra un total neto de indemnización de USD 1.294.981 y las firmas de representantes de Termopichincha, Electroguayas, Transelectric y SEAJUSTE.", "Release and settlement document concerning electricity-sector claims in Trinitaria, Santa Rosa and Quito. It records a net settlement total of USD 1,294,981 and signatures from representatives of Termopichincha, Electroguayas, Transelectric and SEAJUSTE."),
+    reference: text("Acta de finiquito y renuncia · Sector eléctrico", "Release and settlement document · Electricity sector"),
+    alt: text("Acta de finiquito de marzo de 2000 con el detalle de reclamos, indemnizaciones y firmas del sector eléctrico y SEAJUSTE", "March 2000 settlement document detailing electricity-sector claims, settlements and signatures, including SEAJUSTE"),
+  },
+  {
+    id: "solidarity-2001", date: "2001-01-18", dateLabel: text("18 de enero de 2001", "18 January 2001"), image: "/documents/history-solidarity-2001.webp",
+    title: text("Representación del Fondo de Solidaridad", "Representation of the Solidarity Fund"),
+    description: text("Oficio del Fondo de Solidaridad que comunica la participación del Ing. Carlos Quevedo, gerente general de SEAJUSTE, en su representación para tratar reclamos de siniestros pendientes, con atribuciones para discutir y acordar los temas de la reunión.", "Solidarity Fund letter communicating that engineer Carlos Quevedo, SEAJUSTE’s general manager, would represent the Fund in discussions concerning outstanding loss claims, with authority to discuss and agree on the matters addressed at the meeting."),
+    reference: text("Fondo de Solidaridad · Oficio N.º SEFS-2000-0099", "Solidarity Fund · Letter No. SEFS-2000-0099"),
+    alt: text("Oficio del Fondo de Solidaridad fechado el 18 de enero de 2001 sobre la representación de Carlos Quevedo en reclamos pendientes", "Solidarity Fund letter dated 18 January 2001 concerning Carlos Quevedo’s representation in outstanding claims"),
+  },
+];
+
 export const clients = [
   ["aseguradora-del-sur", "Aseguradora del Sur"], ["colonial", "Seguros Colonial"], ["atlas", "Atlas Compañía de Seguros"],
   ["sul-america", "Sul América Seguros"], ["el-fenix", "El Fénix del Ecuador"], ["generali", "Generali"],

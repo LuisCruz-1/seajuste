@@ -128,6 +128,7 @@ test("mobile navigation closes with Escape and after choosing a page", async ({ 
 });
 
 test("page templates fit the viewport and have no accessibility violations", async ({ page }, testInfo) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   const paths = ["/es", "/es/nosotros", "/es/servicios", "/es/servicios/energia-y-generacion", "/es/experiencia", "/es/experiencia/autotransformador-pauwels", "/es/equipo", "/es/acreditaciones", "/es/contacto"];
@@ -148,7 +149,7 @@ test("page templates fit the viewport and have no accessibility violations", asy
           window.scrollTo({ top: y, behavior: "instant" });
           await new Promise((resolve) => setTimeout(resolve, 100));
         }
-        await Promise.all(Array.from(document.images).map((image) => image.decode().catch(() => undefined)));
+        await Promise.all(Array.from(document.images).filter((image) => !image.closest("[inert]")).map((image) => image.decode().catch(() => undefined)));
         window.scrollTo({ top: 0, behavior: "instant" });
       });
       await expect(page.locator(".hero-copy h1")).toBeInViewport();

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, BadgeCheck, Check, FileText, Mail, MapPin, MessageCircle, Phone, Quote, ShieldCheck } from "lucide-react";
-import { authorizations, cases, clients, company, corporatePurpose, economicActivities, services, supplierProducts, team, timeline, type CaseStudy, type Service } from "@/lib/content";
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, BadgeCheck, Check, FileText, Mail, MapPin, MessageCircle, Phone, ShieldCheck } from "lucide-react";
+import { authorizations, cases, clients, company, companyHistoryDocuments, corporatePurpose, economicActivities, services, supplierProducts, team, type CaseStudy, type Service } from "@/lib/content";
 import { copy } from "@/lib/copy";
 import { heroCoverageLabels, heroInterventionRows, heroSlides } from "@/lib/hero-slides";
 import { formatMoney, href, t, type Locale } from "@/lib/i18n";
@@ -11,7 +11,7 @@ import { ContactForm } from "./contact-form";
 import { Gallery } from "./gallery";
 import { HomeHero } from "./home-hero";
 import { Registers } from "./registers";
-import { Breadcrumbs, ButtonLink, ClientLogos, ContactBand, Methodology, PageHero, Photo, SectionHeading, ServiceCard, ServiceIcon, toCaseCard, TrustItems } from "./site";
+import { Breadcrumbs, ButtonLink, ClientLogos, ContactBand, Methodology, PageHero, Photo, SectionHeading, ServiceCard, ServiceIcon, toCaseCard } from "./site";
 
 export function HomePage({ locale }: { locale: Locale }) {
   const settledCases = cases.filter((item) => item.value);
@@ -26,7 +26,29 @@ export function HomePage({ locale }: { locale: Locale }) {
 
 export function AboutPage({ locale }: { locale: Locale }) {
   const c = copy[locale];
-  return <><PageHero locale={locale} section="about" eyebrow={c.aboutEyebrow} title={c.aboutTitle} description={c.aboutIntro} /><section className="section"><div className="container about-intro"><div className="about-photos"><Photo name="tg5-turbine" alt={locale === "es" ? "Maquinaria de generación inspeccionada por SEAJUSTE" : "Power generation machinery surveyed by SEAJUSTE"} /><Photo name="cargo-unloading-2" alt={locale === "es" ? "Inspección de carga y descarga en puerto" : "Port cargo and unloading inspection"} /><span className="about-archive-label">{c.historicImage}</span></div><div className="about-philosophy"><p className="eyebrow">{c.philosophy}</p><h2>{locale === "es" ? "La confianza se gana.\nEl conocimiento la sostiene." : "Trust is earned.\nKnowledge sustains it."}</h2><p>{c.philosophyText}</p><TrustItems locale={locale} /></div></div></section><section className="purpose-section"><div className="container purpose-grid"><div><span className="purpose-icon"><ShieldCheck size={25} strokeWidth={1.5} /></span><h2>{c.mission}</h2><p>{c.missionText}</p></div><div><span className="purpose-icon"><ArrowUpRight size={27} strokeWidth={1.5} /></span><h2>{c.vision}</h2><p>{c.visionText}</p></div></div></section><section className="section"><div className="container history-layout"><div className="history-heading"><SectionHeading eyebrow={c.historyEyebrow} title={c.historyTitle} description={c.historyIntro} /><div className="history-person"><div className="portrait"><Image src="/images/team/carlos-quevedo.webp" alt="Carlos Quevedo" fill sizes="70px" /></div><div><strong>Carlos Quevedo</strong><span>{t(team[0].role, locale)}</span></div></div></div><ol className="timeline">{timeline.map((event) => <li key={event.year}><span className="timeline-year">{event.year}</span><div><h3>{t(event.title, locale)}</h3><p>{t(event.detail, locale)}</p></div></li>)}</ol></div></section><section className="international-section"><div className="container international-inner"><Quote size={38} strokeWidth={1.2} aria-hidden="true" /><div><p className="eyebrow">ECUADOR ↔ LONDON</p><h2>{c.international}</h2><p>{c.internationalText}</p></div><Link href={href(locale, "experience")} className="text-link">{c.allCases}<ArrowUpRight size={18} /></Link></div></section><ContactBand locale={locale} /></>;
+  return <><section className="section company-profile"><div className="container">
+    <header className="company-profile-heading"><h1>{c.aboutTitle}</h1><p>{c.aboutStatement}</p></header>
+    <div className="company-profile-layout">
+      <div className="company-profile-visual"><Image src="/images/brand/about-company-turbine.webp" alt={c.aboutImageAlt} width={435} height={518} sizes="(max-width: 950px) 90vw, 43vw" loading="eager" /></div>
+      <div className="company-profile-copy">
+        <section className="company-philosophy" aria-labelledby="company-philosophy-title"><h2 id="company-philosophy-title">{c.philosophy}</h2><p className="company-philosophy-lead">{c.philosophyLead}</p><p>{c.philosophyText}</p><p>{c.philosophyCommitment}</p></section>
+        <div className="company-purpose-grid">
+          <section className="company-mission" aria-labelledby="company-mission-title"><h2 id="company-mission-title">{c.mission}</h2><p>{c.missionText}</p></section>
+          <section className="company-vision" aria-labelledby="company-vision-title"><h2 id="company-vision-title">{c.vision}</h2><p>{c.visionText}</p></section>
+        </div>
+      </div>
+    </div>
+  </div></section>
+  <section className="section section-tint company-history" id="company-history"><div className="container">
+    <SectionHeading eyebrow={c.historyEyebrow} title={c.historyTitle} description={c.historyIntro} />
+    <div className="history-document-grid">{companyHistoryDocuments.map((document) => <article className="history-document-card" key={document.id}>
+      <div className="history-document-copy"><time dateTime={document.date}>{t(document.dateLabel, locale)}</time><h3>{t(document.title, locale)}</h3><p>{t(document.description, locale)}</p><p className="history-document-reference">{t(document.reference, locale)}</p></div>
+      <a className="history-document-preview" href={document.image} target="_blank" rel="noopener noreferrer" aria-label={`${c.historyOpen}: ${t(document.title, locale)}`}>
+        <div className="history-document-image"><Image src={document.image} alt={t(document.alt, locale)} fill sizes="(max-width: 760px) 90vw, 46vw" /></div>
+        <span className="history-document-action">{c.historyOpen}<ArrowUpRight size={19} aria-hidden="true" /></span>
+      </a>
+    </article>)}</div>
+  </div></section></>;
 }
 
 export function ServicesPage({ locale }: { locale: Locale }) {
