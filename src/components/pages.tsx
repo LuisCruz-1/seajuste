@@ -10,6 +10,7 @@ import { CaseGrid } from "./case-grid";
 import { ContactForm } from "./contact-form";
 import { Gallery } from "./gallery";
 import { HomeHero } from "./home-hero";
+import { PdfDocument } from "./pdf-document";
 import { Registers } from "./registers";
 import { Breadcrumbs, ButtonLink, ClientLogos, ContactBand, Methodology, PageHero, Photo, SectionHeading, ServiceCard, ServiceIcon, toCaseCard } from "./site";
 
@@ -50,16 +51,15 @@ export function AboutPage({ locale }: { locale: Locale }) {
       </div>
     </div>
   </div></section>
-  <section className="section company-origins" id="company-history"><div className="container history-origins-layout">
-    <div className="history-origins-copy" id={aboutAnchors.history} tabIndex={-1}>
-      <SectionHeading eyebrow={c.historySince} title={c.historyStoryTitle} />
-      {companyHistory.paragraphs.map((paragraph, index) => <p key={index}>{t(paragraph, locale)}</p>)}
-      <a className="history-document-action" href={companyHistory.document} target="_blank" rel="noopener noreferrer">{c.historyOpen}<ArrowUpRight size={19} aria-hidden="true" /></a>
-    </div>
+  <section className="section company-origins" id="company-history"><div className="container history-origins-layout" id={aboutAnchors.history} tabIndex={-1}>
     <figure className="history-origins-visual">
-      <a href={companyHistory.document} target="_blank" rel="noopener noreferrer" aria-label={`${c.historyOpen}: ${c.historyStoryTitle}`}><Image src={companyHistory.image} alt={t(companyHistory.alt, locale)} width={companyHistory.width} height={companyHistory.height} sizes="(max-width: 950px) 90vw, 44vw" /></a>
+      <PdfDocument document={companyHistory.pdf} title={c.historyStoryTitle} actionLabel={c.historyOpen} locale={locale} />
       <figcaption>{c.historyCredentials}</figcaption>
     </figure>
+    <div className="history-origins-copy">
+      <SectionHeading eyebrow={c.historySince} title={c.historyStoryTitle} />
+      {companyHistory.paragraphs.map((paragraph, index) => <p key={index}>{t(paragraph, locale)}</p>)}
+    </div>
   </div></section>
   {companyHistoryDocuments.map((document) => <section className={`section company-history${document.section === "claims" ? "" : " section-tint"}`} id={document.section === "review" ? "history-documents" : `${document.section}-documents`} key={document.id}><div className="container" id={document.section === "claims" ? aboutAnchors.london : undefined} tabIndex={document.section === "claims" ? -1 : undefined}>
     <SectionHeading eyebrow={document.section === "review" ? c.historyEyebrow : undefined} title={c.historySections[document.section]} description={document.section === "review" ? c.historyIntro : undefined} />
@@ -68,15 +68,14 @@ export function AboutPage({ locale }: { locale: Locale }) {
         <time dateTime={document.date}>{t(document.dateLabel, locale)}</time>
         <h3 id={`${document.id}-title`}>{t(document.title, locale)}</h3>
         <p className="history-document-reference">{t(document.reference, locale)}</p>
-        {document.details.map((detail, index) => <div className="history-document-detail" key={index}>{detail.heading && <h4>{t(detail.heading, locale)}</h4>}<p>{t(detail.text, locale)}</p></div>)}
-        {document.excerpts && <div className="history-document-excerpts"><p className="data-label">{c.historyExcerpts}</p>{document.excerpts.map((excerpt, index) => <blockquote key={index}><p>{t(excerpt, locale)}</p></blockquote>)}</div>}
+        {document.details.map((detail, index) => <div className="history-document-detail" key={index}>
+          {detail.heading && <h4>{t(detail.heading, locale)}</h4>}
+          <p>{Array.isArray(detail.text) ? detail.text.map((part, partIndex) => part.emphasis ? <strong key={partIndex}>{t(part.text, locale)}</strong> : t(part.text, locale)) : t(detail.text, locale)}</p>
+        </div>)}
+        {document.excerpts && <div className="history-document-excerpts"><p className="data-label">{c.historyExcerpts}</p><blockquote><p>“{document.excerpts.map((excerpt) => t(excerpt, locale)).join(" ")}”</p></blockquote></div>}
         {document.settlement !== undefined && <dl className="history-document-settlement"><dt>{c.historySettlement}</dt><dd>{formatMoney(document.settlement, locale)}</dd></dl>}
-        <a className="history-document-action" href={document.document} target="_blank" rel="noopener noreferrer">{c.historyOpen}<ArrowUpRight size={19} aria-hidden="true" /></a>
       </div>
-      <a className="history-document-preview" href={document.document} target="_blank" rel="noopener noreferrer" aria-label={`${c.historyOpen}: ${t(document.title, locale)}`}>
-        <Image src={document.image} alt={t(document.alt, locale)} width={document.width} height={document.height} sizes="(max-width: 950px) 90vw, 40vw" />
-        <span className="history-document-format"><FileText size={18} aria-hidden="true" />{c.historyPdf}<ArrowUpRight size={18} aria-hidden="true" /></span>
-      </a>
+      <PdfDocument document={document.pdf} title={t(document.title, locale)} actionLabel={c.historyOpen} locale={locale} />
     </article>
     {document.section === "reinsurance" && <div className="about-contact-closing">
       <div><h3>{c.contactAction}</h3><p>{c.contactIntro}</p></div>
