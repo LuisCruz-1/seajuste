@@ -16,6 +16,8 @@ export const sections = {
 export type Section = keyof typeof sections;
 export const sectionKeys = Object.keys(sections) as Section[];
 
+export const aboutAnchors = { identity: "identidad", london: "londres", history: "nuestra-historia" } as const;
+
 export const detailSlugs = {
   adjusting: { section: "services", es: "peritaje-y-ajuste", en: "loss-adjusting" },
   energy: { section: "services", es: "energia-y-generacion", en: "energy-and-power" },

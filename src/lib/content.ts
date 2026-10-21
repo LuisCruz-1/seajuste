@@ -304,34 +304,76 @@ export const team = [
   { id: "carla-garcia", name: "Carla García L.", role: text("Ingeniera agrícola", "Agricultural engineer"), specialty: text("Sector agropecuario", "Agricultural sector"), background: text("Ex directora ejecutiva · Asociación Zamorano", "Former Executive Director · Asociación Zamorano") },
 ];
 
-export const companyHistoryDocuments = [
+const companyHistoryPdf = "/documents/seajuste-historia-documental.pdf";
+
+export const companyHistory = {
+  image: "/documents/history-origins-credentials.webp", width: 1103, height: 1101,
+  document: `${companyHistoryPdf}#page=4`,
+  alt: text("Diplomas de formación en seguros de Carlos Quevedo y credenciales de la Superintendencia de Bancos que documentan la trayectoria de SEAJUSTE", "Carlos Quevedo’s insurance training diplomas and Superintendency of Banks credentials documenting SEAJUSTE’s history"),
+  paragraphs: [
+    text("Nuestra trayectoria en seguros se inicia en 1987, cuando Carlos Quevedo comenzó a ejercer como ajustador independiente, incorporando al análisis de siniestros una formación técnica desarrollada previamente en ingeniería mecánica, mantenimiento, protección contra incendios y control de averías.", "Our insurance history began in 1987, when Carlos Quevedo started practising as an independent loss adjuster, bringing to loss analysis a technical background developed in mechanical engineering, maintenance, fire protection and damage control."),
+    text("Desde sus primeros años, la actividad evolucionó hacia reclamos de creciente complejidad. En 1990, antecedentes documentales del Proyecto Hidroeléctrico Paute registran participación junto a The Salvage Association de Londres en inspecciones de daños, revisión de reclamos y preparación de información técnica. En 1992 la experiencia se institucionalizó con la constitución de Servicios Especializados Asociados SEAJUSTE S.A., y desde 1999 continuó bajo la denominación SEAJUSTE S.A. Ajustadores de Siniestros.", "From its early years, the practice evolved towards increasingly complex claims. In 1990, records of the Paute Hydroelectric Project document participation alongside The Salvage Association of London in damage surveys, claims review and the preparation of technical information. In 1992, this experience was formalised with the incorporation of Servicios Especializados Asociados SEAJUSTE S.A., continuing from 1999 under the name SEAJUSTE S.A. Ajustadores de Siniestros."),
+    text("Con una trayectoria profesional iniciada en 1987, y más de una década de experiencia en el ajuste de siniestros de carácter técnico, SEAJUSTE fue convocada por empresas del sector eléctrico ecuatoriano para presentar sus servicios profesionales especializados.", "With a professional career that began in 1987 and more than a decade of experience in adjusting technical losses, SEAJUSTE was invited by companies in Ecuador’s electricity sector to present its specialist professional services."),
+    text("En el marco del ex-INECEL —Instituto Ecuatoriano de Electrificación— y de los programas de seguros y reaseguros correspondientes, las empresas eléctricas contrataron directamente los servicios de SEAJUSTE S.A. para la evaluación, preparación y gestión técnica de reclamos y siniestros, intervención que incluía gestiones ante reaseguradores y ajustadores internacionales, al amparo de la cláusula Cut Through.", "Within the framework of the former INECEL —Instituto Ecuatoriano de Electrificación— and the corresponding insurance and reinsurance programmes, the electricity companies directly engaged SEAJUSTE S.A. to assess, prepare and technically manage claims and losses. This involvement included coordination with international reinsurers and adjusters under the Cut Through clause."),
+    text("Esta etapa consolidó la experiencia de SEAJUSTE en siniestros complejos del sector energético y su participación profesional en gestiones relacionadas con el mercado reasegurador internacional.", "This stage consolidated SEAJUSTE’s experience in complex energy-sector losses and its professional involvement in matters relating to the international reinsurance market."),
+    text("A lo largo de esta trayectoria se han desarrollado asignaciones en generación y transmisión eléctrica, maquinaria, equipos críticos, carga marítima y pérdidas por interrupción de negocio. Contratos, informes técnicos, actas de finiquito y antecedentes de gestiones ante reaseguradores en Londres constituyen evidencia documental de una práctica construida sobre ingeniería, investigación de causa, cuantificación y dominio de seguros.", "Throughout this history, assignments have covered power generation and transmission, machinery, critical equipment, marine cargo and business interruption losses. Contracts, technical reports, settlement documents and records of claims coordination with reinsurers in London provide documentary evidence of a practice built on engineering, cause investigation, quantification and insurance expertise."),
+    text("Hoy esa experiencia se proyecta bajo un mismo principio: ingeniería especializada aplicada al peritaje y ajuste de reclamos y siniestros complejos.", "Today, that experience continues under the same principle: specialist engineering applied to the surveying and adjustment of complex claims and losses."),
+  ],
+};
+
+type CompanyHistoryDocument = {
+  id: string;
+  section: "review" | "claims" | "reinsurance";
+  date: string;
+  endDate?: string;
+  dateLabel: Localized;
+  image: string;
+  width: number;
+  height: number;
+  document: string;
+  title: Localized;
+  details: { heading?: Localized; text: Localized }[];
+  excerpts?: Localized[];
+  settlement?: number;
+  reference: Localized;
+  alt: Localized;
+};
+
+export const companyHistoryDocuments: CompanyHistoryDocument[] = [
   {
-    id: "paute-1990", date: "1990-12", dateLabel: text("Diciembre de 1990", "December 1990"), image: "/documents/history-paute-1990.webp",
-    title: text("Proyecto hidroeléctrico Paute", "Paute hydroelectric project"),
-    description: text("Informe elaborado para The Salvage Association, Londres, sobre equipos y carga del proyecto hidroeléctrico Paute. Su introducción menciona al Ing. Carlos Quevedo entre los profesionales que participaron en la revisión de equipos y reclamos.", "Report prepared for The Salvage Association, London, concerning equipment and cargo for the Paute hydroelectric project. Its introduction names engineer Carlos Quevedo among the professionals involved in reviewing equipment and claims."),
-    reference: text("The Salvage Association · Ewbank Preece Ltd.", "The Salvage Association · Ewbank Preece Ltd."),
-    alt: text("Portada e introducción del informe de diciembre de 1990 sobre el proyecto hidroeléctrico Paute", "Cover and introduction of the December 1990 report on the Paute hydroelectric project"),
+    id: "paute-1990", section: "review", date: "1990-12", dateLabel: text("Diciembre de 1990", "December 1990"),
+    image: "/documents/history-paute-1990-v2.webp", width: 685, height: 904, document: `${companyHistoryPdf}#page=1`,
+    title: text("Proyecto hidroeléctrico Paute · Fase B", "Paute hydroelectric project · Phase B"),
+    details: [{ text: text("Informe de inspección de daños de carga marítima del Proyecto Hidroeléctrico Paute para The Salvage Association, Londres. La documentación menciona al Ing. Carlos Quevedo, SEA Loss Adjusters, y recoge la intervención de los ajustadores en el acceso a los buques, la inspección y el registro fotográfico de los equipos, así como en las acciones para minimizar las pérdidas con el acuerdo previo de La Nacional.", "Marine project cargo damage survey report for the Paute Hydroelectric Project, prepared for The Salvage Association, London. The records name engineer Carlos Quevedo, SEA Loss Adjusters, and describe the adjusters’ role in gaining access to vessels, surveying and photographing equipment, and taking loss-minimisation measures with La Nacional’s prior agreement.") }],
+    excerpts: [
+      text("G.I.E. señaló dificultades para acceder al puerto y a los buques que llegaban a Guayaquil. Esto no pareció afectar a los ajustadores S.E.A., quienes no solo lograron acceder a los buques, sino que tomaron fotografías de los equipos en las bodegas.", "G.I.E. claimed that they had difficulty in obtaining access to the Port and had no access to vessels arriving at Guayaquil. This did not seem to effect the loss Adjustors S.E.A. who not only managed to obtain access to the vessels but took photographs of equipment in ship hold."),
+      text("Al revisar los resultados de la inspección de daños respecto de los reclamos, se hizo evidente que la mayoría de las acciones para minimizar las pérdidas fueron tomadas por los ajustadores con el acuerdo previo de La Nacional.", "On reviewing the results of damage survey in respect of the claims, it became apparent that most of the action to minimize loss were taken by the loss adjustors with the prior agreement of La Nacional."),
+    ],
+    reference: text("The Salvage Association · Londres · Marine Project Cargo & Damage Survey Report · Ing. Carlos Quevedo, SEA Loss Adjusters", "The Salvage Association · London · Marine Project Cargo & Damage Survey Report · Eng. Carlos Quevedo, SEA Loss Adjusters"),
+    alt: text("Cuatro páginas del informe Paute de diciembre de 1990: portada, introducción, historial de transporte e inspección de daños", "Four pages of the December 1990 Paute report: cover, introduction, transit history and damage survey"),
   },
   {
-    id: "transelectric-2000", date: "2000-02-01", dateLabel: text("1 de febrero de 2000", "1 February 2000"), image: "/documents/history-transelectric-2000.webp",
-    title: text("Gestión de reclamos en Londres", "Claims coordination in London"),
-    description: text("Memorando de Transelectric que autoriza una comisión de servicio a Londres para gestionar reclamos de autotransformadores ante reaseguradores y ajustadores internacionales. El documento indica el acompañamiento del Ing. Carlos Quevedo, gerente de SEAJUSTE.", "Transelectric memorandum authorising an assignment in London to pursue autotransformer claims with international reinsurers and adjusters. The document records the participation of engineer Carlos Quevedo, SEAJUSTE’s manager."),
-    reference: text("Transelectric S.A. · Memorando N.º 09-00", "Transelectric S.A. · Memorandum No. 09-00"),
-    alt: text("Memorando de Transelectric del 1 de febrero de 2000 sobre una comisión de servicio a Londres con Carlos Quevedo", "Transelectric memorandum dated 1 February 2000 concerning an assignment in London with Carlos Quevedo"),
+    id: "transelectric-2000", section: "claims", date: "2000-02-01", endDate: "2000-03-28", dateLabel: text("1 de febrero y 28 de marzo de 2000", "1 February and 28 March 2000"),
+    image: "/documents/history-transelectric-2000-v2.webp", width: 1090, height: 1508, document: `${companyHistoryPdf}#page=2`,
+    title: text("Gestión de reclamos en el mercado reasegurador de Londres", "Claims coordination in the London reinsurance market"),
+    details: [
+      { heading: text("Memorando N.º 09-00 · Comisión de servicio al exterior", "Memorandum No. 09-00 · Overseas assignment"), text: text("El 1 de febrero de 2000, el Directorio de Transelectric S.A. autorizó el viaje a Londres de su presidente ejecutivo, en compañía del Ing. Carlos Quevedo, gerente de SEAJUSTE, para gestionar ante reaseguradores y ajustadores internacionales la recuperación de valores de siniestros de autotransformadores.", "On 1 February 2000, Transelectric S.A.’s board authorised its executive president to travel to London with engineer Carlos Quevedo, SEAJUSTE’s manager, to pursue recovery of autotransformer loss claims with international reinsurers and adjusters.") },
+      { heading: text("Correo del 28 de marzo de 2000 · AON Group Ltd., Londres", "Email dated 28 March 2000 · AON Group Ltd., London"), text: text("La comunicación dirigida a Energy Claims Division de AON Group Ltd., Londres, detalla en tres numerales los puntos sobre el trámite e indemnización de reclamos que se tratarían en una reunión de trabajo en sus oficinas. El correo fue copiado al Ing. Carlos Quevedo, SEAJUSTE S.A.", "Correspondence addressed to the Energy Claims Division of AON Group Ltd., London, sets out three numbered points concerning claims handling and settlement for discussion at a working meeting in its offices. Engineer Carlos Quevedo, SEAJUSTE S.A., was copied on the email.") },
+    ],
+    reference: text("Transelectric S.A. · Memorando N.º 09-00 y correspondencia con Energy Claims Division, AON Group Ltd.", "Transelectric S.A. · Memorandum No. 09-00 and correspondence with Energy Claims Division, AON Group Ltd."),
+    alt: text("Memorando de Transelectric del 1 de febrero de 2000 y tres páginas de correspondencia del 28 de marzo de 2000 con AON Group en Londres", "Transelectric memorandum dated 1 February 2000 and three pages of correspondence dated 28 March 2000 with AON Group in London"),
   },
   {
-    id: "settlement-2000", date: "2000-03", dateLabel: text("Marzo de 2000", "March 2000"), image: "/documents/history-settlement-2000.webp",
-    title: text("Cierre documentado de reclamos", "Documented claim settlement"),
-    description: text("Acta de finiquito y renuncia relativa a reclamos del sector eléctrico en Trinitaria, Santa Rosa y Quito. Registra un total neto de indemnización de USD 1.294.981 y las firmas de representantes de Termopichincha, Electroguayas, Transelectric y SEAJUSTE.", "Release and settlement document concerning electricity-sector claims in Trinitaria, Santa Rosa and Quito. It records a net settlement total of USD 1,294,981 and signatures from representatives of Termopichincha, Electroguayas, Transelectric and SEAJUSTE."),
-    reference: text("Acta de finiquito y renuncia · Sector eléctrico", "Release and settlement document · Electricity sector"),
-    alt: text("Acta de finiquito de marzo de 2000 con el detalle de reclamos, indemnizaciones y firmas del sector eléctrico y SEAJUSTE", "March 2000 settlement document detailing electricity-sector claims, settlements and signatures, including SEAJUSTE"),
-  },
-  {
-    id: "solidarity-2001", date: "2001-01-18", dateLabel: text("18 de enero de 2001", "18 January 2001"), image: "/documents/history-solidarity-2001.webp",
-    title: text("Representación del Fondo de Solidaridad", "Representation of the Solidarity Fund"),
-    description: text("Oficio del Fondo de Solidaridad que comunica la participación del Ing. Carlos Quevedo, gerente general de SEAJUSTE, en su representación para tratar reclamos de siniestros pendientes, con atribuciones para discutir y acordar los temas de la reunión.", "Solidarity Fund letter communicating that engineer Carlos Quevedo, SEAJUSTE’s general manager, would represent the Fund in discussions concerning outstanding loss claims, with authority to discuss and agree on the matters addressed at the meeting."),
-    reference: text("Fondo de Solidaridad · Oficio N.º SEFS-2000-0099", "Solidarity Fund · Letter No. SEFS-2000-0099"),
-    alt: text("Oficio del Fondo de Solidaridad fechado el 18 de enero de 2001 sobre la representación de Carlos Quevedo en reclamos pendientes", "Solidarity Fund letter dated 18 January 2001 concerning Carlos Quevedo’s representation in outstanding claims"),
+    id: "settlement-2000", section: "reinsurance", date: "2000-03", dateLabel: text("Marzo de 2000", "March 2000"),
+    image: "/documents/history-settlement-2000-v2.webp", width: 1396, height: 1706, document: `${companyHistoryPdf}#page=3`,
+    title: text("Gestiones en el mercado reasegurador · Reclamos y siniestros del ex INECEL", "Reinsurance market coordination · Former INECEL claims and losses"),
+    details: [
+      { heading: text("Acta de finiquito y renuncia", "Release and settlement agreement"), text: text("Documento de marzo de 2000 relativo a reclamos del ex Instituto Ecuatoriano de Electrificación (INECEL) y del Fondo de Solidaridad. Registra el acuerdo con el mercado de reaseguradores de Londres para el cierre de reclamos de generación y transmisión eléctrica.", "March 2000 document concerning claims of the former Instituto Ecuatoriano de Electrificación (INECEL) and the Solidarity Fund. It records an agreement with the London reinsurance market to settle power generation and transmission claims.") },
+      { heading: text("Intervinientes", "Participants"), text: text("Progreso Compañía de Seguros y Reaseguros S.A.; el mercado de reaseguradores de Londres; el Fondo de Solidaridad, representado por el vicepresidente de la República del Ecuador. Presidentes Ejecutivos de: Hidropaute S.A., Hidroagoyán S.A., Hidropucará S.A., Termoesmeraldas S.A., Termopichincha S.A., Electroguayas S.A. y Transelectric S.A. Empresa contratada que intervino por el sector eléctrico: SEAJUSTE S.A.", "Progreso Compañía de Seguros y Reaseguros S.A.; the London reinsurance market; the Solidarity Fund, represented by Ecuador’s vice president. Executive Presidents of: Hidropaute S.A., Hidroagoyán S.A., Hidropucará S.A., Termoesmeraldas S.A., Termopichincha S.A., Electroguayas S.A. and Transelectric S.A. Company contracted to act on behalf of the electricity sector: SEAJUSTE S.A.") },
+    ],
+    settlement: 1294981,
+    reference: text("Acta de finiquito y renuncia · Fondo de Solidaridad · Sector eléctrico", "Release and settlement agreement · Solidarity Fund · Electricity sector"),
+    alt: text("Las cuatro páginas del acta de finiquito de marzo de 2000 con reclamos, indemnizaciones y firmas de los participantes, incluida SEAJUSTE", "All four pages of the March 2000 settlement agreement with claims, settlement amounts and participants’ signatures, including SEAJUSTE"),
   },
 ];
 

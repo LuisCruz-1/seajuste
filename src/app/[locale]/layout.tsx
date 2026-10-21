@@ -22,6 +22,6 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const c = copy[locale];
-  const headerLabels = { nav: c.nav, home: c.home, menu: c.menu, closeMenu: c.closeMenu, language: c.language, brandDescriptor: c.brandDescriptor, topLine: c.topLine, location: c.location, contactAction: c.contactAction };
+  const headerLabels = { nav: c.nav, aboutNav: c.aboutNav, aboutSubmenu: c.aboutSubmenu, home: c.home, menu: c.menu, closeMenu: c.closeMenu, language: c.language, brandDescriptor: c.brandDescriptor, topLine: c.topLine, location: c.location, contactAction: c.contactAction };
   return <html lang={locale} className={fontClassName}><body><a href="#main-content" className="skip-link">{c.skip}</a><Header locale={locale} labels={headerLabels} /><main id="main-content">{children}</main><InteriorFooter locale={locale}><Footer locale={locale} /></InteriorFooter><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema()).replace(/</g, "\\u003c") }} /></body></html>;
 }

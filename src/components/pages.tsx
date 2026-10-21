@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, BadgeCheck, Check, FileText, Mail, MapPin, MessageCircle, Phone, ShieldCheck } from "lucide-react";
-import { authorizations, cases, clients, company, companyHistoryDocuments, corporatePurpose, economicActivities, services, supplierProducts, team, type CaseStudy, type Service } from "@/lib/content";
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, BadgeCheck, CalendarDays, Check, FileText, Mail, MapPin, MessageCircle, Phone, ShieldCheck } from "lucide-react";
+import { authorizations, cases, clients, company, companyHistory, companyHistoryDocuments, corporatePurpose, economicActivities, services, supplierProducts, team, type CaseStudy, type Service } from "@/lib/content";
 import { copy } from "@/lib/copy";
 import { heroCoverageLabels, heroInterventionRows, heroSlides } from "@/lib/hero-slides";
-import { formatMoney, href, t, type Locale } from "@/lib/i18n";
+import { aboutAnchors, formatMoney, href, t, type Locale } from "@/lib/i18n";
 import { CaseCard } from "./cards";
 import { CaseGrid } from "./case-grid";
 import { ContactForm } from "./contact-form";
@@ -24,6 +24,15 @@ export function HomePage({ locale }: { locale: Locale }) {
   return <HomeHero locale={locale} slides={heroSlides[locale]} insuranceClasses={authorizations.map((item, index) => t(heroCoverageLabels[index] ?? item, locale))} settlementSummary={settlementSummary} interventionCases={interventionCases} />;
 }
 
+function AboutContactActions({ locale }: { locale: Locale }) {
+  const c = copy[locale];
+  const contact = href(locale, "contact");
+  return <div className="about-contact-actions">
+    <Link className="button hero-consult-action" href={`${contact}#consulta`}>{c.consultationAction}<ArrowUpRight size={18} aria-hidden="true" /></Link>
+    <Link className="button hero-meeting-action" href={`${contact}#reunion`}>{c.meetingTab}<CalendarDays size={18} aria-hidden="true" /></Link>
+  </div>;
+}
+
 export function AboutPage({ locale }: { locale: Locale }) {
   const c = copy[locale];
   return <><section className="section company-profile"><div className="container">
@@ -31,24 +40,49 @@ export function AboutPage({ locale }: { locale: Locale }) {
     <div className="company-profile-layout">
       <div className="company-profile-visual"><Image src="/images/brand/about-company-turbine.webp" alt={c.aboutImageAlt} width={435} height={518} sizes="(max-width: 950px) 90vw, 43vw" loading="eager" /></div>
       <div className="company-profile-copy">
-        <section className="company-philosophy" aria-labelledby="company-philosophy-title"><h2 id="company-philosophy-title">{c.philosophy}</h2><p className="company-philosophy-lead">{c.philosophyLead}</p><p>{c.philosophyText}</p><p>{c.philosophyCommitment}</p></section>
+        <h2 className="company-identity-title" id={aboutAnchors.identity} tabIndex={-1}>{c.identity}</h2>
+        <section className="company-philosophy" aria-labelledby="company-philosophy-title"><h3 id="company-philosophy-title">{c.philosophy}</h3><p className="company-philosophy-lead">{c.philosophyLead}</p><p>{c.philosophyText}</p></section>
         <div className="company-purpose-grid">
-          <section className="company-mission" aria-labelledby="company-mission-title"><h2 id="company-mission-title">{c.mission}</h2><p>{c.missionText}</p></section>
-          <section className="company-vision" aria-labelledby="company-vision-title"><h2 id="company-vision-title">{c.vision}</h2><p>{c.visionText}</p></section>
+          <section className="company-mission" aria-labelledby="company-mission-title"><h3 id="company-mission-title">{c.mission}</h3><p>{c.missionText}</p></section>
+          <section className="company-vision" aria-labelledby="company-vision-title"><h3 id="company-vision-title">{c.vision}</h3><p>{c.visionText}</p></section>
         </div>
+        <AboutContactActions locale={locale} />
       </div>
     </div>
   </div></section>
-  <section className="section section-tint company-history" id="company-history"><div className="container">
-    <SectionHeading eyebrow={c.historyEyebrow} title={c.historyTitle} description={c.historyIntro} />
-    <div className="history-document-grid">{companyHistoryDocuments.map((document) => <article className="history-document-card" key={document.id}>
-      <div className="history-document-copy"><time dateTime={document.date}>{t(document.dateLabel, locale)}</time><h3>{t(document.title, locale)}</h3><p>{t(document.description, locale)}</p><p className="history-document-reference">{t(document.reference, locale)}</p></div>
-      <a className="history-document-preview" href={document.image} target="_blank" rel="noopener noreferrer" aria-label={`${c.historyOpen}: ${t(document.title, locale)}`}>
-        <div className="history-document-image"><Image src={document.image} alt={t(document.alt, locale)} fill sizes="(max-width: 760px) 90vw, 46vw" /></div>
-        <span className="history-document-action">{c.historyOpen}<ArrowUpRight size={19} aria-hidden="true" /></span>
+  <section className="section company-origins" id="company-history"><div className="container history-origins-layout">
+    <div className="history-origins-copy" id={aboutAnchors.history} tabIndex={-1}>
+      <SectionHeading eyebrow={c.historySince} title={c.historyStoryTitle} />
+      {companyHistory.paragraphs.map((paragraph, index) => <p key={index}>{t(paragraph, locale)}</p>)}
+      <a className="history-document-action" href={companyHistory.document} target="_blank" rel="noopener noreferrer">{c.historyOpen}<ArrowUpRight size={19} aria-hidden="true" /></a>
+    </div>
+    <figure className="history-origins-visual">
+      <a href={companyHistory.document} target="_blank" rel="noopener noreferrer" aria-label={`${c.historyOpen}: ${c.historyStoryTitle}`}><Image src={companyHistory.image} alt={t(companyHistory.alt, locale)} width={companyHistory.width} height={companyHistory.height} sizes="(max-width: 950px) 90vw, 44vw" /></a>
+      <figcaption>{c.historyCredentials}</figcaption>
+    </figure>
+  </div></section>
+  {companyHistoryDocuments.map((document) => <section className={`section company-history${document.section === "claims" ? "" : " section-tint"}`} id={document.section === "review" ? "history-documents" : `${document.section}-documents`} key={document.id}><div className="container" id={document.section === "claims" ? aboutAnchors.london : undefined} tabIndex={document.section === "claims" ? -1 : undefined}>
+    <SectionHeading eyebrow={document.section === "review" ? c.historyEyebrow : undefined} title={c.historySections[document.section]} description={document.section === "review" ? c.historyIntro : undefined} />
+    <article className="history-document-card" id={document.id} aria-labelledby={`${document.id}-title`}>
+      <div className="history-document-copy">
+        <time dateTime={document.date}>{t(document.dateLabel, locale)}</time>
+        <h3 id={`${document.id}-title`}>{t(document.title, locale)}</h3>
+        <p className="history-document-reference">{t(document.reference, locale)}</p>
+        {document.details.map((detail, index) => <div className="history-document-detail" key={index}>{detail.heading && <h4>{t(detail.heading, locale)}</h4>}<p>{t(detail.text, locale)}</p></div>)}
+        {document.excerpts && <div className="history-document-excerpts"><p className="data-label">{c.historyExcerpts}</p>{document.excerpts.map((excerpt, index) => <blockquote key={index}><p>{t(excerpt, locale)}</p></blockquote>)}</div>}
+        {document.settlement !== undefined && <dl className="history-document-settlement"><dt>{c.historySettlement}</dt><dd>{formatMoney(document.settlement, locale)}</dd></dl>}
+        <a className="history-document-action" href={document.document} target="_blank" rel="noopener noreferrer">{c.historyOpen}<ArrowUpRight size={19} aria-hidden="true" /></a>
+      </div>
+      <a className="history-document-preview" href={document.document} target="_blank" rel="noopener noreferrer" aria-label={`${c.historyOpen}: ${t(document.title, locale)}`}>
+        <Image src={document.image} alt={t(document.alt, locale)} width={document.width} height={document.height} sizes="(max-width: 950px) 90vw, 40vw" />
+        <span className="history-document-format"><FileText size={18} aria-hidden="true" />{c.historyPdf}<ArrowUpRight size={18} aria-hidden="true" /></span>
       </a>
-    </article>)}</div>
-  </div></section></>;
+    </article>
+    {document.section === "reinsurance" && <div className="about-contact-closing">
+      <div><h3>{c.contactAction}</h3><p>{c.contactIntro}</p></div>
+      <AboutContactActions locale={locale} />
+    </div>}
+  </div></section>)}</>;
 }
 
 export function ServicesPage({ locale }: { locale: Locale }) {
