@@ -4,6 +4,8 @@ import { useId, useRef, useState, useSyncExternalStore, type FormEvent } from "r
 import { ArrowUpRight, CalendarDays, FileText, MessageCircle, ShieldCheck } from "lucide-react";
 import type { Locale } from "@/lib/i18n";
 import type { Copy } from "@/lib/copy";
+import { consultationIntro } from "@/lib/consultation";
+import { ConsultationForm } from "./consultation-form";
 
 type FormLabels = Pick<Copy,
   "formTitle" | "formIntro" | "name" | "company" | "optional" | "email" | "service" | "selectService" | "message" | "messageHint" | "namePlaceholder" | "companyPlaceholder" | "emailPlaceholder" | "messagePlaceholder" |
@@ -31,7 +33,7 @@ function currentDateInEcuador() {
   return `${part("year")}-${part("month")}-${part("day")}`;
 }
 
-export function ContactForm({ locale, options, labels }: { locale: Locale; options: { id: string; title: string }[]; labels: FormLabels }) {
+export function ContactForm({ locale, options, labels, whatsapp, email }: { locale: Locale; options: { id: string; title: string }[]; labels: FormLabels; whatsapp: string; email: string }) {
   const id = useId();
   const mode = useSyncExternalStore(subscribeMode, getMode, serverMode);
   const [prepared, setPrepared] = useState<{ mode: FormMode; url: string } | null>(null);
@@ -73,7 +75,7 @@ export function ContactForm({ locale, options, labels }: { locale: Locale; optio
       details.push(`${labels.meetingDate}: ${date}`, `${labels.meetingTime}: ${value("time")} · ${labels.meetingTimezone}`, `${labels.meetingFormat}: ${meetingFormats.find((format) => format.id === value("format"))?.label ?? ""}`);
     }
     const enquiry = `${details.filter(Boolean).join("\n")}\n\n${meeting ? labels.meetingMessage : labels.message}:\n${value("message")}`;
-    const url = new URL("https://wa.me/593999666167");
+    const url = new URL(whatsapp);
     url.searchParams.set("text", enquiry);
     window.open(url.toString(), "_blank", "noopener,noreferrer");
     setPrepared({ mode: formMode, url: url.toString() });
@@ -93,12 +95,13 @@ export function ContactForm({ locale, options, labels }: { locale: Locale; optio
       }}>
         {modes.map((formMode) => <button key={formMode} ref={(element) => { tabRefs.current[formMode] = element; }} type="button" role="tab" id={`${id}-${formMode}-tab`} aria-controls={`${id}-${formMode}-panel`} aria-selected={mode === formMode} tabIndex={mode === formMode ? 0 : -1} onClick={() => selectMode(formMode)}>{formMode === "meeting" ? <CalendarDays size={20} aria-hidden="true" /> : <FileText size={20} aria-hidden="true" />}<span>{formMode === "meeting" ? labels.meetingTab : labels.consultationTab}</span></button>)}
       </div>
-      <span className="eyebrow">SEAJUSTE · {locale.toUpperCase()}</span><h2 id={`${id}-title`}>{mode === "meeting" ? labels.meetingTitle : labels.formTitle}</h2><p className="form-intro">{mode === "meeting" ? labels.meetingIntro : labels.formIntro}</p>
+      <span className="eyebrow">SEAJUSTE · {locale.toUpperCase()}</span><h2 id={`${id}-title`}>{mode === "meeting" ? labels.meetingTitle : consultationIntro[locale].title}</h2>
+      <div className="form-intro">{mode === "meeting" ? <p>{labels.meetingIntro}</p> : <><p>{consultationIntro[locale].description}</p><p>{consultationIntro[locale].next}</p></>}</div>
       {modes.map((formMode) => {
         const meeting = formMode === "meeting";
         const prefix = `${id}-${formMode}`;
         return <div key={formMode} id={`${prefix}-panel`} role="tabpanel" aria-labelledby={`${prefix}-tab`} hidden={mode !== formMode}>
-          <form onSubmit={(event) => submit(event, formMode)} onInput={() => setPrepared(null)} aria-labelledby={`${prefix}-tab`}>
+          {meeting ? <form onSubmit={(event) => submit(event, formMode)} onInput={() => setPrepared(null)} aria-labelledby={`${prefix}-tab`}>
             <div className="form-fields">
               <div className="field"><label htmlFor={`${prefix}-name`}>{labels.name} <span aria-hidden="true">*</span></label><input id={`${prefix}-name`} name="name" autoComplete="name" placeholder={labels.namePlaceholder} required minLength={2} maxLength={160} /></div>
               <div className="field"><label htmlFor={`${prefix}-company`}>{labels.company} <span className="optional">({labels.optional})</span></label><input id={`${prefix}-company`} name="company" autoComplete="organization" placeholder={labels.companyPlaceholder} maxLength={160} /></div>
@@ -113,7 +116,7 @@ export function ContactForm({ locale, options, labels }: { locale: Locale; optio
               <div className="field field-full"><label htmlFor={`${prefix}-message`}>{meeting ? labels.meetingMessage : labels.message} <span aria-hidden="true">*</span></label><textarea id={`${prefix}-message`} name="message" placeholder={meeting ? labels.meetingMessagePlaceholder : labels.messagePlaceholder} required minLength={10} maxLength={4000} rows={5} aria-describedby={`${prefix}-hint`} /><small id={`${prefix}-hint`}>{meeting ? labels.meetingMessageHint : labels.messageHint}</small></div>
             </div>
             <div className="form-actions"><button type="submit" className="button button-primary"><MessageCircle size={18} aria-hidden="true" />{labels.whatsappSend}<ArrowUpRight size={18} aria-hidden="true" /></button></div>
-          </form>
+          </form> : <ConsultationForm locale={locale} options={options} whatsapp={whatsapp} email={email} submitLabel={labels.whatsappSend} onPrepared={(url) => setPrepared({ mode: "consultation", url })} onDraftChange={() => setPrepared(null)} />}
         </div>;
       })}
       <p className="form-notice"><ShieldCheck size={17} aria-hidden="true" /><span>{labels.formNotice}</span></p>

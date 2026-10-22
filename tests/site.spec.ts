@@ -86,10 +86,15 @@ test("contact validates details and prepares an actual WhatsApp enquiry", async 
   await page.getByRole("button", { name: "Continuar por WhatsApp" }).click();
   await expect(page.getByRole("status")).toHaveCount(0);
   await form.getByLabel(/Nombre y apellido/).fill("María Torres");
-  await form.getByLabel(/Empresa/).fill("Prueba técnica");
+  await form.getByRole("textbox", { name: /Empresa \/ entidad/ }).fill("Prueba técnica");
   await form.getByLabel(/Correo electrónico/).fill("maria@example.com");
+  await form.getByRole("radio", { name: "Aseguradora", exact: true }).check();
+  await form.getByLabel("Teléfono / WhatsApp", { exact: false }).fill("999666167");
+  await form.getByRole("radio", { name: /^Siniestro reciente/ }).check();
+  await form.locator(".consultation-event > summary").click();
   await form.getByLabel(/Especialidad de interés/).selectOption("energy");
   await form.getByLabel(/Contexto de su consulta/).fill("Inspección de un transformador en Guayaquil.");
+  await form.getByRole("checkbox", { name: /He leído la política de privacidad/ }).check();
   await expect(page.getByRole("button", { name: /correo|email/i })).toHaveCount(0);
   await page.getByRole("button", { name: "Continuar por WhatsApp" }).click();
   await expect(page.getByRole("status")).toContainText("La consulta está preparada");

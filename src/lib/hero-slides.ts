@@ -41,6 +41,7 @@ export const heroCoverageOrder = [0, 1, 2, 3, 13, 11, 5, 9, 4, 6, 8, 7, 15, 10, 
 export const heroCoverageLabels: Partial<Record<number, Localized>> = {
   13: text("MARÍTIMO: CASCO & MAQUINARIA", "MARINE: HULL & MACHINERY"),
   11: text("TRANSPORTE MARÍTIMO Y TERRESTRE", "SEA AND LAND TRANSPORT"),
+  12: text("CASCO AÉREO", "AIRCRAFT HULL"),
 };
 
 export const heroInterventionPhotos = [

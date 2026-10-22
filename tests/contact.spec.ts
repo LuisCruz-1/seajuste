@@ -42,7 +42,7 @@ test("meeting requests validate preferences and prepare only the matching WhatsA
     expect(text).toContain(es ? "Solicitud de reunión" : "Meeting request");
     expect(text).toContain(es ? "20 de diciembre de 2099" : "20 December 2099");
     expect(text).not.toContain(es ? "Contexto de su consulta" : "Enquiry details");
-    await expect(page.locator(".contact-form a[href^='mailto:']")).toHaveCount(0);
+    await expect(form.locator(".form-actions a[href^='mailto:']")).toHaveCount(0);
     await expect(page.getByRole("button", { name: /correo|email/i })).toHaveCount(0);
     await expect(page.getByRole("status").getByRole("link")).toHaveAttribute("href", url.toString());
     expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
@@ -82,4 +82,16 @@ test("hero consultation links select the right tab and tab changes preserve draf
   await expect(consultation).toBeFocused();
   await expect(consultation).toHaveAttribute("aria-selected", "true");
   await expect(page.locator(".contact-form")).toBeInViewport();
+});
+
+test("Services opens the same detailed consultation form", async ({ page }) => {
+  for (const locale of ["es", "en"]) {
+    const es = locale === "es";
+    await page.goto(`/${locale}/${es ? "servicios" : "services"}`);
+    await page.locator(".contact-band").getByRole("link", { name: es ? "Solicitar consulta profesional" : "Request a professional consultation", exact: true }).click();
+    await expect(page).toHaveURL(new RegExp(`/${locale}/${es ? "contacto" : "contact"}#consulta$`));
+    await expect(page.getByRole("tab", { name: es ? "Consulta profesional" : "Professional consultation", exact: true })).toHaveAttribute("aria-selected", "true");
+    await expect(page.locator(".consultation-form")).toHaveCount(1);
+    await expect(page.locator(".consultation-identity")).toBeVisible();
+  }
 });

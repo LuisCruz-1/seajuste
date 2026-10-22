@@ -55,7 +55,7 @@ export function ClientLogos({ locale, all = false }: { locale: Locale; all?: boo
 
 export function ContactBand({ locale }: { locale: Locale }) {
   const c = copy[locale];
-  return <section className="contact-band"><div className="container contact-band-inner"><div><p className="eyebrow">{c.ctaEyebrow}</p><h2>{c.ctaTitle}</h2><p>{c.ctaIntro}</p></div><div className="contact-band-actions"><ButtonLink to={href(locale, "contact")} variant="light">{c.contactAction}</ButtonLink><a href={company.phoneHref} className="contact-band-phone">{company.phone}<ArrowUpRight size={18} aria-hidden="true" /></a></div><span className="contact-band-mark" aria-hidden="true">S</span></div></section>;
+  return <section className="contact-band"><div className="container contact-band-inner"><div><p className="eyebrow">{c.ctaEyebrow}</p><h2>{c.ctaTitle}</h2><p>{c.ctaIntro}</p></div><div className="contact-band-actions"><ButtonLink to={`${href(locale, "contact")}#consulta`} variant="light">{c.consultationAction}</ButtonLink><a href={company.phoneHref} className="contact-band-phone">{company.phone}<ArrowUpRight size={18} aria-hidden="true" /></a></div><span className="contact-band-mark" aria-hidden="true">S</span></div></section>;
 }
 
 export function Footer({ locale }: { locale: Locale }) {
