@@ -984,7 +984,7 @@ p { margin-bottom: 20px; }
   .direct-contact strong { font-size: var(--text-card-title); }
   .contact-form { padding-inline: 19px; }
 }
-/* Home panels: trust, specialist services, insurance classes and technical intervention. */
+/* Home panels: trust, specialist services, insurance classes, intervention and consultation. */
 .home-slider { --hero-gold: #ffcd00; }
 .hero-slides { display: grid; }
 .hero-slide { grid-area: 1 / 1; min-width: 0; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .45s ease, visibility .45s; }
@@ -1091,6 +1091,12 @@ p { margin-bottom: 20px; }
 .hero-intervention-closing { margin: 16px 0 0; font-size: var(--text-small); font-weight: var(--weight-bold); line-height: 1.55; white-space: pre-line; }
 .hero-intervention-closing em { display: block; font-style: italic; }
 .home-slider .hero-copy-intervention .hero-conversion { margin-top: 18px; }
+.home-slider .hero-slide-consultation .home-hero-inner { row-gap: 28px; grid-template-rows: minmax(0, 1fr) auto; }
+.hero-slide-consultation .hero-visual > .hero-intervention-closing { margin: 0 0 24px; }
+.hero-consultation-note { grid-column: 1 / -1; min-width: 0; }
+.hero-consultation-note h3 { color: var(--cyan); font-family: var(--font-body), sans-serif; font-size: var(--text-subtitle); font-weight: var(--weight-bold); line-height: 1.45; text-transform: uppercase; margin-bottom: 16px; }
+.hero-consultation-note p { color: #e2edf2; font-size: var(--text-body); line-height: 1.75; margin-bottom: 16px; }
+.hero-consultation-note p:last-child { margin-bottom: 0; }
 .hero-slider-controls { display: flex; gap: 40px; align-items: center; padding-block: 22px 0; }
 .hero-slide-picker { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; flex: 1; min-width: 0; }
 .hero-slide-tab { position: relative; display: flex; gap: 12px; align-items: center; min-height: 57px; padding: 13px 0 17px; text-align: left; background: transparent; color: #aac2d1; border: 0; border-bottom: 1px solid #c0dae53b; font-size: var(--text-small); line-height: 1.5; transition: color .2s; }
@@ -1139,7 +1145,8 @@ p { margin-bottom: 20px; }
   .trust-scene-statistics dd { grid-area: value; margin: 0; text-align: center; }
 }
 @media (max-width: 760px) {
-  .home-slider .home-hero-inner { grid-template-columns: 1fr; grid-template-rows: 1fr auto; gap: 30px; padding-block: 72px 25px; }
+  .home-slider .home-hero-inner { grid-template-columns: 1fr; grid-template-rows: auto 1fr; align-items: start; gap: 30px; padding-block: 72px 25px; }
+  .home-slider .hero-slide-consultation .home-hero-inner { grid-template-rows: auto auto 1fr; }
   .home-slider .hero-copy { order: -1; text-align: left; }
   .home-slider .hero-slide-title { font-size: var(--text-display); margin-bottom: 24px; }
   .hero-copy-trust .hero-actions { justify-content: flex-start; }

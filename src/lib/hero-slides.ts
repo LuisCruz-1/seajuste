@@ -13,6 +13,7 @@ export type HeroSlide = {
   closing?: string;
   closingAccent?: string;
   services?: { label: string; detail: DetailId }[];
+  consultation?: { title: string; paragraphs: string[] };
 };
 
 export type HeroSettlementSummary = { amount: number; caseCount: number };
@@ -57,6 +58,29 @@ export const heroInterventionRows: { id: DetailId; equipment: Localized; unit: L
   { id: "artefacta", equipment: text("Locales comerciales", "Retail premises"), unit: text("Varios", "Various"), location: text("Manabí y Esmeraldas", "Manabí & Esmeraldas") },
 ];
 
+const interventionSlides: Record<Locale, HeroSlide> = {
+  es: {
+    visual: "intervention",
+    topic: "INTERVENCIÓN",
+    title: "Intervención técnica en siniestros complejos",
+    threshold: "Reclamos superiores a USD 1 millón",
+    description: "Experiencia en evaluación de daños, investigación de causas y cuantificación de pérdidas.",
+    highlights: ["Rotura de maquinaria y lucro cesante por rotura de maquinaria (Electroguayas).", "Incendio y lucro cesante a consecuencia de incendio (Artefacta)."],
+    closing: "La confianza se demuestra con experiencia.",
+    closingAccent: "RESULTADOS QUE NOS RESPALDAN",
+  },
+  en: {
+    visual: "intervention",
+    topic: "INTERVENTION",
+    title: "Technical intervention in complex losses",
+    threshold: "Claims exceeding USD 1 million",
+    description: "Experience in damage assessment, cause investigation and loss quantification.",
+    highlights: ["Machinery breakdown and resulting business interruption (Electroguayas).", "Fire and resulting business interruption (Artefacta)."],
+    closing: "Trust is demonstrated through experience.",
+    closingAccent: "RESULTS THAT SPEAK FOR US",
+  },
+};
+
 export const heroSlides: Record<Locale, HeroSlide[]> = {
   es: [
     {
@@ -85,14 +109,15 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
       statement: "Ingeniería forense & causa raíz\nReclamos & siniestros",
     },
     {
-      visual: "intervention",
-      topic: "INTERVENCIÓN",
-      title: "Intervención técnica en siniestros complejos",
-      threshold: "Reclamos superiores a USD 1 millón",
-      description: "Experiencia en evaluación de daños, investigación de causas y cuantificación de pérdidas.",
-      highlights: ["Rotura de maquinaria y lucro cesante por rotura de maquinaria (Electroguayas).", "Incendio y lucro cesante a consecuencia de incendio (Artefacta)."],
-      closing: "La confianza se demuestra con experiencia.",
-      closingAccent: "RESULTADOS QUE NOS RESPALDAN",
+      ...interventionSlides.es,
+      topic: "CONSULTA",
+      consultation: {
+        title: "Conversemos sobre el alcance de su consulta",
+        paragraphs: [
+          "Compártanos sus inquietudes y una descripción de las características del reclamo o siniestro. Con la información inicial y los antecedentes disponibles, podríamos identificar el alcance de su requerimiento y la documentación técnica necesaria para un análisis preliminar.",
+          "Cuando la naturaleza o complejidad del caso lo justifique, coordinaremos una reunión profesional para examinar sus particularidades y definir los siguientes pasos.",
+        ],
+      },
     },
   ],
   en: [
@@ -122,14 +147,15 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
       statement: "Forensic engineering & root cause analysis\nClaims & losses",
     },
     {
-      visual: "intervention",
-      topic: "INTERVENTION",
-      title: "Technical intervention in complex losses",
-      threshold: "Claims exceeding USD 1 million",
-      description: "Experience in damage assessment, cause investigation and loss quantification.",
-      highlights: ["Machinery breakdown and resulting business interruption (Electroguayas).", "Fire and resulting business interruption (Artefacta)."],
-      closing: "Trust is demonstrated through experience.",
-      closingAccent: "RESULTS THAT SPEAK FOR US",
+      ...interventionSlides.en,
+      topic: "CONSULTATION",
+      consultation: {
+        title: "Let’s discuss the scope of your enquiry",
+        paragraphs: [
+          "Share your questions and a description of the claim or loss. With the initial information and available background, we could identify the scope of your request and the technical documentation needed for a preliminary assessment.",
+          "When the nature or complexity of the case calls for it, we will arrange a professional meeting to examine its particulars and define the next steps.",
+        ],
+      },
     },
   ],
 };

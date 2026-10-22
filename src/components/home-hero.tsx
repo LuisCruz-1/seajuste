@@ -97,9 +97,10 @@ export function HomeHero({ locale, slides, insuranceClasses, settlementSummary, 
           const active = current === index;
           const Heading = index === 0 ? "h1" : "h2";
           return (
-            <div key={slide.topic} id={`hero-slide-${index}`} className={`hero-slide hero-slide-${slide.visual}${active ? " is-active" : ""}`} role="group" aria-roledescription={es ? "diapositiva" : "slide"} aria-label={`${index + 1} ${es ? "de" : "of"} ${slides.length}: ${slide.topic}`} aria-hidden={!active} inert={!active}>
+            <div key={slide.topic} id={`hero-slide-${index}`} className={`hero-slide hero-slide-${slide.visual}${slide.consultation ? " hero-slide-consultation" : ""}${active ? " is-active" : ""}`} role="group" aria-roledescription={es ? "diapositiva" : "slide"} aria-label={`${index + 1} ${es ? "de" : "of"} ${slides.length}: ${slide.topic}`} aria-hidden={!active} inert={!active}>
               <div className="container home-hero-inner">
                 <div className="hero-visual">
+                  {slide.consultation && <p className="hero-intervention-closing">{slide.closing}{slide.closingAccent && <em>{slide.closingAccent}</em>}</p>}
                   <div className={`inspection-frame hero-frame-${slide.visual}`}>
                     <HeroBrandVisual kind={slide.visual} locale={locale} />
                     <span className="inspection-corner corner-one" aria-hidden="true" /><span className="inspection-corner corner-two" aria-hidden="true" />
@@ -125,7 +126,7 @@ export function HomeHero({ locale, slides, insuranceClasses, settlementSummary, 
                         </tbody>)}
                       </table>
                     </div>
-                    <p className="hero-intervention-closing">{slide.closing}{slide.closingAccent && <em>{slide.closingAccent}</em>}</p>
+                    {!slide.consultation && <p className="hero-intervention-closing">{slide.closing}{slide.closingAccent && <em>{slide.closingAccent}</em>}</p>}
                   </> : <>
                     <Heading className="hero-slide-title">{slide.title}</Heading>
                     {slide.accent && <p className="hero-primary-statement">{slide.accent}</p>}
@@ -142,6 +143,10 @@ export function HomeHero({ locale, slides, insuranceClasses, settlementSummary, 
                     </Link> : slide.statement && <div className="hero-message-panel"><p>{slide.statement}</p></div>}
                   </div>
                 </div>
+                {slide.consultation && <section className="hero-consultation-note" aria-labelledby={`hero-consultation-title-${index}`}>
+                  <h3 id={`hero-consultation-title-${index}`}>{slide.consultation.title}</h3>
+                  {slide.consultation.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                </section>}
               </div>
             </div>
           );

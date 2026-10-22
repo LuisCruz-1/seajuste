@@ -36,10 +36,10 @@ for (const locale of ["es", "en"]) {
       await expect(actions.getByRole("link").last()).toHaveAttribute("href", locale === "es" ? "/es/contacto#reunion" : "/en/contact#reunion");
       await expect(actions.getByRole("link").last()).toHaveText(locale === "es" ? "Agendar reunión" : "Schedule a meeting");
       const actionsBox = (await actions.boundingBox())!;
-      const summary = active.locator(index === 0 || index === 3 ? ".hero-settlement" : ".hero-message-panel");
+      const summary = active.locator(index === 0 || index >= 3 ? ".hero-settlement" : ".hero-message-panel");
       const summaryBox = (await summary.boundingBox())!;
       expect(actionsBox.x + actionsBox.width).toBeLessThanOrEqual(summaryBox.x + 1);
-      if (index === 0 || index === 3) {
+      if (index === 0 || index >= 3) {
         await expect(active.locator(".hero-settlement-amount strong")).toHaveText(locale === "es" ? "13,8" : "13.8");
         await expect(active.locator(".hero-settlement")).toHaveAttribute("href", locale === "es" ? "/es/experiencia" : "/en/experience");
       } else {
@@ -55,25 +55,40 @@ for (const locale of ["es", "en"]) {
         await expect(active.locator(".hero-coverage-classes > li")).toHaveCount(16);
         await expect(active.locator("img")).toHaveCount(8);
       }
-      if (index === 3) {
+      if (index >= 3) {
         await expect(active.locator("img")).toHaveCount(5);
         await expect(active.locator(".intervention-case-row")).toHaveCount(4);
         await expect(active.locator(".intervention-case-amount")).toHaveText(locale === "es" ? ["8.253.493,28", "1.947.668,80", "1.624.063,03", "2.000.000,00"] : ["8,253,493.28", "1,947,668.80", "1,624,063.03", "2,000,000.00"]);
         const tableRegion = active.locator(".hero-intervention-table-scroll");
         await tableRegion.focus();
         await page.keyboard.press("ArrowLeft");
-        await expect(hero.locator(".hero-slide.is-active")).toHaveAttribute("id", "hero-slide-3");
+        await expect(hero.locator(".hero-slide.is-active")).toHaveAttribute("id", `hero-slide-${index}`);
         await tableRegion.evaluate((element) => {
           const start = new Touch({ identifier: 1, target: element, clientX: 300, clientY: 300 });
           const end = new Touch({ identifier: 1, target: element, clientX: 100, clientY: 310 });
           element.dispatchEvent(new TouchEvent("touchstart", { bubbles: true, touches: [start] }));
           element.dispatchEvent(new TouchEvent("touchend", { bubbles: true, changedTouches: [end] }));
         });
-        await expect(hero.locator(".hero-slide.is-active")).toHaveAttribute("id", "hero-slide-3");
+        await expect(hero.locator(".hero-slide.is-active")).toHaveAttribute("id", `hero-slide-${index}`);
       }
-      await active.locator("img").evaluateAll(async (images) => {
-        await Promise.all(images.map((image) => (image as HTMLImageElement).decode()));
-      });
+      if (index === 3) {
+        await expect(active.locator(".hero-consultation-note h3")).toHaveText(locale === "es" ? "Conversemos sobre el alcance de su consulta" : "Let’s discuss the scope of your enquiry");
+        await expect(active.locator(".hero-consultation-note p")).toHaveCount(2);
+        await expect(active.locator(".hero-consultation-note p").first()).toContainText(locale === "es" ? "la documentación técnica necesaria para un análisis preliminar" : "the technical documentation needed for a preliminary assessment");
+        await expect(active.locator(".hero-consultation-note p").last()).toContainText(locale === "es" ? "coordinaremos una reunión profesional" : "we will arrange a professional meeting");
+        const note = (await active.locator(".hero-consultation-note").boundingBox())!;
+        const visual = (await active.locator(".hero-visual").boundingBox())!;
+        const copy = (await active.locator(".hero-copy").boundingBox())!;
+        expect(note.y).toBeGreaterThanOrEqual(Math.max(visual.y + visual.height, copy.y + copy.height));
+      }
+      for (const image of await active.locator("img").all()) {
+        await image.scrollIntoViewIfNeeded();
+        expect(await image.evaluate(async (element: HTMLImageElement) => {
+          await element.decode();
+          return element.naturalWidth > 0;
+        })).toBe(true);
+      }
+      await page.evaluate(() => { window.scrollTo({ top: 0, behavior: "instant" }); });
       await page.evaluate(() => document.fonts.ready);
       expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
       const currentHeight = (await hero.boundingBox())!.height;
@@ -126,14 +141,40 @@ test("autoplay keeps running on hover and respects pause, keyboard focus and red
   await page.mouse.move(0, 0);
   await page.clock.fastForward(8100);
   await expect(active).toHaveAttribute("id", "hero-slide-3");
+  await page.clock.fastForward(8100);
+  await expect(active).toHaveAttribute("id", "hero-slide-0");
   await hero.getByRole("button", { name: "Diapositiva siguiente" }).focus();
   await page.clock.fastForward(16000);
-  await expect(active).toHaveAttribute("id", "hero-slide-3");
+  await expect(active).toHaveAttribute("id", "hero-slide-0");
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/es");
   await page.clock.fastForward(24000);
   await expect(active).toHaveAttribute("id", "hero-slide-0");
   await expect(hero.locator("[data-rotation]")).toHaveCount(0);
+});
+
+test("fourth slide consultation actions reach the matching contact forms at narrow widths", async ({ page }, testInfo) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.setViewportSize({ width: testInfo.project.name === "mobile" ? 320 : 768, height: 1000 });
+  for (const locale of ["es", "en"]) {
+    const es = locale === "es";
+    for (const choice of [
+      { label: es ? "Solicitar consulta profesional" : "Request a professional consultation", hash: "consulta", tab: es ? "Consulta profesional" : "Professional consultation" },
+      { label: es ? "Agendar reunión" : "Schedule a meeting", hash: "reunion", tab: es ? "Agendar reunión" : "Schedule a meeting" },
+    ]) {
+      await page.goto(`/${locale}`);
+      const hero = page.locator(".home-slider");
+      await hero.getByRole("button", { name: es ? "Diapositiva anterior" : "Previous slide", exact: true }).click();
+      const slide = hero.locator(".hero-slide.is-active");
+      await expect(slide).toHaveAttribute("id", "hero-slide-3");
+      expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
+      await expect(slide.locator(".hero-consultation-note p")).toHaveCount(2);
+      await slide.getByRole("link", { name: choice.label, exact: true }).click();
+      await expect(page).toHaveURL(new RegExp(`/${locale}/${es ? "contacto" : "contact"}#${choice.hash}$`));
+      await expect(page.getByRole("tab", { name: choice.tab, exact: true })).toHaveAttribute("aria-selected", "true");
+      await expect(page.getByRole("tabpanel", { name: choice.tab, exact: true })).toBeVisible();
+    }
+  }
 });
 
 test("touch swipes change slides without treating vertical scrolling as navigation", async ({ page }, testInfo) => {
