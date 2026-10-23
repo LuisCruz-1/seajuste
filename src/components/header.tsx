@@ -4,20 +4,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, ChevronDown, Globe2, Menu, X } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Globe2, Menu, MessageCircle, X } from "lucide-react";
 import { aboutAnchors, href, sectionKeys, translatePath, type Locale, type Section } from "@/lib/i18n";
 import type { Copy } from "@/lib/copy";
 import handsMark from "../../public/images/brand/manos.png";
 
-type Labels = Pick<Copy, "nav" | "aboutNav" | "aboutSubmenu" | "home" | "menu" | "closeMenu" | "language" | "brandDescriptor" | "topLine" | "location" | "contactAction">;
+type Labels = Pick<Copy, "nav" | "aboutNav" | "aboutSubmenu" | "home" | "menu" | "closeMenu" | "language" | "brandDescriptor" | "contactAction">;
 
-export function Header({ locale, labels }: { locale: Locale; labels: Labels }) {
+export function Header({ locale, labels, socialLinks }: { locale: Locale; labels: Labels; socialLinks: { whatsapp: string; linkedin: string } }) {
   const pathname = usePathname();
   const homeActive = pathname === href(locale);
   const [openPath, setOpenPath] = useState<string | null>(null);
   const open = openPath === pathname;
   const [aboutPanel, setAboutPanel] = useState<{ path: string; source: "hover" | "toggle" } | null>(null);
   const aboutOpen = aboutPanel?.path === pathname;
+  const headerRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
@@ -29,6 +30,20 @@ export function Header({ locale, labels }: { locale: Locale; labels: Labels }) {
     { anchor: aboutAnchors.london, label: labels.aboutNav.london },
     { anchor: aboutAnchors.reinsurers, label: labels.aboutNav.reinsurers },
   ];
+
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    const root = document.documentElement;
+    const updateHeight = () => root.style.setProperty("--header-height", `${header.getBoundingClientRect().height}px`);
+    updateHeight();
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(header);
+    return () => {
+      observer.disconnect();
+      root.style.removeProperty("--header-height");
+    };
+  }, []);
 
   useEffect(() => {
     if (!open && !aboutOpen) return;
@@ -77,11 +92,10 @@ export function Header({ locale, labels }: { locale: Locale; labels: Labels }) {
   }
 
   return (
-    <header className="site-header">
-      <div className="topline"><div className="container topline-inner"><span className="topline-motto">{labels.topLine}</span><span>{labels.location}</span></div></div>
+    <header className="site-header" ref={headerRef}>
       <div className="container header-inner">
         <Link href={href(locale)} className="header-brand-lockup" aria-label={`SEAJUSTE · ${labels.home}`} onClick={closeNavigation}>
-          <Image src={handsMark} alt="" className="header-isologo" sizes="(max-width: 640px) 48px, 72px" loading="eager" />
+          <Image src={handsMark} alt="" className="header-isologo" sizes="(max-width: 640px) 42px, 60px" loading="eager" />
           <span className="brand">
             <Image src="/images/brand/seajuste-logo.png" alt="SEAJUSTE S.A." width={900} height={155} className="brand-image" loading="eager" />
             <span>{labels.brandDescriptor}</span>
@@ -114,6 +128,10 @@ export function Header({ locale, labels }: { locale: Locale; labels: Labels }) {
             {(["es", "en"] as const).map((language) => (
               <Link key={language} href={translatePath(pathname, language)} lang={language} hrefLang={language} aria-label={language === "es" ? "Ver esta página en español" : "View this page in English"} aria-current={locale === language ? "true" : undefined} className={locale === language ? "is-active" : ""} onClick={closeNavigation}>{language.toUpperCase()}</Link>
             ))}
+          </div>
+          <div className="header-socials">
+            <a className="header-social header-social-whatsapp" href={socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" aria-label={locale === "es" ? "Contactar por WhatsApp" : "Contact via WhatsApp"} title="WhatsApp" onClick={closeNavigation}><MessageCircle size={20} aria-hidden="true" /></a>
+            <a className="header-social header-social-linkedin" href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer" aria-label={locale === "es" ? "Carlos Quevedo en LinkedIn" : "Carlos Quevedo on LinkedIn"} title="LinkedIn" onClick={closeNavigation}><span aria-hidden="true">in</span></a>
           </div>
           <Link href={href(locale, "contact")} className="header-contact" onClick={closeNavigation}>{labels.nav.contact}<ArrowUpRight size={16} aria-hidden="true" /></Link>
           <button className="menu-toggle" ref={toggleRef} onClick={() => { setOpenPath(open ? null : pathname); setAboutPanel(null); }} aria-expanded={open} aria-controls="primary-navigation" aria-label={open ? labels.closeMenu : labels.menu}>{open ? <X size={23} /> : <Menu size={23} />}</button>

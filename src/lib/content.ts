@@ -10,7 +10,7 @@ export const company = {
   phoneHref: "tel:+593999666167",
   whatsapp: "https://wa.me/593999666167",
   email: "seajuste@gmail.com",
-  linkedin: "https://www.linkedin.com/search/results/people/?keywords=Carlos%20Quevedo%20Seajuste",
+  linkedin: "https://www.linkedin.com/in/carlos-quevedo-seajuste/",
   brochure: "/documents/seajuste-brochure.pdf",
   offices: [
     {
@@ -289,6 +289,12 @@ export const cases: CaseStudy[] = [
 
 export const team = [
   { id: "carlos-quevedo", name: "Carlos Quevedo", role: text("Gerente general · Perito de seguros", "General Manager · Insurance loss adjuster"), specialty: text("Dirección y ajuste de siniestros", "Management & loss adjusting"), background: "SEAJUSTE S.A.", lead: true },
+  { id: "miguel-chavez", name: "Miguel Chávez", role: text("Ingeniero civil y geólogo", "Civil engineer & geologist"), specialty: text("Ingeniería civil y ciencias de la tierra", "Civil engineering & earth sciences"), background: text("Ex decano de Ciencias de la Tierra · ESPOL", "Former Dean of Earth Sciences · ESPOL") },
+  { id: "miguel-yapur", name: "Miguel Yapur", role: text("Ingeniero eléctrico", "Electrical engineer"), specialty: text("Ingeniería eléctrica", "Electrical engineering"), background: text("Ex decano de la Facultad Eléctrica · ESPOL", "Former Dean of the Electrical Faculty · ESPOL") },
+  { id: "ricardo-gallegos", name: "Ricardo Gallegos", role: text("Ingeniero en petróleos", "Petroleum engineer"), specialty: text("Petróleo y ciencias de la tierra", "Petroleum & earth sciences"), background: text("Ex decano de Ciencias de la Tierra · ESPOL", "Former Dean of Earth Sciences · ESPOL") },
+  { id: "marco-leiva", name: "Marco Leiva", role: text("Ingeniero naval · Capitán de Navío SP", "Naval engineer · Retired Navy Captain"), specialty: text("Ingeniería naval", "Naval engineering"), background: text("Armada del Ecuador", "Ecuadorian Navy") },
+  { id: "jorge-loor", name: "Jorge Loor", role: text("Magíster en Administración de Empresas", "Master’s degree in Business Administration"), specialty: text("Poliductos, oleoductos y terminales", "Product pipelines, oil pipelines & terminals"), background: text("Ex gerente de Transportes · EP Petroecuador", "Former Transport Manager · EP Petroecuador") },
+  { id: "carla-garcia", name: "Carla García L.", role: text("Ingeniera agrícola", "Agricultural engineer"), specialty: text("Sector agropecuario", "Agricultural sector"), background: text("Ex directora ejecutiva · Asociación Zamorano", "Former Executive Director · Asociación Zamorano") },
   { id: "josue-gavilanez", name: "Josué Gavilánez", role: text("Ingeniero mecánico", "Mechanical engineer"), specialty: text("Turbogeneradores", "Turbogenerators"), background: text("Ex CELEC", "Former CELEC") },
   { id: "ana-zambrano", name: "Ana Zambrano", role: text("Ingeniera química", "Chemical engineer"), specialty: text("Calderas y sistemas de vapor", "Boilers & steam systems"), background: "" },
   { id: "cristian-chauca", name: "Cristian Chauca", role: text("Magíster en Ciencias Ambientales", "Master’s degree in Environmental Sciences"), specialty: text("Ciencias ambientales", "Environmental sciences"), background: "" },
@@ -297,12 +303,6 @@ export const team = [
   { id: "manuel-patino", name: "Manuel Patiño", role: text("Ingeniero mecánico", "Mechanical engineer"), specialty: text("Equipo y maquinaria", "Plant & machinery"), background: text("Ex gerente de Servicios · IIASA–Caterpillar", "Former Services Manager · IIASA–Caterpillar") },
   { id: "emily-quevedo", name: "Emily Quevedo", role: text("Economista", "Economist"), specialty: text("Lucro cesante y seguros", "Business interruption & insurance"), background: "" },
   { id: "pablo-ramirez", name: "Pablo Ramírez", role: text("Abogado", "Lawyer"), specialty: text("Soporte legal en seguros", "Insurance legal support"), background: "" },
-  { id: "miguel-chavez", name: "Miguel Chávez", role: text("Ingeniero civil y geólogo", "Civil engineer & geologist"), specialty: text("Ingeniería civil y ciencias de la tierra", "Civil engineering & earth sciences"), background: text("Ex decano de Ciencias de la Tierra · ESPOL", "Former Dean of Earth Sciences · ESPOL") },
-  { id: "miguel-yapur", name: "Miguel Yapur", role: text("Ingeniero eléctrico", "Electrical engineer"), specialty: text("Ingeniería eléctrica", "Electrical engineering"), background: text("Ex decano de la Facultad Eléctrica · ESPOL", "Former Dean of the Electrical Faculty · ESPOL") },
-  { id: "ricardo-gallegos", name: "Ricardo Gallegos", role: text("Ingeniero en petróleos", "Petroleum engineer"), specialty: text("Petróleo y ciencias de la tierra", "Petroleum & earth sciences"), background: text("Ex decano de Ciencias de la Tierra · ESPOL", "Former Dean of Earth Sciences · ESPOL") },
-  { id: "marco-leiva", name: "Marco Leiva", role: text("Ingeniero naval · Capitán de Navío SP", "Naval engineer · Retired Navy Captain"), specialty: text("Ingeniería naval", "Naval engineering"), background: text("Armada del Ecuador", "Ecuadorian Navy") },
-  { id: "jorge-loor", name: "Jorge Loor", role: text("Magíster en Administración de Empresas", "Master’s degree in Business Administration"), specialty: text("Poliductos, oleoductos y terminales", "Product pipelines, oil pipelines & terminals"), background: text("Ex gerente de Transportes · EP Petroecuador", "Former Transport Manager · EP Petroecuador") },
-  { id: "carla-garcia", name: "Carla García L.", role: text("Ingeniera agrícola", "Agricultural engineer"), specialty: text("Sector agropecuario", "Agricultural sector"), background: text("Ex directora ejecutiva · Asociación Zamorano", "Former Executive Director · Asociación Zamorano") },
 ];
 
 export const companyHistory = {

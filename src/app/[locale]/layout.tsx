@@ -4,6 +4,7 @@ import { Header } from "@/components/header";
 import { InteriorFooter } from "@/components/interior-footer";
 import { Footer } from "@/components/site";
 import { copy } from "@/lib/copy";
+import { company } from "@/lib/content";
 import { fontClassName } from "@/lib/fonts";
 import { isLocale, locales } from "@/lib/i18n";
 import { organizationSchema, siteUrl } from "@/lib/seo";
@@ -23,5 +24,5 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   if (!isLocale(locale)) notFound();
   const c = copy[locale];
   const headerLabels = { nav: c.nav, aboutNav: c.aboutNav, aboutSubmenu: c.aboutSubmenu, home: c.home, menu: c.menu, closeMenu: c.closeMenu, language: c.language, brandDescriptor: c.brandDescriptor, topLine: c.topLine, location: c.location, contactAction: c.contactAction };
-  return <html lang={locale} className={fontClassName}><body><a href="#main-content" className="skip-link">{c.skip}</a><Header locale={locale} labels={headerLabels} /><main id="main-content">{children}</main><InteriorFooter locale={locale}><Footer locale={locale} /></InteriorFooter><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema()).replace(/</g, "\\u003c") }} /></body></html>;
+  return <html lang={locale} className={fontClassName}><body><a href="#main-content" className="skip-link">{c.skip}</a><Header locale={locale} labels={headerLabels} socialLinks={{ whatsapp: company.whatsapp, linkedin: company.linkedin }} /><main id="main-content">{children}</main><InteriorFooter locale={locale}><Footer locale={locale} /></InteriorFooter><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema()).replace(/</g, "\\u003c") }} /></body></html>;
 }

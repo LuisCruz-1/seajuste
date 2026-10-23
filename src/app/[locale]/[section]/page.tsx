@@ -1,13 +1,13 @@
 import { notFound } from "next/navigation";
-import { AboutPage, ContactPage, CredentialsPage, ExperiencePage, ServicesPage, TeamPage } from "@/components/pages";
+import { AboutPage, ContactPage, ExperiencePage, ServicesPage, TeamPage } from "@/components/pages";
 import { PrivacyPage, privacyMetadata } from "@/components/privacy-page";
 import { copy } from "@/lib/copy";
 import { getSection, isLocale, privacySlugs, sectionKeys, sections, type Section } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
 
 type Props = { params: Promise<{ locale: string; section: string }> };
-const views = { about: AboutPage, services: ServicesPage, experience: ExperiencePage, team: TeamPage, credentials: CredentialsPage, contact: ContactPage };
-const introKeys = { about: "aboutIntro", services: "servicesIntro", experience: "experienceIntro", team: "teamPageIntro", credentials: "credentialsIntro", contact: "contactIntro" } as const;
+const views = { about: AboutPage, services: ServicesPage, experience: ExperiencePage, team: TeamPage, contact: ContactPage };
+const introKeys = { about: "aboutIntro", services: "servicesIntro", experience: "experienceIntro", team: "teamPageIntro", contact: "contactIntro" } as const;
 
 export function generateStaticParams({ params }: { params: { locale: string } }) {
   const { locale } = params;

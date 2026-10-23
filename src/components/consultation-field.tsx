@@ -8,7 +8,7 @@ export function ConsultationField({ field, prefix, locale, answers, onChange }: 
   const value = answers[field.name] ?? "";
   const label = t(field.label, locale);
   const shared = { id, name: field.name, required: field.required, value, onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => { event.currentTarget.setCustomValidity(""); onChange(field.name, event.target.value); } };
-  return <div className="field">
+  return <div className={`field${field.fullWidth ? " field-full" : ""}`}>
     <label id={`${id}-label`} htmlFor={id}>{label}{field.required && <span aria-hidden="true"> *</span>}</label>
     {field.kind === "select" ? <select {...shared}><option value="" disabled>{consultationIntro[locale].select}</option>{field.options?.map((option) => <option key={option.value} value={option.value}>{t(option.label, locale)}{option.description ? ` — ${t(option.description, locale)}` : ""}</option>)}</select>
       : field.kind === "textarea" ? <textarea {...shared} rows={6} minLength={10} maxLength={field.maxLength} />

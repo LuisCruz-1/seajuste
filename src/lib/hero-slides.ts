@@ -4,8 +4,10 @@ export type HeroSlide = {
   visual: "trust" | "turbine" | "coverage" | "intervention";
   topic: string;
   title: string;
+  motto?: string;
   accent?: string;
   statement?: string;
+  contactPrompt?: string;
   threshold?: string;
   description?: string;
   highlights?: string[];
@@ -109,27 +111,28 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
       visual: "trust",
       topic: "EMPRESA",
       title: "Ingeniería especializada\naplicada a seguros",
-      accent: "Peritaje técnico-legal\nde reclamos & siniestros",
+      motto: "Sirviendo al mercado asegurador",
+      accent: "Peritaje técnico-legal de reclamos & siniestros",
     },
     {
       visual: "turbine",
       topic: "ESPECIALIDADES",
       title: "Servicios relevantes",
-      statement: "Marine & proyect cargo survey\nReclamos & siniestros\nAlta complejidad",
+      statement: "Reclamos & siniestros de alta complejidad",
       services: [
         { label: "Engineering for complex claims", detail: "engineering" },
         { label: "Energy & power loss adjusting", detail: "energy" },
         { label: "Marine: hull & machinery · cargo", detail: "marine" },
         { label: "Business interruption | Lucro cesante", detail: "interruption" },
       ],
-      consultation: consultationDetails.es,
+      contactPrompt: "Si necesita más información de nuestros servicios.",
     },
     {
       visual: "coverage",
       topic: "PÓLIZA",
       title: "Ramos de seguros autorizados",
       statement: "Ingeniería forense & causa raíz\nReclamos & siniestros",
-      consultation: consultationDetails.es,
+      contactPrompt: "Si necesita más información de nuestros servicios.",
     },
     {
       ...interventionSlides.es,
@@ -142,27 +145,28 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
       visual: "trust",
       topic: "COMPANY",
       title: "Specialist engineering\nfor insurance",
-      accent: "Technical & legal expertise\nfor claims & losses",
+      motto: "Serving the insurance market",
+      accent: "Technical & legal expertise for claims & losses",
     },
     {
       visual: "turbine",
       topic: "SPECIALTIES",
       title: "Key services",
-      statement: "Marine & project cargo survey\nClaims & losses\nHigh complexity",
+      statement: "High-complexity claims & losses",
       services: [
         { label: "Engineering for complex claims", detail: "engineering" },
         { label: "Energy & power loss adjusting", detail: "energy" },
         { label: "Marine: hull & machinery · cargo", detail: "marine" },
         { label: "Business interruption", detail: "interruption" },
       ],
-      consultation: consultationDetails.en,
+      contactPrompt: "If you need more information about our services.",
     },
     {
       visual: "coverage",
       topic: "POLICY",
       title: "Authorised insurance classes",
       statement: "Forensic engineering & root cause analysis\nClaims & losses",
-      consultation: consultationDetails.en,
+      contactPrompt: "If you need more information about our services.",
     },
     {
       ...interventionSlides.en,

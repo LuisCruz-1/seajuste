@@ -10,7 +10,6 @@ export const sections = {
   services: { es: "servicios", en: "services" },
   experience: { es: "experiencia", en: "experience" },
   team: { es: "equipo", en: "team" },
-  credentials: { es: "acreditaciones", en: "credentials" },
   contact: { es: "contacto", en: "contact" },
 } as const;
 export type Section = keyof typeof sections;

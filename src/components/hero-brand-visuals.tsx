@@ -10,12 +10,12 @@ export function HeroBrandVisual({ kind, locale }: { kind: HeroSlide["visual"]; l
   if (kind === "trust") {
     const statistics = [
       { value: "38+", label: es ? "Años de experiencia\nen seguros" : "Years of experience\nin insurance" },
-      { value: "16", label: es ? "Ramos de seguros\nautorizados" : "Authorised\ninsurance classes" },
-      { value: "17", label: es ? "Especialistas en\nnuestro equipo" : "Specialists\nin our team" },
+      { value: "18", label: es ? "Ramos de seguros\nautorizados" : "Authorised\ninsurance classes" },
+      { value: "18", label: es ? "Especialistas en\nnuestro equipo" : "Specialists\nin our team" },
     ];
     return <div className="hero-trust-scene">
       <div className="trust-scene-mark"><Image className="trust-scene-seal" src="/images/brand/manos-texto.png" alt={es ? "Confianza mutua" : "Mutual trust"} fill sizes="(max-width: 760px) 80vw, 38vw" preload /></div>
-      <dl className="trust-scene-statistics">{statistics.map(({ value, label }) => <div key={value}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
+      <dl className="trust-scene-statistics">{statistics.map(({ value, label }) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
       <p className="trust-scene-country">Ecuador</p>
     </div>;
   }
@@ -42,7 +42,7 @@ export function HeroBrandVisual({ kind, locale }: { kind: HeroSlide["visual"]; l
   ];
   return <div className="hero-turbine-scene">
     <div className="turbine-scene-media">
-      <Image className="turbine-scene-art" src="/images/brand/turbina.png" alt={es ? "Turbina metálica frente a un complejo industrial portuario al atardecer" : "Metallic turbine overlooking a waterfront industrial complex at sunset"} fill sizes="(max-width: 760px) 90vw, 46vw" />
+      <Image className="turbine-scene-art" src="/images/brand/turbina.png" alt={es ? "Turbina metálica frente a un complejo industrial portuario al atardecer" : "Metallic turbine overlooking a waterfront industrial complex at sunset"} fill sizes="(max-width: 760px) 90vw, (max-width: 1664px) 53vw, 846px" />
       <div className="turbine-scene-seal"><Image src="/images/brand/confianza-mutua-38.png" alt={sealAlt} width={330} height={312} sizes="(max-width: 760px) 76px, 96px" preload /></div>
     </div>
     <div className="turbine-pillars">{pillars.map(({ icon: Icon, label }) => <div className="turbine-pillar" key={label}><Icon size={19} strokeWidth={1.5} aria-hidden="true" /><strong>{label}</strong></div>)}</div>

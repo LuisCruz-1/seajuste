@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Pause, Play } from "lucide-react";
 import { formatMoney, href, type Locale } from "@/lib/i18n";
 import { heroCoverageOrder, type HeroInterventionCase, type HeroSettlementSummary, type HeroSlide } from "@/lib/hero-slides";
+import { homeFontClassName } from "@/lib/home-fonts";
 import { HeroBrandVisual } from "./hero-brand-visuals";
 
 function subscribeMotion(callback: () => void) {
@@ -56,7 +57,7 @@ export function HomeHero({ locale, slides, insuranceClasses, settlementSummary, 
   return (
     <section
       ref={section}
-      className="home-hero home-slider"
+      className={`home-hero home-slider ${homeFontClassName}`}
       aria-roledescription={es ? "carrusel" : "carousel"}
       aria-label={es ? "Servicios destacados de SEAJUSTE" : "SEAJUSTE featured services"}
       onFocusCapture={(event) => { if (!(event.target as HTMLElement).closest("[data-rotation]")) setPaused(true); }}
@@ -100,13 +101,18 @@ export function HomeHero({ locale, slides, insuranceClasses, settlementSummary, 
             <div key={slide.topic} id={`hero-slide-${index}`} className={`hero-slide hero-slide-${slide.visual}${slide.consultation ? " hero-slide-consultation" : ""}${active ? " is-active" : ""}`} role="group" aria-roledescription={es ? "diapositiva" : "slide"} aria-label={`${index + 1} ${es ? "de" : "of"} ${slides.length}: ${slide.topic}`} aria-hidden={!active} inert={!active}>
               <div className="container home-hero-inner">
                 <div className="hero-visual">
-                  {slide.consultation && (slide.closing || slide.closingAccent) && <p className="hero-intervention-closing">{slide.closing}{slide.closingAccent && <em>{slide.closingAccent}</em>}</p>}
                   <div className={`inspection-frame hero-frame-${slide.visual}`}>
                     <HeroBrandVisual kind={slide.visual} locale={locale} />
                     <span className="inspection-corner corner-one" aria-hidden="true" /><span className="inspection-corner corner-two" aria-hidden="true" />
                   </div>
+                  {slide.consultation && <section className="hero-consultation-note" aria-labelledby={`hero-consultation-title-${index}`}>
+                    <h3 id={`hero-consultation-title-${index}`}>{slide.consultation.title}</h3>
+                    {slide.consultation.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                    <div className="hero-actions"><Link className="button hero-consult-action" href={`${href(locale, "contact")}#consulta`}>{es ? "Solicitar consulta profesional" : "Request a professional consultation"}<ArrowUpRight size={17} aria-hidden="true" /></Link></div>
+                  </section>}
                 </div>
                 <div className={`hero-copy hero-copy-${slide.visual}`}>
+                  {slide.motto && <p className="hero-market-motto">{slide.motto}</p>}
                   {slide.visual === "coverage" ? <div className="hero-coverage-panel">
                       <Heading className="hero-slide-title hero-coverage-title">{slide.title}</Heading>
                       <ul className="hero-coverage-classes" aria-label={es ? "Ramos y coberturas de seguros" : "Insurance classes and covers"}>{heroCoverageOrder.map((classIndex) => <li key={classIndex}>{insuranceClasses[classIndex]}</li>)}</ul>
@@ -125,26 +131,25 @@ export function HomeHero({ locale, slides, insuranceClasses, settlementSummary, 
                         </tbody>)}
                       </table>
                     </div>
-                    {!slide.consultation && <p className="hero-intervention-closing">{slide.closing}{slide.closingAccent && <em>{slide.closingAccent}</em>}</p>}
                   </> : <>
                     <Heading className="hero-slide-title">{slide.title}</Heading>
                     {slide.accent && <p className="hero-primary-statement">{slide.accent}</p>}
                     {slide.services && <ul className="hero-service-list">{slide.services.map(({ label, detail }) => <li key={detail}><Link href={href(locale, "services", detail)}><span>{label}</span><ArrowUpRight size={16} aria-hidden="true" /></Link></li>)}</ul>}
                   </>}
-                  <div className={`hero-conversion has-summary${index === 0 ? " hero-conversion-no-actions" : ""}`}>
-                    {index > 0 && <div className="hero-actions">
-                      <Link className="button hero-consult-action" href={`${href(locale, "contact")}#consulta`}>{es ? "Solicitar consulta profesional" : "Request a professional consultation"}<ArrowUpRight size={17} aria-hidden="true" /></Link>
-                    </div>}
+                  <div className="hero-conversion">
                     {slide.visual === "trust" || slide.visual === "intervention" ? <Link href={href(locale, "experience")} className="hero-settlement" aria-label={es ? `Ver ${caseCountLabel} casos destacados: USD ${settlementFigure} millones en indemnizaciones` : `View ${caseCountLabel} featured cases: USD ${settlementFigure} million in settlements`}>
                       <p className="hero-settlement-amount" aria-hidden="true"><span>USD</span><strong>{settlementFigure}</strong><span>M</span></p>
-                      <p className="hero-settlement-caption">{settlementCaption}</p>
+                      <div className="hero-settlement-copy">
+                        <p className="hero-settlement-caption">{settlementCaption}</p>
+                        {slide.closing && <p className="hero-intervention-closing">{slide.closing}{slide.closingAccent && <em>{slide.closingAccent}</em>}</p>}
+                      </div>
                     </Link> : slide.statement && <div className="hero-message-panel"><p>{slide.statement}</p></div>}
                   </div>
+                  {slide.contactPrompt && <div className="hero-service-contact">
+                    <p>{slide.contactPrompt}</p>
+                    <Link className="button hero-contact-action" href={href(locale, "contact")}>{es ? "Contáctenos" : "Contact us"}<ArrowUpRight size={17} aria-hidden="true" /></Link>
+                  </div>}
                 </div>
-                {slide.consultation && <section className="hero-consultation-note" aria-labelledby={`hero-consultation-title-${index}`}>
-                  <h3 id={`hero-consultation-title-${index}`}>{slide.consultation.title}</h3>
-                  {slide.consultation.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-                </section>}
               </div>
             </div>
           );

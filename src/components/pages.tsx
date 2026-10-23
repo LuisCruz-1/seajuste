@@ -1,17 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, BadgeCheck, CalendarDays, Check, FileText, Mail, MapPin, MessageCircle, Phone, ShieldCheck } from "lucide-react";
-import { authorizations, cases, clients, company, companyHistory, companyHistoryDocuments, corporatePurpose, economicActivities, services, supplierProducts, team, type CaseStudy, type Service } from "@/lib/content";
+import { ArrowDown, ArrowLeft, ArrowUpRight, Check, FileText, Mail, MapPin, MessageCircle, Phone, ShieldCheck } from "lucide-react";
+import { authorizations, cases, clients, company, companyHistory, companyHistoryDocuments, services, team, type CaseStudy, type Service } from "@/lib/content";
 import { copy } from "@/lib/copy";
 import { consultationDetails, heroCoverageAdditionalClasses, heroCoverageLabels, heroInterventionRows, heroSlides } from "@/lib/hero-slides";
 import { aboutAnchors, formatMoney, href, t, type Locale } from "@/lib/i18n";
+import { homeFontClassName } from "@/lib/home-fonts";
 import { CaseCard } from "./cards";
 import { CaseGrid } from "./case-grid";
 import { ContactForm } from "./contact-form";
 import { Gallery } from "./gallery";
 import { HomeHero } from "./home-hero";
 import { PdfDocument } from "./pdf-document";
-import { Registers } from "./registers";
 import { Breadcrumbs, ButtonLink, ClientLogos, ContactBand, Methodology, PageHero, Photo, SectionHeading, ServiceCard, ServiceIcon, toCaseCard } from "./site";
 
 export function HomePage({ locale }: { locale: Locale }) {
@@ -31,24 +31,22 @@ function AboutContactActions({ locale }: { locale: Locale }) {
   const contact = href(locale, "contact");
   return <div className="about-contact-actions">
     <Link className="button hero-consult-action" href={`${contact}#consulta`}>{c.consultationAction}<ArrowUpRight size={18} aria-hidden="true" /></Link>
-    <Link className="button hero-meeting-action" href={`${contact}#reunion`}>{c.meetingTab}<CalendarDays size={18} aria-hidden="true" /></Link>
   </div>;
 }
 
 export function AboutPage({ locale }: { locale: Locale }) {
   const c = copy[locale];
-  return <><section className="section company-profile" id={aboutAnchors.company}><div className="container">
-    <header className="company-profile-heading"><h1>{c.aboutTitle}</h1><p>{c.aboutStatement}</p></header>
+  return <div className={`about-page ${homeFontClassName}`}><section className="section company-profile" id={aboutAnchors.company}><div className="container">
+    <header className="company-profile-heading"><h1>{c.aboutTitle}</h1><div className="company-profile-intro"><p>{c.aboutStatement}</p><AboutContactActions locale={locale} /></div></header>
     <div className="company-profile-layout">
-      <div className="company-profile-visual"><Image src="/images/brand/about-company-turbine.webp" alt={c.aboutImageAlt} width={435} height={518} sizes="(max-width: 950px) 90vw, 43vw" loading="eager" /></div>
+      <h2 className="company-identity-title" id={aboutAnchors.identity} tabIndex={-1}>{c.identity}</h2>
+      <div className="company-profile-visual"><Image src="/images/brand/about-company-turbine.webp" alt={c.aboutImageAlt} fill sizes="(max-width: 950px) 90vw, 43vw" loading="eager" /></div>
       <div className="company-profile-copy">
-        <h2 className="company-identity-title" id={aboutAnchors.identity} tabIndex={-1}>{c.identity}</h2>
         <section className="company-philosophy" aria-labelledby="company-philosophy-title"><h3 id="company-philosophy-title">{c.philosophy}</h3><p className="company-philosophy-lead">{c.philosophyLead}</p><p>{c.philosophyText}</p></section>
         <div className="company-purpose-grid">
           <section className="company-mission" aria-labelledby="company-mission-title"><h3 id="company-mission-title">{c.mission}</h3><p>{c.missionText}</p></section>
           <section className="company-vision" aria-labelledby="company-vision-title"><h3 id="company-vision-title">{c.vision}</h3><p>{c.visionText}</p></section>
         </div>
-        <AboutContactActions locale={locale} />
       </div>
     </div>
   </div></section>
@@ -63,7 +61,7 @@ export function AboutPage({ locale }: { locale: Locale }) {
     </div>
   </div></section>
   {companyHistoryDocuments.map((document) => <section className={`section company-history${document.section === "claims" ? "" : " section-tint"}`} id={document.section === "review" ? "history-documents" : `${document.section}-documents`} key={document.id}><div className="container" id={document.section === "review" ? aboutAnchors.marine : document.section === "claims" ? aboutAnchors.london : aboutAnchors.reinsurers} tabIndex={-1}>
-    <SectionHeading eyebrow={document.section === "review" ? c.historyEyebrow : undefined} title={c.historySections[document.section]} description={document.section === "review" ? c.historyIntro : undefined} />
+    <SectionHeading title={c.historySections[document.section]} description={document.section === "review" ? c.historyIntro : undefined} />
     <article className="history-document-card" id={document.id} aria-labelledby={`${document.id}-title`}>
       <div className="history-document-copy">
         <time dateTime={document.date}>{t(document.dateLabel, locale)}</time>
@@ -79,15 +77,15 @@ export function AboutPage({ locale }: { locale: Locale }) {
       <PdfDocument document={document.pdf} title={t(document.title, locale)} actionLabel={c.historyOpen} locale={locale} />
     </article>
     {document.section === "reinsurance" && <div className="about-contact-closing">
-      <div><h3>{c.contactAction}</h3><p>{c.contactIntro}</p></div>
+      <div><p className="eyebrow">{c.contactEyebrow}</p><h3>{c.contactTitle}</h3><p>{c.contactIntro}</p></div>
       <AboutContactActions locale={locale} />
     </div>}
-  </div></section>)}</>;
+  </div></section>)}</div>;
 }
 
 export function ServicesPage({ locale }: { locale: Locale }) {
   const c = copy[locale];
-  return <><PageHero locale={locale} section="services" eyebrow={c.servicesEyebrow} title={c.servicesTitle} description={c.servicesIntro} /><section className="section"><div className="container"><div className="service-feature"><Photo name="electrical-testing" alt={locale === "es" ? "Pruebas de campo de equipos eléctricos" : "Field testing of electrical equipment"} /><div><span className="eyebrow">{c.coreLabel}</span><h2>{t(services[0].title, locale)}</h2><p>{t(services[0].summary, locale)}</p><ul className="check-list">{services[0].scope.slice(0, 3).map((scope, index) => <li key={index}><Check size={17} aria-hidden="true" />{t(scope, locale)}</li>)}</ul><ButtonLink to={href(locale, "services", "adjusting")}>{c.viewService}</ButtonLink></div></div><div className="service-grid primary-services">{services.filter((service) => service.featured && service.id !== "adjusting").map((service) => <ServiceCard service={service} locale={locale} key={service.id} />)}</div></div></section><section className="section section-tint"><div className="container"><SectionHeading title={c.complementaryTitle} description={c.complementaryIntro} /><div className="service-grid">{services.filter((service) => !service.featured).map((service) => <ServiceCard key={service.id} service={service} locale={locale} />)}</div></div></section><section className="section coverage-section"><div className="container"><SectionHeading title={c.coverageTitle} description={c.coverageIntro} action={<Link className="text-link" href={href(locale, "credentials")}>{c.nav.credentials}<ArrowUpRight size={18} /></Link>} /><div className="coverage-tags">{authorizations.map((authorization, index) => <span key={index}>{t(authorization, locale)}</span>)}<span>{locale === "es" ? "Fenómenos de la naturaleza" : "Natural perils"}</span></div></div></section><Methodology locale={locale} /><ContactBand locale={locale} /></>;
+  return <><PageHero locale={locale} section="services" eyebrow={c.servicesEyebrow} title={c.servicesTitle} description={c.servicesIntro} /><section className="section"><div className="container"><div className="service-feature"><Photo name="electrical-testing" alt={locale === "es" ? "Pruebas de campo de equipos eléctricos" : "Field testing of electrical equipment"} /><div><span className="eyebrow">{c.coreLabel}</span><h2>{t(services[0].title, locale)}</h2><p>{t(services[0].summary, locale)}</p><ul className="check-list">{services[0].scope.slice(0, 3).map((scope, index) => <li key={index}><Check size={17} aria-hidden="true" />{t(scope, locale)}</li>)}</ul><ButtonLink to={href(locale, "services", "adjusting")}>{c.viewService}</ButtonLink></div></div><div className="service-grid primary-services">{services.filter((service) => service.featured && service.id !== "adjusting").map((service) => <ServiceCard service={service} locale={locale} key={service.id} />)}</div></div></section><section className="section section-tint"><div className="container"><SectionHeading title={c.complementaryTitle} description={c.complementaryIntro} /><div className="service-grid">{services.filter((service) => !service.featured).map((service) => <ServiceCard key={service.id} service={service} locale={locale} />)}</div></div></section><section className="section coverage-section"><div className="container"><SectionHeading title={c.coverageTitle} description={c.coverageIntro} /><div className="coverage-tags">{authorizations.map((authorization, index) => <span key={index}>{t(authorization, locale)}</span>)}<span>{locale === "es" ? "Fenómenos de la naturaleza" : "Natural perils"}</span></div></div></section><Methodology locale={locale} /><ContactBand locale={locale} /></>;
 }
 
 export function ServicePage({ locale, service }: { locale: Locale; service: Service }) {
@@ -100,20 +98,20 @@ export function ServicePage({ locale, service }: { locale: Locale; service: Serv
 export function ExperiencePage({ locale }: { locale: Locale }) {
   const c = copy[locale];
   const filters = { all: c.all, search: c.searchCases, categories: c.categories, action: c.viewCase, settlement: c.settlement, empty: c.empty, clear: c.clear, results: c.results, resultSingular: c.resultSingular };
-  return <>
-    <PageHero locale={locale} section="experience" eyebrow={c.experienceEyebrow} title={c.experienceTitle} description={c.experienceIntro} />
+  return <div className={`experience-page ${homeFontClassName}`}>
+    <PageHero locale={locale} section="experience" eyebrow={c.experienceEyebrow} title={c.experienceTitle} description={c.experienceIntro} className="experience-hero" />
     <section className="section settlements-section"><div className="container">
       <p className="eyebrow">{c.settlement}</p>
-      <div className="settlement-strip">{cases.filter((item) => item.value).map((item) => <Link key={item.id} href={href(locale, "experience", item.id)}><strong>{formatMoney(item.value!, locale)}</strong><span>{item.client} · {t(item.title, locale)}</span><ArrowUpRight size={18} aria-hidden="true" /></Link>)}</div>
+      <div className="settlement-strip">{cases.filter((item) => item.value).map((item) => <Link key={item.id} href={href(locale, "experience", item.id)}><p className="settlement-figure"><span>USD</span><strong>{formatMoney(item.value!, locale).replace("USD ", "")}</strong></p><span className="settlement-case-label">{item.client} · {t(item.title, locale)}</span><ArrowUpRight size={18} aria-hidden="true" /></Link>)}</div>
       <p className="source-note">{c.settlementNote}</p>
     </div></section>
-    <section className="section experience-archive"><div className="container"><CaseGrid items={cases.map((item) => toCaseCard(item, locale))} labels={filters} /></div></section>
-    <section className="section section-tint"><div className="container">
+    <section className="section experience-archive"><div className="container"><div className="experience-archive-heading"><h2>{c.caseEyebrow}</h2><p>{c.caseIntro}</p></div><CaseGrid items={cases.map((item) => toCaseCard(item, locale))} labels={filters} /></div></section>
+    <section className="section section-tint experience-clients"><div className="container">
       <SectionHeading eyebrow={c.clientsEyebrow} title={c.clientsTitle} description={c.clientsIntro} /><ClientLogos locale={locale} all />
       <p className="source-note">{locale === "es" ? `Referencias del brochure corporativo · ${clients.length} empresas e instituciones.` : `Corporate brochure references · ${clients.length} companies and institutions.`}</p>
     </div></section>
     <ContactBand locale={locale} />
-  </>;
+  </div>;
 }
 
 export function CasePage({ locale, item }: { locale: Locale; item: CaseStudy }) {
@@ -125,46 +123,61 @@ export function CasePage({ locale, item }: { locale: Locale; item: CaseStudy }) 
 export function TeamPage({ locale }: { locale: Locale }) {
   const c = copy[locale];
   const leader = team[0];
-  return <><PageHero locale={locale} section="team" eyebrow={c.teamEyebrow} title={c.teamPageTitle} description={c.teamPageIntro} /><section className="section"><div className="container leader-card"><div className="leader-portrait"><Image src={`/images/team/${leader.id}.webp`} alt={leader.name} fill sizes="(max-width: 650px) 80vw, 320px" /></div><div><p className="eyebrow">{c.teamLeader}</p><h2>{leader.name}</h2><p className="leader-role">{t(leader.role, locale)}</p><p>{c.teamLeaderText}</p><Link href={href(locale, "about")} className="text-link">{c.historyEyebrow}<ArrowUpRight size={18} aria-hidden="true" /></Link></div><span className="leader-mark" aria-hidden="true">S</span></div></section><section className="section section-tint"><div className="container"><SectionHeading title={c.specialists} description={c.teamIntro} /><div className="team-grid">{team.slice(1).map((person) => <article className="team-card" key={person.id}><div className="portrait"><Image src={`/images/team/${person.id}.webp`} alt={person.name} fill sizes="(max-width: 600px) 45vw, (max-width: 1000px) 30vw, 23vw" /></div><div className="team-card-text"><span className="data-label">{t(person.specialty, locale)}</span><h3>{person.name}</h3><p>{t(person.role, locale)}</p>{person.background && <small>{typeof person.background === "string" ? person.background : t(person.background, locale)}</small>}</div></article>)}</div><p className="source-note">{c.teamNote}</p></div></section><ContactBand locale={locale} /></>;
-}
-
-export function CredentialsPage({ locale }: { locale: Locale }) {
-  const c = copy[locale];
-  const registerGroups = [
-    { title: c.activityTitle, rows: economicActivities.map((item) => ({ code: item.code, description: t(item.description, locale) })) },
-    { title: c.supplierTitle, rows: supplierProducts.map(([code, description]) => ({ code, description: t(description, locale) })) },
-  ];
-  const registerLabels = { search: c.searchRegisters, code: c.code, description: c.description, empty: c.empty, clear: c.clear, results: c.registerResults, resultSingular: c.registerResultSingular };
-  return <>
-    <PageHero locale={locale} section="credentials" eyebrow={c.credentialsEyebrow} title={c.credentialsTitle} description={c.credentialsIntro} />
-    <section className="section credentials-identity"><div className="container"><dl className="identity-grid"><div><dt>{c.legalName}</dt><dd>{company.legalName}</dd></div><div><dt>{c.taxId}</dt><dd className="identity-tax">{company.taxId}</dd></div><div><dt>{c.deed}</dt><dd>{c.deedValue}<p>{c.notary}</p></dd></div></dl></div></section>
-    <section className="section authorization-section"><div className="container">
-      <SectionHeading eyebrow={c.certificateAuthority} title={c.certificateTitle} description={c.certificateDate} action={<a className="text-link" href="/documents/brochure-page-38.webp" target="_blank" rel="noopener noreferrer">{c.original}<ArrowUpRight size={18} /></a>} />
-      <ol className="authorization-grid">{authorizations.map((authorization, index) => <li key={index}><span>{String(index + 1).padStart(2, "0")}</span><p>{t(authorization, locale)}</p><BadgeCheck size={20} strokeWidth={1.4} aria-hidden="true" /></li>)}</ol>
-    </div></section>
-    <section className="section"><div className="container corporate-layout">
-      <div><SectionHeading title={c.purposeTitle} description={c.purposeIntro} /><p>{c.purposeAudience}</p><a href="/documents/brochure-page-39.webp" target="_blank" rel="noopener noreferrer" className="text-link">{c.original}<ArrowUpRight size={18} /></a></div>
-      <ul className="corporate-list">{corporatePurpose.map((purpose, index) => <li key={index}><Check size={16} aria-hidden="true" /><span>{t(purpose, locale)}</span></li>)}</ul>
-    </div></section>
-    <section className="section section-tint"><div className="container">
-      <SectionHeading eyebrow={c.credentialsEyebrow} title={locale === "es" ? "Registros y actividades" : "Registers & activities"} description={c.registerIntro} />
-      <Registers groups={registerGroups} labels={registerLabels} />
-      <p className="source-note">{c.registerReference}</p>
-      <div className="register-download"><ButtonLink to={company.brochure} variant="outline" download>{c.downloadFull}</ButtonLink></div>
-    </div></section>
+  const [titleLead, ...titleRest] = c.nav.team.split(" ");
+  return <div className={`workgroup-page ${homeFontClassName}`}>
+    <section className="workgroup-hero" aria-labelledby="workgroup-title">
+      <div className="container">
+        <div className="workgroup-seal"><Image src="/images/brand/manos.png" alt={locale === "es" ? "Confianza mutua" : "Mutual trust"} fill sizes="(max-width: 640px) 88px, 132px" /></div>
+        <Breadcrumbs locale={locale} section="team" />
+        <div className="workgroup-hero-layout">
+          <div className="workgroup-hero-intro">
+            <p className="eyebrow">{c.teamEyebrow}</p>
+            <h1 id="workgroup-title"><span>{titleLead}</span>{" "}<span>{titleRest.join(" ")}</span></h1>
+            <p className="workgroup-hero-description">{c.teamPageIntro}</p>
+          </div>
+          <div className="workgroup-director">
+            <article className="workgroup-card workgroup-director-card" aria-labelledby="workgroup-director-name">
+              <div className="workgroup-profile-header">
+                <div className="workgroup-portrait"><Image src={`/images/team/${leader.id}.webp`} alt={leader.name} fill sizes="112px" loading="eager" /></div>
+                <div className="workgroup-identity"><p className="workgroup-director-label">{c.teamLeader}</p><h2 id="workgroup-director-name">{leader.name}</h2><p className="workgroup-role">{t(leader.role, locale)}</p><p className="workgroup-affiliation">{typeof leader.background === "string" ? leader.background : t(leader.background, locale)}</p></div>
+              </div>
+            </article>
+            <p className="workgroup-director-note">{c.teamLeaderText}</p>
+            <Link href={href(locale, "about")} className="text-link">{c.historyEyebrow}<ArrowUpRight size={18} aria-hidden="true" /></Link>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section className="workgroup-introduction" aria-labelledby="workgroup-disciplines-title"><div className="container"><h2 id="workgroup-disciplines-title">{c.teamPageTitle}</h2><p>{c.teamIntro}</p></div></section>
+    <section className="workgroup-members" aria-label={c.specialists}>
+      <div className="container">
+        <ul className="workgroup-grid" role="list">
+          {team.slice(1).map((person) => <li key={person.id}>
+            <article className="workgroup-card workgroup-member-card" aria-labelledby={`workgroup-${person.id}`}>
+              <div className="workgroup-profile-header">
+                <div className="workgroup-portrait"><Image src={`/images/team/${person.id}.webp`} alt={person.name} fill sizes="96px" /></div>
+                <div className="workgroup-identity"><h3 id={`workgroup-${person.id}`}>{person.name}</h3><p className="workgroup-role">{t(person.role, locale)}</p></div>
+              </div>
+              <div className="workgroup-profile-details"><p className="workgroup-specialty">{t(person.specialty, locale)}</p>{person.background && <p className="workgroup-background">{typeof person.background === "string" ? person.background : t(person.background, locale)}</p>}</div>
+            </article>
+          </li>)}
+        </ul>
+      </div>
+    </section>
+    <div className="container workgroup-note"><p>{c.teamNote}</p></div>
     <ContactBand locale={locale} />
-  </>;
+  </div>;
 }
 
 export function ContactPage({ locale }: { locale: Locale }) {
   const c = copy[locale];
   const consultation = consultationDetails[locale];
-  return <>
-    <PageHero locale={locale} section="contact" title={consultation.title} description={consultation.paragraphs} />
+  return <div className={`contact-page ${homeFontClassName}`}>
+    <PageHero locale={locale} section="contact" title={consultation.title} description={consultation.paragraphs} className="contact-hero" />
     <section className="section contact-section"><div className="container contact-layout">
-      <ContactForm locale={locale} options={services.map((service) => ({ id: service.id, title: t(service.title, locale) }))} labels={c} whatsapp={company.whatsapp} />
+      <ContactForm locale={locale} labels={c} whatsapp={company.whatsapp} />
       <aside className="contact-information" aria-label={c.directContact}>
-        <p className="eyebrow">{c.directContact}</p>
+        <h2 className="direct-contact-heading">{c.directContact}</h2>
         <a className="direct-contact" href={company.phoneHref}><span className="contact-icon"><Phone size={23} strokeWidth={1.5} aria-hidden="true" /></span><span><small>{c.phone}</small><strong>{company.phone}</strong></span><ArrowUpRight size={20} aria-hidden="true" /></a>
         <a className="direct-contact" href={`mailto:${company.email}`}><span className="contact-icon"><Mail size={23} strokeWidth={1.5} aria-hidden="true" /></span><span><small>{c.email}</small><strong>{company.email}</strong></span><ArrowUpRight size={20} aria-hidden="true" /></a>
         <a className="text-link whatsapp-direct" href={company.whatsapp} target="_blank" rel="noopener noreferrer"><MessageCircle size={19} aria-hidden="true" />{c.whatsapp}<ArrowUpRight size={17} aria-hidden="true" /></a>
@@ -172,6 +185,6 @@ export function ContactPage({ locale }: { locale: Locale }) {
         <div className="office-list">{company.offices.map((office) => <article className="office-card" key={office.city}><div><MapPin size={20} strokeWidth={1.5} aria-hidden="true" /><h3>{office.city}<span>{c.officeCountry}</span></h3></div><address><strong>{t(office.building, locale)}</strong><br />{t(office.office, locale)}<br />{office.street}</address><a href={office.map} target="_blank" rel="noopener noreferrer" className="text-link">{c.mapAction}<ArrowUpRight size={16} aria-hidden="true" /></a></article>)}</div>
       </aside>
     </div></section>
-    <section className="contact-assurance"><div className="container"><ShieldCheck size={24} strokeWidth={1.5} aria-hidden="true" /><p>{c.values.join(" · ")}</p><Link href={href(locale, "credentials")}>{c.nav.credentials}<ArrowRight size={16} aria-hidden="true" /></Link></div></section>
-  </>;
+    <section className="contact-assurance"><div className="container"><ShieldCheck size={24} strokeWidth={1.5} aria-hidden="true" /><p>{c.topLine}</p></div></section>
+  </div>;
 }
