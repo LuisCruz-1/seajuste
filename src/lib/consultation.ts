@@ -6,7 +6,7 @@ export type ConsultationOption = { value: string; label: Localized; description?
 export type ConsultationField = {
   name: string;
   label: Localized;
-  kind: "text" | "email" | "tel" | "textarea" | "radio";
+  kind: "text" | "email" | "tel" | "textarea" | "select";
   required?: boolean;
   options?: ConsultationOption[];
   autoComplete?: string;
@@ -19,12 +19,12 @@ const field = (name: string, es: string, en: string, props: Partial<Consultation
 
 export const consultationIntro = {
   es: {
-    title: "Consulta profesional", required: "Los campos marcados con * son obligatorios.",
+    title: "Consulta profesional", required: "Los campos marcados con * son obligatorios.", select: "Seleccione una opción",
     invalid: "Complete este campo sin usar solo espacios.", invalidPhone: "Indique un teléfono válido con al menos 7 dígitos.",
     subject: "Solicitud de consulta profesional · SEAJUSTE",
   },
   en: {
-    title: "Professional consultation", required: "Fields marked * are required.",
+    title: "Professional consultation", required: "Fields marked * are required.", select: "Select an option",
     invalid: "Complete this field with more than spaces.", invalidPhone: "Enter a valid phone number with at least 7 digits.",
     subject: "Professional consultation request · SEAJUSTE",
   },
@@ -34,7 +34,7 @@ export const consultationIntro = {
 export function getConsultationSections(): ConsultationSection[] {
   return [
     { id: "identity", title: text("Seleccione quién solicita la consulta", "Select who is requesting the consultation"), fields: [
-      field("requester", "Seleccione quién solicita la consulta", "Select who is requesting the consultation", { kind: "radio", required: true, options: [
+      field("requester", "Seleccione quién solicita la consulta", "Select who is requesting the consultation", { kind: "select", required: true, options: [
         option("insurer", "Aseguradora", "Insurer"), option("reinsurer", "Reaseguradora", "Reinsurer"), option("insured", "Empresa / asegurado", "Company / insured"), option("adjuster", "Ajustadora", "Loss adjuster"), option("broker", "Corredor de seguros", "Insurance broker"), option("legal", "Abogado / asesor", "Lawyer / adviser"), option("other", "Otro", "Other"),
       ] }),
     ] },
@@ -49,7 +49,7 @@ export function getConsultationSections(): ConsultationSection[] {
       field("eventLocation", "Ubicación del reclamo / siniestro", "Claim / loss location"),
     ] },
     { id: "situation", title: text("Seleccione el motivo de consulta", "Select the reason for your enquiry"), fields: [
-      field("situation", "Seleccione el motivo de consulta", "Select the reason for your enquiry", { kind: "radio", required: true, options: [
+      field("situation", "Seleccione el motivo de consulta", "Select the reason for your enquiry", { kind: "select", required: true, options: [
         option("recent", "Siniestro reciente", "Recent loss", text("Inspección temprana y preservación de evidencias.", "Early inspection and preservation of evidence.")),
         option("ongoing", "Reclamo en curso", "Ongoing claim", text("Evaluación con antecedentes y documentación disponible.", "Assessment using available background and documentation.")),
         option("technical", "Asistencia técnica-legal", "Technical and legal assistance", text("Asunto o especialidad solicitada.", "Subject or specialist assistance requested.")),

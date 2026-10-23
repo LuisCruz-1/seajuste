@@ -31,14 +31,17 @@ for (const locale of ["es", "en"]) {
       await expect(active).toHaveAttribute("id", `hero-slide-${index}`);
       await expect(hero.locator(".hero-slide[inert]")).toHaveCount(3);
       const actions = active.locator(".hero-actions");
-      await expect(actions.getByRole("link").first()).toHaveAttribute("href", locale === "es" ? "/es/contacto#consulta" : "/en/contact#consulta");
-      await expect(actions.getByRole("link").first()).toHaveText(locale === "es" ? "Solicitar consulta profesional" : "Request a professional consultation");
-      await expect(actions.getByRole("link").last()).toHaveAttribute("href", locale === "es" ? "/es/contacto#reunion" : "/en/contact#reunion");
-      await expect(actions.getByRole("link").last()).toHaveText(locale === "es" ? "Agendar reunión" : "Schedule a meeting");
+      const links = actions.getByRole("link");
+      await expect(links).toHaveCount(index === 0 ? 0 : 1);
+      await expect(active.getByRole("link", { name: locale === "es" ? /Agendar reunión/ : /Schedule a meeting/ })).toHaveCount(0);
+      if (index > 0) {
+        await expect(links.first()).toHaveAttribute("href", locale === "es" ? "/es/contacto#consulta" : "/en/contact#consulta");
+        await expect(links.first()).toHaveText(locale === "es" ? "Solicitar consulta profesional" : "Request a professional consultation");
+      }
       const actionsBox = (await actions.boundingBox())!;
       const summary = active.locator(index === 0 || index >= 3 ? ".hero-settlement" : ".hero-message-panel");
       const summaryBox = (await summary.boundingBox())!;
-      expect(actionsBox.x + actionsBox.width).toBeLessThanOrEqual(summaryBox.x + 1);
+      if (index > 0) expect(actionsBox.x + actionsBox.width).toBeLessThanOrEqual(summaryBox.x + 1);
       if (index === 0 || index >= 3) {
         await expect(active.locator(".hero-settlement-amount strong")).toHaveText(locale === "es" ? "13,8" : "13.8");
         await expect(active.locator(".hero-settlement")).toHaveAttribute("href", locale === "es" ? "/es/experiencia" : "/en/experience");
@@ -46,13 +49,20 @@ for (const locale of ["es", "en"]) {
         await expect(active.locator(".hero-settlement")).toHaveCount(0);
         await expect(active.locator(".hero-message-panel")).toBeVisible();
       }
-      if (index === 0) await expect(active.locator(".trust-scene-statistics dd")).toHaveCount(3);
+      if (index === 0) {
+        await expect(active.locator(".trust-scene-statistics dd")).toHaveCount(3);
+        await expect(active.locator(".trust-scene-statistics dd").nth(1)).toHaveText("16");
+      }
       if (index === 1) {
         await expect(active.locator(".hero-service-list > li")).toHaveCount(4);
         await expect(active.locator(".turbine-pillar")).toHaveCount(4);
       }
       if (index === 2) {
-        await expect(active.locator(".hero-coverage-classes > li")).toHaveCount(16);
+        const classes = active.locator(".hero-coverage-classes > li");
+        await expect(classes).toHaveCount(18);
+        await expect(classes.nth(15)).toHaveText(locale === "es" ? "CASCO AÉREO" : "AIRCRAFT HULL");
+        await expect(classes.nth(16)).toHaveText(locale === "es" ? "Riesgos diversos" : "Miscellaneous risks");
+        await expect(classes.nth(17)).toHaveText(locale === "es" ? "Vehículos" : "Motor vehicles");
         await expect(active.locator("img")).toHaveCount(8);
       }
       if (index >= 3) {
@@ -71,7 +81,7 @@ for (const locale of ["es", "en"]) {
         });
         await expect(hero.locator(".hero-slide.is-active")).toHaveAttribute("id", `hero-slide-${index}`);
       }
-      if (index === 3) {
+      if (index > 0) {
         await expect(active.locator(".hero-consultation-note h3")).toHaveText(locale === "es" ? "Conversemos sobre el alcance de su consulta" : "Let’s discuss the scope of your enquiry");
         await expect(active.locator(".hero-consultation-note p")).toHaveCount(2);
         await expect(active.locator(".hero-consultation-note p").first()).toContainText(locale === "es" ? "la documentación técnica necesaria para un análisis preliminar" : "the technical documentation needed for a preliminary assessment");
@@ -111,11 +121,11 @@ for (const locale of ["es", "en"]) {
       await hero.locator(".hero-slide-tab").nth(1).click();
     }
     await expect(hero.locator(".hero-slide.is-active")).toHaveAttribute("id", "hero-slide-1");
-    await hero.locator(".hero-slide.is-active .hero-actions").getByRole("link", { name: locale === "es" ? /Agendar reunión/i : /Schedule a meeting/i }).click();
-    await expect(page).toHaveURL(new RegExp(locale === "es" ? "/es/contacto#reunion$" : "/en/contact#reunion$"));
+    await hero.locator(".hero-slide.is-active .hero-actions").getByRole("link", { name: locale === "es" ? /Solicitar consulta profesional/i : /Request a professional consultation/i }).click();
+    await expect(page).toHaveURL(new RegExp(locale === "es" ? "/es/contacto#consulta$" : "/en/contact#consulta$"));
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-    await expect(page.getByRole("tab", { name: locale === "es" ? "Agendar reunión" : "Schedule a meeting" })).toHaveAttribute("aria-selected", "true");
-    await expect(page.getByRole("tabpanel").getByLabel(locale === "es" ? /Fecha preferida/ : /Preferred date/)).toBeVisible();
+    await expect(page.getByRole("tab", { name: locale === "es" ? "Consulta profesional" : "Professional consultation" })).toHaveAttribute("aria-selected", "true");
+    await expect(page.locator(".consultation-form")).toBeVisible();
     expect(errors).toEqual([]);
   });
 }
@@ -153,26 +163,24 @@ test("autoplay keeps running on hover and respects pause, keyboard focus and red
   await expect(hero.locator("[data-rotation]")).toHaveCount(0);
 });
 
-test("fourth slide consultation actions reach the matching contact forms at narrow widths", async ({ page }, testInfo) => {
+test("slides two through four consultation actions reach the matching contact forms at narrow widths", async ({ page }, testInfo) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.setViewportSize({ width: testInfo.project.name === "mobile" ? 320 : 768, height: 1000 });
   for (const locale of ["es", "en"]) {
     const es = locale === "es";
-    for (const choice of [
-      { label: es ? "Solicitar consulta profesional" : "Request a professional consultation", hash: "consulta", tab: es ? "Consulta profesional" : "Professional consultation" },
-      { label: es ? "Agendar reunión" : "Schedule a meeting", hash: "reunion", tab: es ? "Agendar reunión" : "Schedule a meeting" },
-    ]) {
+    for (const index of [1, 2, 3]) {
       await page.goto(`/${locale}`);
       const hero = page.locator(".home-slider");
-      await hero.getByRole("button", { name: es ? "Diapositiva anterior" : "Previous slide", exact: true }).click();
+      for (let step = 0; step < index; step++) await hero.getByRole("button", { name: es ? "Diapositiva siguiente" : "Next slide", exact: true }).click();
       const slide = hero.locator(".hero-slide.is-active");
-      await expect(slide).toHaveAttribute("id", "hero-slide-3");
+      await expect(slide).toHaveAttribute("id", `hero-slide-${index}`);
       expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
       await expect(slide.locator(".hero-consultation-note p")).toHaveCount(2);
-      await slide.getByRole("link", { name: choice.label, exact: true }).click();
-      await expect(page).toHaveURL(new RegExp(`/${locale}/${es ? "contacto" : "contact"}#${choice.hash}$`));
-      await expect(page.getByRole("tab", { name: choice.tab, exact: true })).toHaveAttribute("aria-selected", "true");
-      await expect(page.getByRole("tabpanel", { name: choice.tab, exact: true })).toBeVisible();
+      await expect(slide.getByRole("link", { name: es ? "Agendar reunión" : "Schedule a meeting" })).toHaveCount(0);
+      await slide.getByRole("link", { name: es ? "Solicitar consulta profesional" : "Request a professional consultation", exact: true }).click();
+      await expect(page).toHaveURL(new RegExp(`/${locale}/${es ? "contacto" : "contact"}#consulta$`));
+      await expect(page.getByRole("tab", { name: es ? "Consulta profesional" : "Professional consultation", exact: true })).toHaveAttribute("aria-selected", "true");
+      await expect(page.locator(".consultation-form")).toBeVisible();
     }
   }
 });

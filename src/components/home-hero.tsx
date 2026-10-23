@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Check, Pause, Play } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Pause, Play } from "lucide-react";
 import { formatMoney, href, type Locale } from "@/lib/i18n";
 import { heroCoverageOrder, type HeroInterventionCase, type HeroSettlementSummary, type HeroSlide } from "@/lib/hero-slides";
 import { HeroBrandVisual } from "./hero-brand-visuals";
@@ -110,7 +110,7 @@ export function HomeHero({ locale, slides, insuranceClasses, settlementSummary, 
                   {slide.visual === "coverage" ? <div className="hero-coverage-panel">
                       <Heading className="hero-slide-title hero-coverage-title">{slide.title}</Heading>
                       <p className="hero-coverage-authority">{slide.authority}</p>
-                      <ul className="hero-coverage-classes" aria-label={es ? "16 ramos de seguros autorizados" : "16 authorised insurance classes"}>{heroCoverageOrder.map((classIndex) => <li key={classIndex}>{insuranceClasses[classIndex]}</li>)}</ul>
+                      <ul className="hero-coverage-classes" aria-label={es ? "Ramos y coberturas de seguros" : "Insurance classes and covers"}>{heroCoverageOrder.map((classIndex) => <li key={classIndex}>{insuranceClasses[classIndex]}</li>)}</ul>
                   </div> : slide.visual === "intervention" ? <>
                     <Heading className="hero-slide-title hero-intervention-title">{slide.title}</Heading>
                     <p className="hero-intervention-threshold">{slide.threshold}</p>
@@ -132,10 +132,9 @@ export function HomeHero({ locale, slides, insuranceClasses, settlementSummary, 
                     {slide.accent && <p className="hero-primary-statement">{slide.accent}</p>}
                     {slide.services && <ul className="hero-service-list">{slide.services.map(({ label, detail }) => <li key={detail}><Link href={href(locale, "services", detail)}><span>{label}</span><ArrowUpRight size={16} aria-hidden="true" /></Link></li>)}</ul>}
                   </>}
-                  <div className="hero-conversion has-summary">
+                  <div className={`hero-conversion has-summary${index === 0 ? " hero-conversion-no-actions" : ""}`}>
                     <div className="hero-actions">
-                      <Link className="button hero-consult-action" href={`${href(locale, "contact")}#consulta`}>{es ? "Solicitar consulta profesional" : "Request a professional consultation"}<ArrowUpRight size={17} aria-hidden="true" /></Link>
-                      <Link href={`${href(locale, "contact")}#reunion`} className="button hero-meeting-action">{es ? "Agendar reunión" : "Schedule a meeting"}<CalendarDays size={17} aria-hidden="true" /></Link>
+                      {index > 0 && <Link className="button hero-consult-action" href={`${href(locale, "contact")}#consulta`}>{es ? "Solicitar consulta profesional" : "Request a professional consultation"}<ArrowUpRight size={17} aria-hidden="true" /></Link>}
                     </div>
                     {slide.visual === "trust" || slide.visual === "intervention" ? <Link href={href(locale, "experience")} className="hero-settlement" aria-label={es ? `Ver ${caseCountLabel} casos destacados: USD ${settlementFigure} millones en indemnizaciones` : `View ${caseCountLabel} featured cases: USD ${settlementFigure} million in settlements`}>
                       <p className="hero-settlement-amount" aria-hidden="true"><span>USD</span><strong>{settlementFigure}</strong><span>M</span></p>

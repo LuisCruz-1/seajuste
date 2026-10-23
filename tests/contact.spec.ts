@@ -61,7 +61,9 @@ test("meeting requests validate preferences and prepare only the matching WhatsA
 test("hero consultation links select the right tab and tab changes preserve drafts and history", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/es");
-  await page.locator(".hero-slide.is-active").getByRole("link", { name: "Solicitar consulta profesional" }).click();
+  const hero = page.locator(".home-slider");
+  await hero.getByRole("button", { name: "Diapositiva siguiente" }).click();
+  await hero.locator(".hero-slide.is-active").getByRole("link", { name: "Solicitar consulta profesional" }).click();
   await expect(page).toHaveURL(/\/es\/contacto#consulta$/);
   const consultation = page.getByRole("tab", { name: "Consulta profesional" });
   const meeting = page.getByRole("tab", { name: "Agendar reunión" });

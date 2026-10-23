@@ -88,9 +88,9 @@ test("contact validates details and prepares an actual WhatsApp enquiry", async 
   await form.getByLabel(/Nombre y apellido/).fill("María Torres");
   await form.getByRole("textbox", { name: "Empresa", exact: true }).fill("Prueba técnica");
   await form.getByLabel(/Correo electrónico/).fill("maria@example.com");
-  await form.getByRole("radio", { name: "Aseguradora", exact: true }).check();
+  await form.getByRole("combobox", { name: "Seleccione quién solicita la consulta", exact: true }).selectOption("insurer");
   await form.getByLabel("Teléfono / WhatsApp", { exact: false }).fill("999666167");
-  await form.getByRole("radio", { name: /^Siniestro reciente/ }).check();
+  await form.getByRole("combobox", { name: "Seleccione el motivo de consulta", exact: true }).selectOption("recent");
   await form.getByLabel(/Ubicación del reclamo \/ siniestro/).fill("Guayaquil, Ecuador");
   await form.getByRole("textbox", { name: "Descripción de la consulta", exact: true }).fill("Inspección de un transformador en Guayaquil.");
   await form.getByRole("checkbox", { name: /Estoy de acuerdo con la política de privacidad/ }).check();

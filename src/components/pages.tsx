@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, BadgeCheck, CalendarDays, Check, FileText, Mail, MapPin, MessageCircle, Phone, ShieldCheck } from "lucide-react";
 import { authorizations, cases, clients, company, companyHistory, companyHistoryDocuments, corporatePurpose, economicActivities, services, supplierProducts, team, type CaseStudy, type Service } from "@/lib/content";
 import { copy } from "@/lib/copy";
-import { heroCoverageLabels, heroInterventionRows, heroSlides } from "@/lib/hero-slides";
+import { heroCoverageAdditionalClasses, heroCoverageLabels, heroInterventionRows, heroSlides } from "@/lib/hero-slides";
 import { aboutAnchors, formatMoney, href, t, type Locale } from "@/lib/i18n";
 import { CaseCard } from "./cards";
 import { CaseGrid } from "./case-grid";
@@ -22,7 +22,8 @@ export function HomePage({ locale }: { locale: Locale }) {
     if (item?.value === undefined) throw new Error(`Missing documented settlement for ${row.id}`);
     return { id: row.id, client: item.client, equipment: t(row.equipment, locale), unit: t(row.unit, locale), location: t(row.location, locale), value: item.value };
   });
-  return <HomeHero locale={locale} slides={heroSlides[locale]} insuranceClasses={authorizations.map((item, index) => t(heroCoverageLabels[index] ?? item, locale))} settlementSummary={settlementSummary} interventionCases={interventionCases} />;
+  const insuranceClasses = [...authorizations.map((item, index) => t(heroCoverageLabels[index] ?? item, locale)), ...heroCoverageAdditionalClasses.map((item) => t(item, locale))];
+  return <HomeHero locale={locale} slides={heroSlides[locale]} insuranceClasses={insuranceClasses} settlementSummary={settlementSummary} interventionCases={interventionCases} />;
 }
 
 function AboutContactActions({ locale }: { locale: Locale }) {

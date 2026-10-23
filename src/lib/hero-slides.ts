@@ -35,8 +35,13 @@ export const heroCoveragePhotos: HeroProjectPhoto[] = [
   { image: "ramos-cargo-unloading", alt: text("Supervisión de descarga de carga industrial en puerto", "Supervision of industrial cargo unloading at port") },
 ];
 
+export const heroCoverageAdditionalClasses: Localized[] = [
+  text("Riesgos diversos", "Miscellaneous risks"),
+  text("Vehículos", "Motor vehicles"),
+];
+
 // Keep the authorised classes together in the same pairs as the reference layout.
-export const heroCoverageOrder = [0, 1, 2, 3, 13, 11, 5, 9, 4, 6, 8, 7, 15, 10, 14, 12];
+export const heroCoverageOrder = [0, 1, 2, 3, 13, 11, 5, 9, 4, 6, 8, 7, 15, 10, 14, 12, 16, 17];
 
 export const heroCoverageLabels: Partial<Record<number, Localized>> = {
   13: text("MARÍTIMO: CASCO & MAQUINARIA", "MARINE: HULL & MACHINERY"),
@@ -58,6 +63,23 @@ export const heroInterventionRows: { id: DetailId; equipment: Localized; unit: L
   { id: "tg4", equipment: text("Turbina a gas", "Gas turbine"), unit: text("TG-4", "TG-4"), location: text("Gonzalo Zevallos", "Gonzalo Zevallos") },
   { id: "artefacta", equipment: text("Locales comerciales", "Retail premises"), unit: text("Varios", "Various"), location: text("Manabí y Esmeraldas", "Manabí & Esmeraldas") },
 ];
+
+const consultationDetails: Record<Locale, HeroSlide["consultation"]> = {
+  es: {
+    title: "Conversemos sobre el alcance de su consulta",
+    paragraphs: [
+      "Compártanos sus inquietudes y una descripción de las características del reclamo o siniestro. Con la información inicial y los antecedentes disponibles, podríamos identificar el alcance de su requerimiento y la documentación técnica necesaria para un análisis preliminar.",
+      "Cuando la naturaleza o complejidad del caso lo justifique, coordinaremos una reunión profesional para examinar sus particularidades y definir los siguientes pasos.",
+    ],
+  },
+  en: {
+    title: "Let’s discuss the scope of your enquiry",
+    paragraphs: [
+      "Share your questions and a description of the claim or loss. With the initial information and available background, we could identify the scope of your request and the technical documentation needed for a preliminary assessment.",
+      "When the nature or complexity of the case calls for it, we will arrange a professional meeting to examine its particulars and define the next steps.",
+    ],
+  },
+};
 
 const interventionSlides: Record<Locale, HeroSlide> = {
   es: {
@@ -101,6 +123,7 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
         { label: "Marine: hull & machinery · cargo", detail: "marine" },
         { label: "Business interruption | Lucro cesante", detail: "interruption" },
       ],
+      consultation: consultationDetails.es,
     },
     {
       visual: "coverage",
@@ -108,17 +131,12 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
       title: "Ramos de seguros autorizados",
       authority: "Superintendencia de Compañías, Valores y Seguros",
       statement: "Ingeniería forense & causa raíz\nReclamos & siniestros",
+      consultation: consultationDetails.es,
     },
     {
       ...interventionSlides.es,
       topic: "CONSULTA",
-      consultation: {
-        title: "Conversemos sobre el alcance de su consulta",
-        paragraphs: [
-          "Compártanos sus inquietudes y una descripción de las características del reclamo o siniestro. Con la información inicial y los antecedentes disponibles, podríamos identificar el alcance de su requerimiento y la documentación técnica necesaria para un análisis preliminar.",
-          "Cuando la naturaleza o complejidad del caso lo justifique, coordinaremos una reunión profesional para examinar sus particularidades y definir los siguientes pasos.",
-        ],
-      },
+      consultation: consultationDetails.es,
     },
   ],
   en: [
@@ -139,6 +157,7 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
         { label: "Marine: hull & machinery · cargo", detail: "marine" },
         { label: "Business interruption", detail: "interruption" },
       ],
+      consultation: consultationDetails.en,
     },
     {
       visual: "coverage",
@@ -146,17 +165,12 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
       title: "Authorised insurance classes",
       authority: "Superintendency of Companies, Securities and Insurance",
       statement: "Forensic engineering & root cause analysis\nClaims & losses",
+      consultation: consultationDetails.en,
     },
     {
       ...interventionSlides.en,
       topic: "CONSULTATION",
-      consultation: {
-        title: "Let’s discuss the scope of your enquiry",
-        paragraphs: [
-          "Share your questions and a description of the claim or loss. With the initial information and available background, we could identify the scope of your request and the technical documentation needed for a preliminary assessment.",
-          "When the nature or complexity of the case calls for it, we will arrange a professional meeting to examine its particulars and define the next steps.",
-        ],
-      },
+      consultation: consultationDetails.en,
     },
   ],
 };
