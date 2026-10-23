@@ -30,6 +30,11 @@ test("meeting requests validate preferences and prepare only the matching WhatsA
     expect(await page.evaluate(() => (window as unknown as { whatsappRequests: string[] }).whatsappRequests)).toEqual([]);
 
     await form.getByLabel(es ? /Fecha preferida/ : /Preferred date/).fill("2099-12-20");
+    const consent = form.getByRole("checkbox", { name: es ? /Estoy de acuerdo con la política de privacidad/ : /I agree to the privacy policy/ });
+    await expect(consent).not.toBeChecked();
+    await submit.click();
+    expect(await page.evaluate(() => (window as unknown as { whatsappRequests: string[] }).whatsappRequests)).toEqual([]);
+    await consent.check();
     await submit.click();
     await expect(page.getByRole("status")).toContainText(es ? "La solicitud de reunión está preparada" : "Your meeting request is ready");
     const requests = await page.evaluate(() => (window as unknown as { whatsappRequests: string[] }).whatsappRequests);
@@ -41,7 +46,8 @@ test("meeting requests validate preferences and prepare only the matching WhatsA
     for (const value of ["José Núñez", "Energía & Transporte", "jose@example.com", "+593 99 123 4567", "09:30", "UTC−5", "Virtual", "Ana & José"]) expect(text).toContain(value);
     expect(text).toContain(es ? "Solicitud de reunión" : "Meeting request");
     expect(text).toContain(es ? "20 de diciembre de 2099" : "20 December 2099");
-    expect(text).not.toContain(es ? "Contexto de su consulta" : "Enquiry details");
+    expect(text).toContain(es ? "Estoy de acuerdo con la política de privacidad." : "I agree to the privacy policy.");
+    expect(text).not.toContain(es ? "Descripción de la consulta" : "Enquiry description");
     await expect(form.locator(".form-actions a[href^='mailto:']")).toHaveCount(0);
     await expect(page.getByRole("button", { name: /correo|email/i })).toHaveCount(0);
     await expect(page.getByRole("status").getByRole("link")).toHaveAttribute("href", url.toString());
@@ -61,14 +67,14 @@ test("hero consultation links select the right tab and tab changes preserve draf
   const meeting = page.getByRole("tab", { name: "Agendar reunión" });
   await expect(consultation).toHaveAttribute("aria-selected", "true");
   await page.getByRole("tabpanel").getByLabel(/Nombre y apellido/).fill("María Torres");
-  await page.getByRole("tabpanel").getByLabel(/Contexto de su consulta/).fill("Consulta sobre daños en una turbina de generación.");
+  await page.getByRole("tabpanel").getByRole("textbox", { name: "Descripción de la consulta", exact: true }).fill("Consulta sobre daños en una turbina de generación.");
 
   await meeting.click();
   await expect(page).toHaveURL(/#reunion$/);
   await page.getByRole("tabpanel").getByLabel(/Nombre y apellido/).fill("Carlos Quevedo");
   await consultation.click();
   await expect(page.getByRole("tabpanel").getByLabel(/Nombre y apellido/)).toHaveValue("María Torres");
-  await expect(page.getByRole("tabpanel").getByLabel(/Contexto de su consulta/)).toHaveValue("Consulta sobre daños en una turbina de generación.");
+  await expect(page.getByRole("tabpanel").getByRole("textbox", { name: "Descripción de la consulta", exact: true })).toHaveValue("Consulta sobre daños en una turbina de generación.");
   await page.goBack();
   await expect(meeting).toHaveAttribute("aria-selected", "true");
   await expect(page.getByRole("tabpanel").getByLabel(/Nombre y apellido/)).toHaveValue("Carlos Quevedo");
@@ -84,7 +90,7 @@ test("hero consultation links select the right tab and tab changes preserve draf
   await expect(page.locator(".contact-form")).toBeInViewport();
 });
 
-test("Services opens the same detailed consultation form", async ({ page }) => {
+test("Services opens the same consultation form", async ({ page }) => {
   for (const locale of ["es", "en"]) {
     const es = locale === "es";
     await page.goto(`/${locale}/${es ? "servicios" : "services"}`);

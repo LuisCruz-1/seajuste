@@ -17,6 +17,8 @@ export type Section = keyof typeof sections;
 export const sectionKeys = Object.keys(sections) as Section[];
 
 export const aboutAnchors = { identity: "identidad", london: "londres", history: "nuestra-historia" } as const;
+export const privacySlugs = { es: "politica-de-privacidad", en: "privacy-policy" } as const;
+export const privacyHref = (locale: Locale) => `/${locale}/${privacySlugs[locale]}`;
 
 export const detailSlugs = {
   adjusting: { section: "services", es: "peritaje-y-ajuste", en: "loss-adjusting" },
@@ -62,6 +64,7 @@ export function getDetail(locale: Locale, section: Section, slug: string): Detai
 export function translatePath(pathname: string, target: Locale): string {
   const [, language, sectionSlug, detailSlug] = pathname.split("/");
   if (!isLocale(language)) return href(target);
+  if (sectionSlug === privacySlugs[language] && !detailSlug) return privacyHref(target);
   const section = sectionSlug ? getSection(language, sectionSlug) : undefined;
   const detail = section && detailSlug ? getDetail(language, section, detailSlug) : undefined;
   return href(target, section, detail);

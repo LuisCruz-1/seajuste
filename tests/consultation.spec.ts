@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
 for (const locale of ["es", "en"] as const) {
-  test(`detailed consultation validates identification and serialises only the selected claim branch (${locale})`, async ({ page }, testInfo) => {
+  test(`consultation follows the JPEG reference and sends only its fields (${locale})`, async ({ page }, testInfo) => {
     const es = locale === "es";
     if (testInfo.project.name === "mobile") await page.setViewportSize({ width: 320, height: 1000 });
     await page.emulateMedia({ reducedMotion: "reduce" });
@@ -12,103 +12,71 @@ for (const locale of ["es", "en"] as const) {
     });
     await page.goto(`/${locale}/${es ? "contacto" : "contact"}#consulta`);
     await page.evaluate(() => document.fonts.ready);
-    await page.screenshot({ path: testInfo.outputPath(`contact-entry-${locale}.png`) });
     const form = page.locator(".consultation-form");
-    await expect(form).toHaveCount(1);
-    await expect(form.locator(".consultation-section").first()).toHaveClass(/consultation-identity/);
+    const expectedFields = ["requester", "company", "name", "position", "phone", "email", "cityCountry", "address", "eventLocation", "situation", "message", "consent"].sort();
+    const fields = () => form.locator("input, textarea, select").evaluateAll((elements) => [...new Set(elements.map((element) => (element as HTMLInputElement).name))].sort());
+    expect(await fields()).toEqual(expectedFields);
+    await expect(form.locator("details, select, input[type='date'], input[type='time'], input[type='file']")).toHaveCount(0);
+    await expect(form.locator(".consultation-choice-grid").first().locator("label")).toHaveText(es
+      ? ["Aseguradora", "Reaseguradora", "Empresa / asegurado", "Ajustadora", "Corredor de seguros", "Abogado / asesor", "Otro"]
+      : ["Insurer", "Reinsurer", "Company / insured", "Loss adjuster", "Insurance broker", "Lawyer / adviser", "Other"]);
+    await expect(form.locator('[name="situation"]')).toHaveCount(3);
+    expect(await form.locator(".consultation-contact input").evaluateAll((inputs) => inputs.map((input) => (input as HTMLInputElement).name))).toEqual(["company", "name", "position", "phone", "email", "cityCountry", "address", "eventLocation"]);
+
     const submit = form.getByRole("button", { name: es ? "Continuar por WhatsApp" : "Continue via WhatsApp" });
     const calls = () => page.evaluate(() => (window as unknown as { consultationUrls: string[] }).consultationUrls);
     await submit.click();
     expect(await calls()).toEqual([]);
     await form.locator('[name="requester"][value="other"]').check();
-    await form.locator('[name="requesterOther"]').fill("Consultora técnica independiente");
-    await form.locator('[name="name"]').fill("María Núñez");
+    expect(await fields()).toEqual(expectedFields);
     await form.locator('[name="company"]').fill("Energía & Seguros");
+    await form.locator('[name="name"]').fill("María Núñez");
     await form.locator('[name="position"]').fill("Ingeniera");
-    await form.locator('[name="acting"]').selectOption("entity");
-    await form.locator('[name="representedEntity"]').fill("Entidad oculta al actuar en nombre propio");
-    await form.locator('[name="phone"]').fill("999123456");
-    await form.locator('[name="countryCode"]').fill("593");
+    await form.locator('[name="phone"]').fill("no-es-un-telefono");
     await form.locator('[name="email"]').fill("maria@example.com");
-    await form.locator('[name="preferredContact"]').selectOption("email");
-    await form.locator('[name="situation"][value="recent"]').check();
-    await expect(form.locator(".consultation-recent")).toBeVisible();
-    await expect(form.locator(".consultation-ongoing")).toHaveCount(0);
-    await form.locator(".consultation-event > summary").click();
-    await form.locator('[name="eventDate"]').fill("2026-01-15");
+    await form.locator('[name="cityCountry"]').fill("Quito, Ecuador");
+    await form.locator('[name="address"]').fill("Av. Principal 123");
     await form.locator('[name="eventLocation"]').fill("Guayaquil, Guayas, Ecuador");
-    await form.locator('[name="service"]').selectOption("energy");
-    await form.locator('[name="notifiedBy"]').selectOption("broker");
-    await form.locator('[name="appointment"]').selectOption("yes");
-    await form.locator('[name="appointingEntity"]').fill("Designante temporal");
-    await form.locator(".consultation-recent > summary").click();
-    await form.locator('[name="inspection"]').selectOption("confirm");
-    await form.locator('[name="measures"][value="repairs"]').check();
-    await form.locator('[name="measures"][value="none"]').check();
-    await expect(form.locator('[name="measures"][value="repairs"]')).not.toBeChecked();
-    await form.locator('[name="measures"][value="emergency"]').check();
-    await expect(form.locator('[name="measures"][value="none"]')).not.toBeChecked();
-    await form.locator('[name="urgency"]').fill("Plazo exclusivo del siniestro reciente");
+    await form.locator('[name="situation"][value="recent"]').check();
     await form.locator('[name="message"]').fill("Evaluación técnica de daños en una turbina y sus equipos auxiliares.");
-    await form.getByRole("checkbox", { name: es ? /He leído la política/ : /I have read the privacy/ }).check();
-    await submit.click();
-    expect(await calls()).toEqual([]); // Calling code requires its + prefix.
-    await form.locator('[name="countryCode"]').fill("+593");
-    await form.getByRole("checkbox", { name: es ? /He leído la política/ : /I have read the privacy/ }).uncheck();
+    const consent = form.getByRole("checkbox", { name: es ? /Estoy de acuerdo/ : /I agree/ });
+    await consent.check();
     await submit.click();
     expect(await calls()).toEqual([]);
-    await form.getByRole("checkbox", { name: es ? /He leído la política/ : /I have read the privacy/ }).check();
+    await form.locator('[name="phone"]').fill("+593 99 912 3456");
+    await form.locator('[name="company"]').fill("   ");
     await submit.click();
-    expect(await calls()).toHaveLength(1);
-    expect(new URL((await calls())[0]).searchParams.get("text")).toContain("Plazo exclusivo del siniestro reciente");
+    expect(await calls()).toEqual([]);
+    await form.locator('[name="company"]').fill("Energía & Seguros");
+    await consent.uncheck();
+    await submit.click();
+    expect(await calls()).toEqual([]);
+    await consent.check();
 
-    await form.locator('[name="situation"][value="ongoing"]').check();
-    await expect(page.getByRole("status")).toHaveCount(0);
-    await expect(form.locator(".consultation-recent")).toHaveCount(0);
-    await form.locator(".consultation-ongoing > summary").click();
-    await form.locator('[name="claimStatus"]').selectOption("discussion");
-    await form.locator('[name="physicalEvidence"]').selectOption("partial");
-    await form.locator('[name="priorWork"][value="manufacturer"]').check();
-    await form.locator('[name="existingDocuments"][value="reports"]').check();
-    await form.locator('[name="claimDeadline"]').fill("Reunión técnica el 28 de octubre");
-    await form.locator('[name="acting"]').selectOption("self");
-    await expect(form.locator('[name="representedEntity"]')).toHaveCount(0);
-    await form.locator('[name="appointment"]').selectOption("no");
-    await expect(form.locator('[name="appointingEntity"]')).toHaveCount(0);
-    await form.locator('[name="documents"][value="policy"]').check();
-    await form.locator('[name="preferredHours"]').fill("09:00–12:00 UTC−5");
-    await form.locator(".consultation-privacy > summary").click();
-    await expect(form.locator(".consultation-privacy")).toContainText("seajuste@gmail.com");
-    await expect(form.locator('input[type="file"]')).toHaveCount(0);
-    await submit.click();
-    expect(await calls()).toHaveLength(2);
-    const url = new URL((await calls())[1]);
-    expect(url.hostname).toBe("wa.me");
-    expect(url.pathname).toBe("/593999666167");
-    const message = url.searchParams.get("text")!;
-    for (const value of ["María Núñez", "Energía & Seguros", "Consultora técnica independiente", "+593", "999123456", "maria@example.com", "Guayaquil, Guayas, Ecuador", "2026-01-15", "Reunión técnica el 28 de octubre", "09:00–12:00 UTC−5"]) expect(message).toContain(value);
-    for (const value of ["Plazo exclusivo del siniestro reciente", "Entidad oculta al actuar en nombre propio", "Designante temporal"]) expect(message).not.toContain(value);
-    expect(message).toContain(es ? "Corredor de seguros" : "Insurance broker");
-    expect(message).toContain(es ? "Discusión técnica" : "Technical discussion");
-    await expect(page.getByRole("status")).toContainText(es ? "La consulta está preparada" : "Your consultation is ready");
-    await expect(page.getByRole("status").getByRole("link")).toHaveAttribute("href", url.toString());
+    const reasons = [
+      { value: "recent", label: es ? "Siniestro reciente" : "Recent loss" },
+      { value: "ongoing", label: es ? "Reclamo en curso" : "Ongoing claim" },
+      { value: "technical", label: es ? "Asistencia técnica-legal" : "Technical and legal assistance" },
+    ];
+    for (const [index, reason] of reasons.entries()) {
+      await form.locator(`[name="situation"][value="${reason.value}"]`).check();
+      expect(await fields()).toEqual(expectedFields);
+      await submit.click();
+      expect(await calls()).toHaveLength(index + 1);
+      const url = new URL((await calls())[index]);
+      expect(url.hostname).toBe("wa.me");
+      expect(url.pathname).toBe("/593999666167");
+      const message = url.searchParams.get("text")!;
+      for (const value of ["María Núñez", "Energía & Seguros", "Ingeniera", "+593 99 912 3456", "maria@example.com", "Quito, Ecuador", "Av. Principal 123", "Guayaquil, Guayas, Ecuador", "Evaluación técnica de daños", reason.label]) expect(message).toContain(value);
+      for (const other of reasons.filter((item) => item.value !== reason.value)) expect(message).not.toContain(other.label);
+      expect(message).toContain(es ? "Estoy de acuerdo con la política de privacidad." : "I agree to the privacy policy.");
+      await expect(page.getByRole("status")).toContainText(es ? "La consulta está preparada" : "Your consultation is ready");
+      await expect(page.getByRole("status").getByRole("link")).toHaveAttribute("href", url.toString());
+    }
+
     const results = await new AxeBuilder({ page }).include(".contact-form").withTags(["wcag2a", "wcag2aa", "wcag21aa"]).analyze();
     expect(results.violations.map((item) => ({ id: item.id, targets: item.nodes.map((node) => node.target) }))).toEqual([]);
     expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
     await form.screenshot({ path: testInfo.outputPath(`consultation-${locale}.png`), style: ".site-header, .skip-link { visibility: hidden !important; }" });
-
-    await form.locator('[name="situation"][value="technical"]').check();
-    await expect(form.locator(".consultation-ongoing")).toHaveCount(0);
-    await form.locator('[name="technicalSubject"]').fill("Análisis técnico-legal");
-    await submit.click();
-    const technical = new URL((await calls())[2]).searchParams.get("text")!;
-    expect(technical).toContain("Análisis técnico-legal");
-    expect(technical).not.toContain("Reunión técnica el 28 de octubre");
-    await form.locator('[name="situation"][value="preventive"]').check();
-    await form.locator('[name="preventiveSubject"]').fill("Colaboración profesional preventiva");
-    await submit.click();
-    const preventive = new URL((await calls())[3]).searchParams.get("text")!;
-    expect(preventive).toContain("Colaboración profesional preventiva");
-    expect(preventive).not.toContain("Análisis técnico-legal");
   });
 }

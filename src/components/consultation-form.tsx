@@ -1,19 +1,19 @@
 "use client";
 
-import { useId, useRef, useState, type FormEvent } from "react";
+import { useId, useState, type FormEvent } from "react";
 import { ArrowUpRight, MessageCircle } from "lucide-react";
 import { t, type Locale } from "@/lib/i18n";
-import { buildConsultationMessage, consultationIntro, getConsultationSections, type ConsultationAnswers, type ServiceOption } from "@/lib/consultation";
+import { buildConsultationMessage, consultationIntro, getConsultationSections, type ConsultationAnswers } from "@/lib/consultation";
 import { ConsultationField } from "./consultation-field";
+import { PrivacyConsent } from "./privacy-consent";
 
-export function ConsultationForm({ locale, options, whatsapp, email, submitLabel, onPrepared, onDraftChange }: { locale: Locale; options: ServiceOption[]; whatsapp: string; email: string; submitLabel: string; onPrepared: (url: string) => void; onDraftChange: () => void }) {
+export function ConsultationForm({ locale, whatsapp, submitLabel, onPrepared, onDraftChange }: { locale: Locale; whatsapp: string; submitLabel: string; onPrepared: (url: string) => void; onDraftChange: () => void }) {
   const id = useId();
-  const [answers, setAnswers] = useState<ConsultationAnswers>({ countryCode: "+593" });
-  const formRef = useRef<HTMLFormElement>(null);
+  const [answers, setAnswers] = useState<ConsultationAnswers>({});
   const c = consultationIntro[locale];
-  const sections = getConsultationSections(answers, options);
+  const sections = getConsultationSections();
 
-  function change(name: string, value: string | string[]) {
+  function change(name: string, value: string) {
     setAnswers((current) => ({ ...current, [name]: value }));
     onDraftChange();
   }
@@ -22,31 +22,33 @@ export function ConsultationForm({ locale, options, whatsapp, email, submitLabel
     event.preventDefault();
     const form = event.currentTarget;
     for (const section of sections) for (const field of section.fields) {
+      if (field.kind === "tel") {
+        const input = form.elements.namedItem(field.name) as HTMLInputElement;
+        const value = input.value.trim();
+        input.setCustomValidity(value.replace(/\D/g, "").length < 7 || !/^[+\d()\s.-]+$/.test(value) ? c.invalidPhone : "");
+        continue;
+      }
       if (!field.required || !["text", "textarea"].includes(field.kind)) continue;
       const input = form.elements.namedItem(field.name) as HTMLInputElement | HTMLTextAreaElement;
       input.setCustomValidity(input.value.trim().length < (field.kind === "textarea" ? 10 : 2) ? c.invalid : "");
     }
     if (!form.reportValidity()) return;
     const url = new URL(whatsapp);
-    url.searchParams.set("text", buildConsultationMessage(answers, options, locale));
+    url.searchParams.set("text", buildConsultationMessage(answers, locale));
     window.open(url.toString(), "_blank", "noopener,noreferrer");
     onPrepared(url.toString());
   }
 
-  return <form className="consultation-form" ref={formRef} onSubmit={submit} onInput={onDraftChange} aria-label={locale === "es" ? "Consulta profesional" : "Professional consultation"}>
+  return <form className="consultation-form" onSubmit={submit} onInput={onDraftChange} aria-label={c.title}>
     <p className="consultation-required">{c.required}</p>
     {sections.map((section) => {
-      const heading = <><span className="consultation-section-number">{section.number}</span><span>{t(section.title, locale)}</span></>;
-      const fields = <><div className="form-fields">{section.fields.map((field) => <ConsultationField key={field.name} field={field} prefix={id} locale={locale} answers={answers} onChange={change} />)}</div>{section.note && <p className="consultation-hint">{t(section.note, locale)}</p>}</>;
-      return section.optional ? <details className={`consultation-section consultation-disclosure consultation-${section.id}`} key={section.id}>
-        <summary>{heading}<span className="consultation-optional">{c.optional}</span></summary><div className="consultation-section-body">{fields}</div>
-      </details> : <section className={`consultation-section consultation-${section.id}`} key={section.id} aria-labelledby={`${id}-${section.id}-title`}>
-        <h3 id={`${id}-${section.id}-title`}>{heading}</h3>{fields}
+      const single = section.fields.length === 1;
+      return <section className={`consultation-section consultation-${section.id}`} key={section.id} aria-labelledby={single ? `${id}-${section.fields[0].name}-label` : `${id}-${section.id}-title`}>
+        {!single && <h3 id={`${id}-${section.id}-title`}>{t(section.title, locale)}</h3>}
+        <div className="form-fields">{section.fields.map((field) => <ConsultationField key={field.name} field={field} prefix={id} locale={locale} answers={answers} onChange={change} />)}</div>
       </section>;
     })}
-    <p className="consultation-hint">{c.confidential}</p>
-    <details className="consultation-privacy"><summary>{c.privacy}</summary><p>{c.privacyText}</p><p>{c.privacyContact} <a href={`mailto:${email}`}>{email}</a>.</p><p>{c.privacyWhatsapp} <a href="https://www.whatsapp.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">WhatsApp</a></p></details>
-    <label className="consultation-consent"><input type="checkbox" name="consent" required onChange={onDraftChange} /><span>{c.consent} <span aria-hidden="true">*</span></span></label>
+    <PrivacyConsent locale={locale} onChange={onDraftChange} />
     <div className="form-actions"><button type="submit" className="button button-primary"><MessageCircle size={18} aria-hidden="true" />{submitLabel}<ArrowUpRight size={18} aria-hidden="true" /></button></div>
   </form>;
 }

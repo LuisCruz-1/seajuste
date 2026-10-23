@@ -160,7 +160,7 @@ export function ContactPage({ locale }: { locale: Locale }) {
   return <>
     <PageHero locale={locale} section="contact" eyebrow={c.contactEyebrow} title={c.contactTitle} description={c.contactIntro} />
     <section className="section contact-section"><div className="container contact-layout">
-      <ContactForm locale={locale} options={services.map((service) => ({ id: service.id, title: t(service.title, locale) }))} labels={c} whatsapp={company.whatsapp} email={company.email} />
+      <ContactForm locale={locale} options={services.map((service) => ({ id: service.id, title: t(service.title, locale) }))} labels={c} whatsapp={company.whatsapp} />
       <aside className="contact-information" aria-label={c.directContact}>
         <p className="eyebrow">{c.directContact}</p>
         <a className="direct-contact" href={company.phoneHref}><span className="contact-icon"><Phone size={23} strokeWidth={1.5} aria-hidden="true" /></span><span><small>{c.phone}</small><strong>{company.phone}</strong></span><ArrowUpRight size={20} aria-hidden="true" /></a>
