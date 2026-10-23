@@ -4,14 +4,13 @@ import { useId, useRef, useState, useSyncExternalStore, type FormEvent } from "r
 import { ArrowUpRight, CalendarDays, FileText, MessageCircle, ShieldCheck } from "lucide-react";
 import type { Locale } from "@/lib/i18n";
 import type { Copy } from "@/lib/copy";
-import { consultationIntro } from "@/lib/consultation";
 import { ConsultationForm } from "./consultation-form";
 import { PrivacyConsent } from "./privacy-consent";
 import { privacyCopy } from "@/lib/privacy";
 
 type FormLabels = Pick<Copy,
-  "formTitle" | "formIntro" | "name" | "company" | "optional" | "email" | "service" | "selectService" | "message" | "messageHint" | "namePlaceholder" | "companyPlaceholder" | "emailPlaceholder" | "messagePlaceholder" |
-  "formTabs" | "consultationTab" | "meetingTab" | "contactPhone" | "contactPhonePlaceholder" | "consultationSubject" | "meetingTitle" | "meetingIntro" | "meetingSubject" | "meetingDate" | "meetingTime" | "meetingTimezone" | "meetingFormat" | "selectMeetingFormat" | "meetingVirtual" | "meetingGuayaquil" | "meetingQuito" | "meetingMessage" | "meetingMessagePlaceholder" | "meetingMessageHint" | "meetingReady" |
+  "name" | "company" | "optional" | "email" | "service" | "selectService" | "message" | "messageHint" | "namePlaceholder" | "companyPlaceholder" | "emailPlaceholder" | "messagePlaceholder" |
+  "formTabs" | "consultationTab" | "meetingTab" | "contactPhone" | "contactPhonePlaceholder" | "consultationSubject" | "meetingIntro" | "meetingSubject" | "meetingDate" | "meetingTime" | "meetingTimezone" | "meetingFormat" | "selectMeetingFormat" | "meetingVirtual" | "meetingGuayaquil" | "meetingQuito" | "meetingMessage" | "meetingMessagePlaceholder" | "meetingMessageHint" | "meetingReady" |
   "whatsappSend" | "openWhatsapp" | "formNotice" | "formReady" | "formFallback"
 >;
 
@@ -84,7 +83,7 @@ export function ContactForm({ locale, options, labels, whatsapp }: { locale: Loc
   }
 
   return (
-    <section className="contact-form" id="enquiry" aria-labelledby={`${id}-title`}>
+    <section className="contact-form" id="enquiry">
       <span id="consulta" className="contact-mode-anchor" aria-hidden="true" />
       <span id="reunion" className="contact-mode-anchor" aria-hidden="true" />
       <div className="contact-form-tabs" role="tablist" aria-label={labels.formTabs} onKeyDown={(event) => {
@@ -97,7 +96,6 @@ export function ContactForm({ locale, options, labels, whatsapp }: { locale: Loc
       }}>
         {modes.map((formMode) => <button key={formMode} ref={(element) => { tabRefs.current[formMode] = element; }} type="button" role="tab" id={`${id}-${formMode}-tab`} aria-controls={`${id}-${formMode}-panel`} aria-selected={mode === formMode} tabIndex={mode === formMode ? 0 : -1} onClick={() => selectMode(formMode)}>{formMode === "meeting" ? <CalendarDays size={20} aria-hidden="true" /> : <FileText size={20} aria-hidden="true" />}<span>{formMode === "meeting" ? labels.meetingTab : labels.consultationTab}</span></button>)}
       </div>
-      <span className="eyebrow">SEAJUSTE · {locale.toUpperCase()}</span><h2 id={`${id}-title`}>{mode === "meeting" ? labels.meetingTitle : consultationIntro[locale].title}</h2>
       {mode === "meeting" && <div className="form-intro"><p>{labels.meetingIntro}</p></div>}
       {modes.map((formMode) => {
         const meeting = formMode === "meeting";

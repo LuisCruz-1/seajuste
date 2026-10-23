@@ -8,6 +8,9 @@ for (const locale of ["es", "en"]) {
     page.on("pageerror", (error) => errors.push(error.message));
     await page.goto(`/${locale}`);
     const hero = page.locator(".home-slider");
+    const motto = page.locator(".topline-motto");
+    await expect(motto).toHaveText(locale === "es" ? "Sirviendo al mercado asegurador" : "Serving the insurance market");
+    expect(await motto.evaluate((element) => getComputedStyle(element).fontFamily)).not.toBe(await page.locator("body").evaluate((element) => getComputedStyle(element).fontFamily));
     const next = hero.getByRole("button", { name: locale === "es" ? "Diapositiva siguiente" : "Next slide" });
     const seal = hero.getByRole("img", { name: locale === "es" ? "Confianza mutua" : "Mutual trust", exact: true });
     await expect(seal).toBeVisible();
@@ -24,7 +27,7 @@ for (const locale of ["es", "en"]) {
     } else {
       expect(controlsBox.y + controlsBox.height).toBeLessThanOrEqual(slidesBox.y + 1);
     }
-    let height = 0;
+    const heights: number[] = [];
 
     for (let index = 0; index < 4; index++) {
       const active = hero.locator('.hero-slide[aria-hidden="false"]');
@@ -38,10 +41,14 @@ for (const locale of ["es", "en"]) {
         await expect(links.first()).toHaveAttribute("href", locale === "es" ? "/es/contacto#consulta" : "/en/contact#consulta");
         await expect(links.first()).toHaveText(locale === "es" ? "Solicitar consulta profesional" : "Request a professional consultation");
       }
-      const actionsBox = (await actions.boundingBox())!;
       const summary = active.locator(index === 0 || index >= 3 ? ".hero-settlement" : ".hero-message-panel");
       const summaryBox = (await summary.boundingBox())!;
-      if (index > 0) expect(actionsBox.x + actionsBox.width).toBeLessThanOrEqual(summaryBox.x + 1);
+      if (index > 0) {
+        const actionsBox = (await actions.boundingBox())!;
+        expect(actionsBox.x + actionsBox.width).toBeLessThanOrEqual(summaryBox.x + 1);
+      } else {
+        await expect(actions).toHaveCount(0);
+      }
       if (index === 0 || index >= 3) {
         await expect(active.locator(".hero-settlement-amount strong")).toHaveText(locale === "es" ? "13,8" : "13.8");
         await expect(active.locator(".hero-settlement")).toHaveAttribute("href", locale === "es" ? "/es/experiencia" : "/en/experience");
@@ -54,18 +61,23 @@ for (const locale of ["es", "en"]) {
         await expect(active.locator(".trust-scene-statistics dd").nth(1)).toHaveText("16");
       }
       if (index === 1) {
+        await expect(active.locator(".hero-slide-title")).toHaveText(locale === "es" ? "Servicios relevantes" : "Key services");
         await expect(active.locator(".hero-service-list > li")).toHaveCount(4);
         await expect(active.locator(".turbine-pillar")).toHaveCount(4);
       }
       if (index === 2) {
         const classes = active.locator(".hero-coverage-classes > li");
         await expect(classes).toHaveCount(18);
-        await expect(classes.nth(15)).toHaveText(locale === "es" ? "CASCO AÉREO" : "AIRCRAFT HULL");
-        await expect(classes.nth(16)).toHaveText(locale === "es" ? "Riesgos diversos" : "Miscellaneous risks");
+        await expect(active.locator(".hero-coverage-authority")).toHaveCount(0);
+        await expect(classes.nth(4)).toHaveText(locale === "es" ? "Marítimo: casco & maquinaria" : "Marine: hull & machinery");
+        await expect(classes.nth(5)).toHaveText(locale === "es" ? "Transporte marítimo y terrestre" : "Sea and land transport");
+        await expect(classes.nth(15)).toHaveText(locale === "es" ? "Casco aéreo" : "Aircraft hull");
+        await expect(classes.nth(16)).toHaveText(locale === "es" ? "Robo" : "Theft");
         await expect(classes.nth(17)).toHaveText(locale === "es" ? "Vehículos" : "Motor vehicles");
         await expect(active.locator("img")).toHaveCount(8);
       }
       if (index >= 3) {
+        await expect(active.locator(".hero-slide-title")).toHaveText(locale === "es" ? "Intervención en siniestros complejos" : "Intervention in complex losses");
         await expect(active.locator("img")).toHaveCount(5);
         await expect(active.locator(".intervention-case-row")).toHaveCount(4);
         await expect(active.locator(".intervention-case-amount")).toHaveText(locale === "es" ? ["8.253.493,28", "1.947.668,80", "1.624.063,03", "2.000.000,00"] : ["8,253,493.28", "1,947,668.80", "1,624,063.03", "2,000,000.00"]);
@@ -89,7 +101,9 @@ for (const locale of ["es", "en"]) {
         const note = (await active.locator(".hero-consultation-note").boundingBox())!;
         const visual = (await active.locator(".hero-visual").boundingBox())!;
         const copy = (await active.locator(".hero-copy").boundingBox())!;
-        expect(note.y).toBeGreaterThanOrEqual(Math.max(visual.y + visual.height, copy.y + copy.height));
+        const noteGap = note.y - Math.max(visual.y + visual.height, copy.y + copy.height);
+        expect(noteGap).toBeGreaterThanOrEqual(0);
+        expect(noteGap).toBeLessThanOrEqual(32);
       }
       for (const image of await active.locator("img").all()) {
         await image.scrollIntoViewIfNeeded();
@@ -101,9 +115,18 @@ for (const locale of ["es", "en"]) {
       await page.evaluate(() => { window.scrollTo({ top: 0, behavior: "instant" }); });
       await page.evaluate(() => document.fonts.ready);
       expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
-      const currentHeight = (await hero.boundingBox())!.height;
-      if (index === 0) height = currentHeight;
-      expect(Math.abs(currentHeight - height)).toBeLessThanOrEqual(1);
+      const slide = (await active.boundingBox())!;
+      const frame = (await hero.locator(".hero-slides").boundingBox())!;
+      const copy = (await active.locator(".hero-copy").boundingBox())!;
+      const visual = (await active.locator(".hero-visual").boundingBox())!;
+      expect(Math.abs(frame.height - slide.height)).toBeLessThanOrEqual(1);
+      expect(copy.y - frame.y).toBeLessThanOrEqual(mobileControls ? 80 : 40);
+      if (!mobileControls) expect(Math.abs(copy.y - visual.y)).toBeLessThanOrEqual(1);
+      const lastBlock = index > 0 ? (await active.locator(".hero-consultation-note").boundingBox())! : [copy, visual].reduce((last, block) => block.y + block.height > last.y + last.height ? block : last);
+      const bottomSpace = slide.y + slide.height - lastBlock.y - lastBlock.height;
+      expect(bottomSpace).toBeGreaterThanOrEqual(0);
+      expect(bottomSpace).toBeLessThanOrEqual(40);
+      heights.push((await hero.boundingBox())!.height);
       const results = await new AxeBuilder({ page }).include(".home-slider").withTags(["wcag2a", "wcag2aa", "wcag21aa"]).analyze();
       expect(results.violations).toEqual([]);
       await hero.screenshot({ path: testInfo.outputPath(`${locale}-hero-${index + 1}.png`), style: ".site-header, .skip-link { visibility: hidden !important; }" });
@@ -111,6 +134,8 @@ for (const locale of ["es", "en"]) {
     }
 
     await expect(hero.locator(".hero-slide.is-active")).toHaveAttribute("id", "hero-slide-0");
+    expect(Math.max(...heights) - Math.min(...heights)).toBeGreaterThan(100);
+    expect((await hero.boundingBox())!.height).toBeCloseTo(heights[0], 0);
     await next.focus();
     await page.keyboard.press("ArrowLeft");
     await expect(hero.locator(".hero-slide.is-active")).toHaveAttribute("id", "hero-slide-3");

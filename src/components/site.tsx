@@ -31,8 +31,8 @@ export function Breadcrumbs({ locale, section, current }: { locale: Locale; sect
   return <nav className="breadcrumbs" aria-label={locale === "es" ? "Ruta de navegación" : "Breadcrumb"}><Link href={href(locale)}>{c.home}</Link>{section && <><ChevronRight size={12} aria-hidden="true" />{current ? <Link href={href(locale, section)}>{c.nav[section]}</Link> : <span aria-current="page">{c.nav[section]}</span>}</>}{current && <><ChevronRight size={12} aria-hidden="true" /><span aria-current="page">{current}</span></>}</nav>;
 }
 
-export function PageHero({ locale, section, eyebrow, title, description }: { locale: Locale; section: Section; eyebrow: string; title: string; description: string }) {
-  return <section className="page-hero"><div className="container"><Breadcrumbs locale={locale} section={section} /><div className="page-hero-content"><div><p className="eyebrow">{eyebrow}</p><h1>{title}</h1></div><p>{description}</p></div></div><div className="hero-reference-circle" aria-hidden="true" /></section>;
+export function PageHero({ locale, section, eyebrow, title, description }: { locale: Locale; section: Section; eyebrow?: string; title: string; description: string | string[] }) {
+  return <section className="page-hero"><div className="container"><Breadcrumbs locale={locale} section={section} /><div className="page-hero-content"><div>{eyebrow && <p className="eyebrow">{eyebrow}</p>}<h1>{title}</h1></div>{Array.isArray(description) ? <div className="page-hero-description">{description.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div> : <p>{description}</p>}</div></div><div className="hero-reference-circle" aria-hidden="true" /></section>;
 }
 
 export function ServiceCard({ service, locale }: { service: Service; locale: Locale }) {

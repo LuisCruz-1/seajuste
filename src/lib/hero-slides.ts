@@ -6,7 +6,6 @@ export type HeroSlide = {
   title: string;
   accent?: string;
   statement?: string;
-  authority?: string;
   threshold?: string;
   description?: string;
   highlights?: string[];
@@ -36,7 +35,7 @@ export const heroCoveragePhotos: HeroProjectPhoto[] = [
 ];
 
 export const heroCoverageAdditionalClasses: Localized[] = [
-  text("Riesgos diversos", "Miscellaneous risks"),
+  text("Robo", "Theft"),
   text("Vehículos", "Motor vehicles"),
 ];
 
@@ -44,9 +43,9 @@ export const heroCoverageAdditionalClasses: Localized[] = [
 export const heroCoverageOrder = [0, 1, 2, 3, 13, 11, 5, 9, 4, 6, 8, 7, 15, 10, 14, 12, 16, 17];
 
 export const heroCoverageLabels: Partial<Record<number, Localized>> = {
-  13: text("MARÍTIMO: CASCO & MAQUINARIA", "MARINE: HULL & MACHINERY"),
-  11: text("TRANSPORTE MARÍTIMO Y TERRESTRE", "SEA AND LAND TRANSPORT"),
-  12: text("CASCO AÉREO", "AIRCRAFT HULL"),
+  13: text("Marítimo: casco & maquinaria", "Marine: hull & machinery"),
+  11: text("Transporte marítimo y terrestre", "Sea and land transport"),
+  12: text("Casco aéreo", "Aircraft hull"),
 };
 
 export const heroInterventionPhotos = [
@@ -64,7 +63,7 @@ export const heroInterventionRows: { id: DetailId; equipment: Localized; unit: L
   { id: "artefacta", equipment: text("Locales comerciales", "Retail premises"), unit: text("Varios", "Various"), location: text("Manabí y Esmeraldas", "Manabí & Esmeraldas") },
 ];
 
-const consultationDetails: Record<Locale, HeroSlide["consultation"]> = {
+export const consultationDetails: Record<Locale, NonNullable<HeroSlide["consultation"]>> = {
   es: {
     title: "Conversemos sobre el alcance de su consulta",
     paragraphs: [
@@ -85,7 +84,7 @@ const interventionSlides: Record<Locale, HeroSlide> = {
   es: {
     visual: "intervention",
     topic: "INTERVENCIÓN",
-    title: "Intervención técnica en siniestros complejos",
+    title: "Intervención en siniestros complejos",
     threshold: "Reclamos superiores a USD 1 millón",
     description: "Experiencia en evaluación de daños, investigación de causas y cuantificación de pérdidas.",
     highlights: ["Rotura de maquinaria y lucro cesante por rotura de maquinaria (Electroguayas).", "Incendio y lucro cesante a consecuencia de incendio (Artefacta)."],
@@ -95,7 +94,7 @@ const interventionSlides: Record<Locale, HeroSlide> = {
   en: {
     visual: "intervention",
     topic: "INTERVENTION",
-    title: "Technical intervention in complex losses",
+    title: "Intervention in complex losses",
     threshold: "Claims exceeding USD 1 million",
     description: "Experience in damage assessment, cause investigation and loss quantification.",
     highlights: ["Machinery breakdown and resulting business interruption (Electroguayas).", "Fire and resulting business interruption (Artefacta)."],
@@ -115,7 +114,7 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
     {
       visual: "turbine",
       topic: "ESPECIALIDADES",
-      title: "Nuestros servicios relevantes",
+      title: "Servicios relevantes",
       statement: "Marine & proyect cargo survey\nReclamos & siniestros\nAlta complejidad",
       services: [
         { label: "Engineering for complex claims", detail: "engineering" },
@@ -129,7 +128,6 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
       visual: "coverage",
       topic: "PÓLIZA",
       title: "Ramos de seguros autorizados",
-      authority: "Superintendencia de Compañías, Valores y Seguros",
       statement: "Ingeniería forense & causa raíz\nReclamos & siniestros",
       consultation: consultationDetails.es,
     },
@@ -149,7 +147,7 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
     {
       visual: "turbine",
       topic: "SPECIALTIES",
-      title: "Our key services",
+      title: "Key services",
       statement: "Marine & project cargo survey\nClaims & losses\nHigh complexity",
       services: [
         { label: "Engineering for complex claims", detail: "engineering" },
@@ -163,7 +161,6 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
       visual: "coverage",
       topic: "POLICY",
       title: "Authorised insurance classes",
-      authority: "Superintendency of Companies, Securities and Insurance",
       statement: "Forensic engineering & root cause analysis\nClaims & losses",
       consultation: consultationDetails.en,
     },

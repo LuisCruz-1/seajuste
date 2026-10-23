@@ -1,6 +1,27 @@
 import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
+test("contact page explains the consultation before showing tab-labelled forms", async ({ page }) => {
+  for (const locale of ["es", "en"] as const) {
+    const es = locale === "es";
+    await page.goto(`/${locale}/${es ? "contacto" : "contact"}#consulta`);
+    await expect(page.locator(".page-hero h1")).toHaveText(es ? "Conversemos sobre el alcance de su consulta" : "Let’s discuss the scope of your enquiry");
+    const paragraphs = page.locator(".page-hero-description > p");
+    await expect(paragraphs).toHaveCount(2);
+    await expect(paragraphs.first()).toContainText(es ? "Compártanos sus inquietudes" : "Share your questions");
+    await expect(paragraphs.last()).toContainText(es ? "Cuando la naturaleza o complejidad del caso lo justifique" : "When the nature or complexity of the case calls for it");
+
+    const form = page.locator(".contact-form");
+    await expect(form.locator(":scope > h2, :scope > .eyebrow")).toHaveCount(0);
+    const consultation = page.getByRole("tab", { name: es ? "Consulta profesional" : "Professional consultation" });
+    const meeting = page.getByRole("tab", { name: es ? "Agendar reunión" : "Schedule a meeting" });
+    await expect(consultation).toHaveAttribute("aria-selected", "true");
+    await meeting.click();
+    await expect(meeting).toHaveAttribute("aria-selected", "true");
+    await expect(form.locator(":scope > h2, :scope > .eyebrow")).toHaveCount(0);
+  }
+});
+
 test("meeting requests validate preferences and prepare only the matching WhatsApp message", async ({ page }, testInfo) => {
   await page.addInitScript(() => {
     const requests: string[] = [];

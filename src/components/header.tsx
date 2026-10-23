@@ -78,7 +78,7 @@ export function Header({ locale, labels }: { locale: Locale; labels: Labels }) {
 
   return (
     <header className="site-header">
-      <div className="topline"><div className="container topline-inner"><span>{labels.topLine}</span><span>{labels.location}</span></div></div>
+      <div className="topline"><div className="container topline-inner"><span className="topline-motto">{labels.topLine}</span><span>{labels.location}</span></div></div>
       <div className="container header-inner">
         <Link href={href(locale)} className="header-brand-lockup" aria-label={`SEAJUSTE · ${labels.home}`} onClick={closeNavigation}>
           <Image src={handsMark} alt="" className="header-isologo" sizes="(max-width: 640px) 48px, 72px" loading="eager" />

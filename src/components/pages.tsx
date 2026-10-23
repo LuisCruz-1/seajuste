@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, BadgeCheck, CalendarDays, Check, FileText, Mail, MapPin, MessageCircle, Phone, ShieldCheck } from "lucide-react";
 import { authorizations, cases, clients, company, companyHistory, companyHistoryDocuments, corporatePurpose, economicActivities, services, supplierProducts, team, type CaseStudy, type Service } from "@/lib/content";
 import { copy } from "@/lib/copy";
-import { heroCoverageAdditionalClasses, heroCoverageLabels, heroInterventionRows, heroSlides } from "@/lib/hero-slides";
+import { consultationDetails, heroCoverageAdditionalClasses, heroCoverageLabels, heroInterventionRows, heroSlides } from "@/lib/hero-slides";
 import { aboutAnchors, formatMoney, href, t, type Locale } from "@/lib/i18n";
 import { CaseCard } from "./cards";
 import { CaseGrid } from "./case-grid";
@@ -158,8 +158,9 @@ export function CredentialsPage({ locale }: { locale: Locale }) {
 
 export function ContactPage({ locale }: { locale: Locale }) {
   const c = copy[locale];
+  const consultation = consultationDetails[locale];
   return <>
-    <PageHero locale={locale} section="contact" eyebrow={c.contactEyebrow} title={c.contactTitle} description={c.contactIntro} />
+    <PageHero locale={locale} section="contact" title={consultation.title} description={consultation.paragraphs} />
     <section className="section contact-section"><div className="container contact-layout">
       <ContactForm locale={locale} options={services.map((service) => ({ id: service.id, title: t(service.title, locale) }))} labels={c} whatsapp={company.whatsapp} />
       <aside className="contact-information" aria-label={c.directContact}>

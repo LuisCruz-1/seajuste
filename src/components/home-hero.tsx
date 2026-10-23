@@ -100,7 +100,7 @@ export function HomeHero({ locale, slides, insuranceClasses, settlementSummary, 
             <div key={slide.topic} id={`hero-slide-${index}`} className={`hero-slide hero-slide-${slide.visual}${slide.consultation ? " hero-slide-consultation" : ""}${active ? " is-active" : ""}`} role="group" aria-roledescription={es ? "diapositiva" : "slide"} aria-label={`${index + 1} ${es ? "de" : "of"} ${slides.length}: ${slide.topic}`} aria-hidden={!active} inert={!active}>
               <div className="container home-hero-inner">
                 <div className="hero-visual">
-                  {slide.consultation && <p className="hero-intervention-closing">{slide.closing}{slide.closingAccent && <em>{slide.closingAccent}</em>}</p>}
+                  {slide.consultation && (slide.closing || slide.closingAccent) && <p className="hero-intervention-closing">{slide.closing}{slide.closingAccent && <em>{slide.closingAccent}</em>}</p>}
                   <div className={`inspection-frame hero-frame-${slide.visual}`}>
                     <HeroBrandVisual kind={slide.visual} locale={locale} />
                     <span className="inspection-corner corner-one" aria-hidden="true" /><span className="inspection-corner corner-two" aria-hidden="true" />
@@ -109,7 +109,6 @@ export function HomeHero({ locale, slides, insuranceClasses, settlementSummary, 
                 <div className={`hero-copy hero-copy-${slide.visual}`}>
                   {slide.visual === "coverage" ? <div className="hero-coverage-panel">
                       <Heading className="hero-slide-title hero-coverage-title">{slide.title}</Heading>
-                      <p className="hero-coverage-authority">{slide.authority}</p>
                       <ul className="hero-coverage-classes" aria-label={es ? "Ramos y coberturas de seguros" : "Insurance classes and covers"}>{heroCoverageOrder.map((classIndex) => <li key={classIndex}>{insuranceClasses[classIndex]}</li>)}</ul>
                   </div> : slide.visual === "intervention" ? <>
                     <Heading className="hero-slide-title hero-intervention-title">{slide.title}</Heading>
@@ -133,9 +132,9 @@ export function HomeHero({ locale, slides, insuranceClasses, settlementSummary, 
                     {slide.services && <ul className="hero-service-list">{slide.services.map(({ label, detail }) => <li key={detail}><Link href={href(locale, "services", detail)}><span>{label}</span><ArrowUpRight size={16} aria-hidden="true" /></Link></li>)}</ul>}
                   </>}
                   <div className={`hero-conversion has-summary${index === 0 ? " hero-conversion-no-actions" : ""}`}>
-                    <div className="hero-actions">
-                      {index > 0 && <Link className="button hero-consult-action" href={`${href(locale, "contact")}#consulta`}>{es ? "Solicitar consulta profesional" : "Request a professional consultation"}<ArrowUpRight size={17} aria-hidden="true" /></Link>}
-                    </div>
+                    {index > 0 && <div className="hero-actions">
+                      <Link className="button hero-consult-action" href={`${href(locale, "contact")}#consulta`}>{es ? "Solicitar consulta profesional" : "Request a professional consultation"}<ArrowUpRight size={17} aria-hidden="true" /></Link>
+                    </div>}
                     {slide.visual === "trust" || slide.visual === "intervention" ? <Link href={href(locale, "experience")} className="hero-settlement" aria-label={es ? `Ver ${caseCountLabel} casos destacados: USD ${settlementFigure} millones en indemnizaciones` : `View ${caseCountLabel} featured cases: USD ${settlementFigure} million in settlements`}>
                       <p className="hero-settlement-amount" aria-hidden="true"><span>USD</span><strong>{settlementFigure}</strong><span>M</span></p>
                       <p className="hero-settlement-caption">{settlementCaption}</p>
