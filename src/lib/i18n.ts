@@ -16,7 +16,14 @@ export const sections = {
 export type Section = keyof typeof sections;
 export const sectionKeys = Object.keys(sections) as Section[];
 
-export const aboutAnchors = { identity: "identidad", london: "londres", history: "nuestra-historia" } as const;
+export const aboutAnchors = {
+  company: "nuestra-empresa",
+  identity: "identidad",
+  history: "nuestra-historia",
+  marine: "marine-cargo",
+  london: "londres",
+  reinsurers: "reaseguradores",
+} as const;
 export const privacySlugs = { es: "politica-de-privacidad", en: "privacy-policy" } as const;
 export const privacyHref = (locale: Locale) => `/${locale}/${privacySlugs[locale]}`;
 

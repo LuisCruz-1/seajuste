@@ -37,7 +37,7 @@ function AboutContactActions({ locale }: { locale: Locale }) {
 
 export function AboutPage({ locale }: { locale: Locale }) {
   const c = copy[locale];
-  return <><section className="section company-profile"><div className="container">
+  return <><section className="section company-profile" id={aboutAnchors.company}><div className="container">
     <header className="company-profile-heading"><h1>{c.aboutTitle}</h1><p>{c.aboutStatement}</p></header>
     <div className="company-profile-layout">
       <div className="company-profile-visual"><Image src="/images/brand/about-company-turbine.webp" alt={c.aboutImageAlt} width={435} height={518} sizes="(max-width: 950px) 90vw, 43vw" loading="eager" /></div>
@@ -62,7 +62,7 @@ export function AboutPage({ locale }: { locale: Locale }) {
       {companyHistory.paragraphs.map((paragraph, index) => <p key={index}>{t(paragraph, locale)}</p>)}
     </div>
   </div></section>
-  {companyHistoryDocuments.map((document) => <section className={`section company-history${document.section === "claims" ? "" : " section-tint"}`} id={document.section === "review" ? "history-documents" : `${document.section}-documents`} key={document.id}><div className="container" id={document.section === "claims" ? aboutAnchors.london : undefined} tabIndex={document.section === "claims" ? -1 : undefined}>
+  {companyHistoryDocuments.map((document) => <section className={`section company-history${document.section === "claims" ? "" : " section-tint"}`} id={document.section === "review" ? "history-documents" : `${document.section}-documents`} key={document.id}><div className="container" id={document.section === "review" ? aboutAnchors.marine : document.section === "claims" ? aboutAnchors.london : aboutAnchors.reinsurers} tabIndex={-1}>
     <SectionHeading eyebrow={document.section === "review" ? c.historyEyebrow : undefined} title={c.historySections[document.section]} description={document.section === "review" ? c.historyIntro : undefined} />
     <article className="history-document-card" id={document.id} aria-labelledby={`${document.id}-title`}>
       <div className="history-document-copy">

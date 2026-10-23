@@ -23,9 +23,11 @@ export function Header({ locale, labels }: { locale: Locale; labels: Labels }) {
   const aboutRef = useRef<HTMLDivElement>(null);
   const aboutToggleRef = useRef<HTMLButtonElement>(null);
   const aboutLinks = [
-    { anchor: aboutAnchors.identity, label: labels.aboutNav.identity },
-    { anchor: aboutAnchors.london, label: labels.aboutNav.london },
+    { anchor: aboutAnchors.company, label: labels.aboutNav.company },
     { anchor: aboutAnchors.history, label: labels.aboutNav.history },
+    { anchor: aboutAnchors.marine, label: labels.aboutNav.marine },
+    { anchor: aboutAnchors.london, label: labels.aboutNav.london },
+    { anchor: aboutAnchors.reinsurers, label: labels.aboutNav.reinsurers },
   ];
 
   useEffect(() => {

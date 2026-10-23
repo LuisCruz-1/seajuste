@@ -1,7 +1,7 @@
 export const copy = {
   es: {
     nav: { about: "Nosotros", services: "Servicios", experience: "Experiencia", team: "Equipo", credentials: "Respaldo", contact: "Contacto" },
-    aboutNav: { identity: "Identidad", london: "Londres", history: "Nuestra historia" }, aboutSubmenu: "Secciones de Nosotros",
+    aboutNav: { company: "Nuestra empresa", history: "Nuestra historia", marine: "Marine cargo", london: "Londres", reinsurers: "Reaseguradores" }, aboutSubmenu: "Secciones de Nosotros",
     home: "Inicio", skip: "Ir al contenido", menu: "Abrir menú", closeMenu: "Cerrar menú", language: "Cambiar idioma", languageLabel: "Español",
     topLine: "Ingeniería para siniestros complejos", location: "Guayaquil · Quito, Ecuador", brandDescriptor: "Ajustadores de siniestros",
     contactAction: "Hablemos de su caso", explore: "Explorar especialidades", learnMore: "Conocer más", viewService: "Ver especialidad", viewCase: "Explorar el caso", allServices: "Todos los servicios", allCases: "Nuestra experiencia", download: "Brochure corporativo", downloadFull: "Descargar brochure", back: "Volver", whatsapp: "Consultar por WhatsApp", emailAction: "Escribir un correo", mapAction: "Ver ubicación", original: "Documento original", gallery: "Archivo fotográfico", openPhoto: "Ampliar fotografía", closePhoto: "Cerrar fotografía", previousPhoto: "Fotografía anterior", nextPhoto: "Fotografía siguiente", photo: "Fotografía", of: "de", empty: "No hay resultados para esta búsqueda.", clear: "Limpiar búsqueda",
@@ -51,7 +51,7 @@ export const copy = {
   },
   en: {
     nav: { about: "About us", services: "Services", experience: "Experience", team: "Our team", credentials: "Credentials", contact: "Contact" },
-    aboutNav: { identity: "Identity", london: "London", history: "Our history" }, aboutSubmenu: "About us sections",
+    aboutNav: { company: "Our company", history: "Our history", marine: "Marine cargo", london: "London", reinsurers: "Reinsurers" }, aboutSubmenu: "About us sections",
     home: "Home", skip: "Skip to content", menu: "Open menu", closeMenu: "Close menu", language: "Change language", languageLabel: "English",
     topLine: "Engineering for complex claims", location: "Guayaquil · Quito, Ecuador", brandDescriptor: "Loss adjusters",
     contactAction: "Let’s discuss your case", explore: "Explore our expertise", learnMore: "Learn more", viewService: "Explore service", viewCase: "Explore the case", allServices: "All services", allCases: "Our experience", download: "Corporate brochure", downloadFull: "Download brochure", back: "Back", whatsapp: "Contact via WhatsApp", emailAction: "Write an email", mapAction: "View location", original: "Original document", gallery: "Photographic archive", openPhoto: "Enlarge photograph", closePhoto: "Close photograph", previousPhoto: "Previous photograph", nextPhoto: "Next photograph", photo: "Photograph", of: "of", empty: "No results for this search.", clear: "Clear search",

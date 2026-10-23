@@ -13,9 +13,11 @@ test("about submenu reaches each anchor from another page and within About", asy
     const openMenu = es ? "Abrir menú" : "Open menu";
     const submenuLabel = es ? "Secciones de Nosotros" : "About us sections";
     const choices = [
-      { label: es ? "Identidad" : "Identity", anchor: "identidad" },
-      { label: es ? "Londres" : "London", anchor: "londres" },
+      { label: es ? "Nuestra empresa" : "Our company", anchor: "nuestra-empresa" },
       { label: es ? "Nuestra historia" : "Our history", anchor: "nuestra-historia" },
+      { label: "Marine cargo", anchor: "marine-cargo" },
+      { label: es ? "Londres" : "London", anchor: "londres" },
+      { label: es ? "Reaseguradores" : "Reinsurers", anchor: "reaseguradores" },
     ];
     await page.goto(es ? "/es/servicios" : "/en/services");
     await page.evaluate(() => document.fonts.ready);
@@ -40,7 +42,7 @@ test("about submenu reaches each anchor from another page and within About", asy
       await expect.poll(() => target.evaluate((element) => element.getBoundingClientRect().top - document.querySelector(".site-header")!.getBoundingClientRect().bottom)).toBeGreaterThanOrEqual(-1);
     }
     await page.reload();
-    await expect(page.locator("#nuestra-historia")).toBeInViewport();
+    await expect(page.locator("#reaseguradores")).toBeInViewport();
   }
 });
 
@@ -69,13 +71,13 @@ test("about dropdown supports keyboard, hover, Escape and outside dismissal", as
   expect(accessibility.violations.map((violation) => ({ id: violation.id, targets: violation.nodes.map((node) => node.target) }))).toEqual([]);
   await toggle.focus();
   await page.keyboard.press("ArrowDown");
-  await expect(submenu.getByRole("link", { name: "Identidad", exact: true })).toBeFocused();
+  await expect(submenu.getByRole("link", { name: "Nuestra empresa", exact: true })).toBeFocused();
   await page.keyboard.press("ArrowDown");
-  await expect(submenu.getByRole("link", { name: "Londres", exact: true })).toBeFocused();
+  await expect(submenu.getByRole("link", { name: "Nuestra historia", exact: true })).toBeFocused();
   await page.keyboard.press("ArrowUp");
-  await expect(submenu.getByRole("link", { name: "Identidad", exact: true })).toBeFocused();
+  await expect(submenu.getByRole("link", { name: "Nuestra empresa", exact: true })).toBeFocused();
   await page.keyboard.press("Tab");
-  await expect(submenu.getByRole("link", { name: "Londres", exact: true })).toBeFocused();
+  await expect(submenu.getByRole("link", { name: "Nuestra historia", exact: true })).toBeFocused();
   await page.keyboard.press("Escape");
   await expect(submenu).toBeHidden();
   await expect(toggle).toBeFocused();
