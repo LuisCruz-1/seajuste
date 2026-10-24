@@ -12,7 +12,7 @@ export type HeroSlide = {
   description?: string;
   highlights?: string[];
   closing?: string;
-  closingAccent?: string;
+  resultsLabel?: string;
   services?: { label: string; detail: DetailId }[];
   consultation?: { title: string; paragraphs: string[] };
 };
@@ -85,23 +85,23 @@ export const consultationDetails: Record<Locale, NonNullable<HeroSlide["consulta
 const interventionSlides: Record<Locale, HeroSlide> = {
   es: {
     visual: "intervention",
-    topic: "INTERVENCIÓN",
+    topic: "SINIESTROS COMPLEJOS",
     title: "Intervención en siniestros complejos",
     threshold: "Reclamos superiores a USD 1 millón",
-    description: "Experiencia en evaluación de daños, investigación de causas y cuantificación de pérdidas.",
+    description: "Cobertura de los reclamos y cuantificación de la pérdida.",
     highlights: ["Rotura de maquinaria y lucro cesante por rotura de maquinaria (Electroguayas).", "Incendio y lucro cesante a consecuencia de incendio (Artefacta)."],
     closing: "La confianza se demuestra con experiencia.",
-    closingAccent: "RESULTADOS QUE NOS RESPALDAN",
+    resultsLabel: "RESULTADOS QUE NOS RESPALDAN",
   },
   en: {
     visual: "intervention",
-    topic: "INTERVENTION",
+    topic: "COMPLEX LOSSES",
     title: "Intervention in complex losses",
     threshold: "Claims exceeding USD 1 million",
-    description: "Experience in damage assessment, cause investigation and loss quantification.",
+    description: "Claims coverage and loss quantification.",
     highlights: ["Machinery breakdown and resulting business interruption (Electroguayas).", "Fire and resulting business interruption (Artefacta)."],
     closing: "Trust is demonstrated through experience.",
-    closingAccent: "RESULTS THAT SPEAK FOR US",
+    resultsLabel: "RESULTS THAT SPEAK FOR US",
   },
 };
 
@@ -116,7 +116,7 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
     },
     {
       visual: "turbine",
-      topic: "ESPECIALIDADES",
+      topic: "SERVICIOS RELEVANTES",
       title: "Servicios relevantes",
       statement: "Reclamos & siniestros de alta complejidad",
       services: [
@@ -129,15 +129,14 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
     },
     {
       visual: "coverage",
-      topic: "PÓLIZA",
+      topic: "PÓLIZAS",
       title: "Ramos de seguros autorizados",
       statement: "Ingeniería forense & causa raíz\nReclamos & siniestros",
       contactPrompt: "Si necesita más información de nuestros servicios.",
     },
     {
       ...interventionSlides.es,
-      topic: "CONSULTA",
-      consultation: consultationDetails.es,
+      consultation: { ...consultationDetails.es, paragraphs: consultationDetails.es.paragraphs.slice(0, 1) },
     },
   ],
   en: [
@@ -150,7 +149,7 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
     },
     {
       visual: "turbine",
-      topic: "SPECIALTIES",
+      topic: "KEY SERVICES",
       title: "Key services",
       statement: "High-complexity claims & losses",
       services: [
@@ -163,15 +162,14 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
     },
     {
       visual: "coverage",
-      topic: "POLICY",
+      topic: "POLICIES",
       title: "Authorised insurance classes",
       statement: "Forensic engineering & root cause analysis\nClaims & losses",
       contactPrompt: "If you need more information about our services.",
     },
     {
       ...interventionSlides.en,
-      topic: "CONSULTATION",
-      consultation: consultationDetails.en,
+      consultation: { ...consultationDetails.en, paragraphs: consultationDetails.en.paragraphs.slice(0, 1) },
     },
   ],
 };

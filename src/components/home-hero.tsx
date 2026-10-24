@@ -118,6 +118,7 @@ export function HomeHero({ locale, slides, insuranceClasses, settlementSummary, 
                       <ul className="hero-coverage-classes" aria-label={es ? "Ramos y coberturas de seguros" : "Insurance classes and covers"}>{heroCoverageOrder.map((classIndex) => <li key={classIndex}>{insuranceClasses[classIndex]}</li>)}</ul>
                   </div> : slide.visual === "intervention" ? <>
                     <Heading className="hero-slide-title hero-intervention-title">{slide.title}</Heading>
+                    {slide.resultsLabel && <p className="hero-intervention-results">{slide.resultsLabel}</p>}
                     <p className="hero-intervention-threshold">{slide.threshold}</p>
                     <p className="hero-intervention-description">{slide.description}</p>
                     <ul className="hero-intervention-highlights">{slide.highlights?.map((item) => <li key={item}><Check size={18} aria-hidden="true" /><span>{item}</span></li>)}</ul>
@@ -138,10 +139,10 @@ export function HomeHero({ locale, slides, insuranceClasses, settlementSummary, 
                   </>}
                   <div className="hero-conversion">
                     {slide.visual === "trust" || slide.visual === "intervention" ? <Link href={href(locale, "experience")} className="hero-settlement" aria-label={es ? `Ver ${caseCountLabel} casos destacados: USD ${settlementFigure} millones en indemnizaciones` : `View ${caseCountLabel} featured cases: USD ${settlementFigure} million in settlements`}>
-                      <p className="hero-settlement-amount" aria-hidden="true"><span>USD</span><strong>{settlementFigure}</strong><span>M</span></p>
+                      <p className="hero-settlement-amount" aria-hidden="true"><span className="hero-settlement-currency">USD</span><strong>{settlementFigure}<span className="hero-settlement-unit">M</span></strong></p>
                       <div className="hero-settlement-copy">
                         <p className="hero-settlement-caption">{settlementCaption}</p>
-                        {slide.closing && <p className="hero-intervention-closing">{slide.closing}{slide.closingAccent && <em>{slide.closingAccent}</em>}</p>}
+                        {slide.closing && <p className="hero-intervention-closing">{slide.closing}</p>}
                       </div>
                     </Link> : slide.statement && <div className="hero-message-panel"><p>{slide.statement}</p></div>}
                   </div>
