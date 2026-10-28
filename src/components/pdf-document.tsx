@@ -20,7 +20,7 @@ export function PdfDocument({ document, title, actionLabel, locale }: { document
         <button type="button" disabled={current === document.pages.length - 1} onClick={() => setCurrent((index) => Math.min(document.pages.length - 1, index + 1))} aria-label={es ? "Página siguiente" : "Next page"}><ChevronRight size={19} aria-hidden="true" /></button>
       </div>
     </div>
-    <Image src={page.src} width={page.width} height={page.height} alt={`${title} · ${es ? "Página" : "Page"} ${current + 1} ${es ? "de" : "of"} ${document.pages.length}`} unoptimized />
+    <div className="history-document-page"><Image src={page.src} width={page.width} height={page.height} alt={`${title} · ${es ? "Página" : "Page"} ${current + 1} ${es ? "de" : "of"} ${document.pages.length}`} unoptimized /></div>
     <a className="history-document-action" href={document.src} target="_blank" rel="noopener noreferrer" aria-label={`${actionLabel}: ${title}`}>{actionLabel}<ArrowUpRight size={19} aria-hidden="true" /></a>
   </div>;
 }

@@ -55,7 +55,6 @@ export const heroInterventionPhotos = [
   { slot: "tv1", image: "intervention-tv1", caption: text("Unidad TV1", "TV1 unit"), alt: text("Turbina de la unidad TV1 en planta", "TV1 turbine at the power plant") },
   { slot: "tg4", image: "intervention-tg4", caption: text("Unidad TG4", "TG4 unit"), alt: text("Detalle del rotor y álabes de la unidad TG4", "TG4 rotor and turbine blade detail") },
   { slot: "damage", image: "intervention-artefacta-damage", caption: text("Artefacta · Daños", "Artefacta · Damage"), alt: text("Daños documentados en un local de Artefacta", "Documented damage at an Artefacta retail property") },
-  { slot: "store", image: "intervention-artefacta-store", caption: text("Artefacta · Local comercial", "Artefacta · Retail property"), alt: text("Local comercial de Artefacta incluido en los casos destacados", "Artefacta retail property featured in the documented claims") },
 ];
 
 export const heroInterventionRows: { id: DetailId; equipment: Localized; unit: Localized; location: Localized }[] = [

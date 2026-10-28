@@ -26,18 +26,11 @@ export function HomePage({ locale }: { locale: Locale }) {
   return <HomeHero locale={locale} slides={heroSlides[locale]} insuranceClasses={insuranceClasses} settlementSummary={settlementSummary} interventionCases={interventionCases} />;
 }
 
-function AboutContactActions({ locale }: { locale: Locale }) {
-  const c = copy[locale];
-  const contact = href(locale, "contact");
-  return <div className="about-contact-actions">
-    <Link className="button hero-consult-action" href={`${contact}#consulta`}>{c.consultationAction}<ArrowUpRight size={18} aria-hidden="true" /></Link>
-  </div>;
-}
-
 export function AboutPage({ locale }: { locale: Locale }) {
   const c = copy[locale];
-  return <div className={`about-page ${homeFontClassName}`}><section className="section company-profile" id={aboutAnchors.company}><div className="container">
-    <header className="company-profile-heading"><h1>{c.aboutTitle}</h1><div className="company-profile-intro"><p>{c.aboutStatement}</p><AboutContactActions locale={locale} /></div></header>
+  return <div className={`about-page ${homeFontClassName}`} id={aboutAnchors.company}>
+  <PageHero locale={locale} section="about" title={c.aboutTitle} description={c.aboutStatement} className="company-hero" />
+  <section className="section company-profile"><div className="container">
     <div className="company-profile-layout">
       <h2 className="company-identity-title" id={aboutAnchors.identity} tabIndex={-1}>{c.identity}</h2>
       <div className="company-profile-visual"><Image src="/images/brand/about-company-turbine.webp" alt={c.aboutImageAlt} fill sizes="(max-width: 950px) 90vw, 43vw" loading="eager" /></div>
@@ -71,15 +64,11 @@ export function AboutPage({ locale }: { locale: Locale }) {
           {detail.heading && <h4>{t(detail.heading, locale)}</h4>}
           <p>{Array.isArray(detail.text) ? detail.text.map((part, partIndex) => part.emphasis ? <strong key={partIndex}>{t(part.text, locale)}</strong> : t(part.text, locale)) : t(detail.text, locale)}</p>
         </div>)}
-        {document.excerpts && <div className="history-document-excerpts"><p className="data-label">{c.historyExcerpts}</p><blockquote><p>“{document.excerpts.map((excerpt) => t(excerpt, locale)).join(" ")}”</p></blockquote></div>}
+        {document.excerpts && <div className="history-document-excerpts"><p className="data-label">{c.historyExcerpts}</p><blockquote>{document.excerpts.map((excerpt, index, excerpts) => <p key={index}>{index === 0 && "“"}{Array.isArray(excerpt) ? excerpt.map((part, partIndex) => part.emphasis ? <strong key={partIndex}>{t(part.text, locale)}</strong> : t(part.text, locale)) : t(excerpt, locale)}{index === excerpts.length - 1 && "”"}</p>)}</blockquote></div>}
         {document.settlement !== undefined && <dl className="history-document-settlement"><dt>{c.historySettlement}</dt><dd>{formatMoney(document.settlement, locale)}</dd></dl>}
       </div>
       <PdfDocument document={document.pdf} title={t(document.title, locale)} actionLabel={c.historyOpen} locale={locale} />
     </article>
-    {document.section === "reinsurance" && <div className="about-contact-closing">
-      <div><p className="eyebrow">{c.contactEyebrow}</p><h3>{c.contactTitle}</h3><p>{c.contactIntro}</p></div>
-      <AboutContactActions locale={locale} />
-    </div>}
   </div></section>)}</div>;
 }
 

@@ -329,7 +329,7 @@ type CompanyHistoryDocument = {
   pdf: typeof aboutPdfs.history;
   title: Localized;
   details: { heading?: Localized; text: CompanyHistoryText }[];
-  excerpts?: Localized[];
+  excerpts?: CompanyHistoryText[];
   settlement?: number;
   reference: Localized;
 };
@@ -342,7 +342,10 @@ export const companyHistoryDocuments: CompanyHistoryDocument[] = [
     details: [{ text: text("Informe de inspección de daños de carga marítima del Proyecto Hidroeléctrico Paute para The Salvage Association, Londres. La documentación menciona al Ing. Carlos Quevedo, SEA Loss Adjusters, y recoge la intervención de los ajustadores en el acceso a los buques, la inspección y el registro fotográfico de los equipos, así como en las acciones para minimizar las pérdidas con el acuerdo previo de La Nacional.", "Marine project cargo damage survey report for the Paute Hydroelectric Project, prepared for The Salvage Association, London. The records name engineer Carlos Quevedo, SEA Loss Adjusters, and describe the adjusters’ role in gaining access to vessels, surveying and photographing equipment, and taking loss-minimisation measures with La Nacional’s prior agreement.") }],
     excerpts: [
       text("G.I.E. señaló dificultades para acceder al puerto y a los buques que llegaban a Guayaquil. Esto no pareció afectar a los ajustadores S.E.A., quienes no solo lograron acceder a los buques, sino que tomaron fotografías de los equipos en las bodegas.", "G.I.E. claimed that they had difficulty in obtaining access to the Port and had no access to vessels arriving at Guayaquil. This did not seem to effect the loss Adjustors S.E.A. who not only managed to obtain access to the vessels but took photographs of equipment in ship hold."),
-      text("Al revisar los resultados de la inspección de daños respecto de los reclamos, se hizo evidente que la mayoría de las acciones para minimizar las pérdidas fueron tomadas por los ajustadores con el acuerdo previo de La Nacional.", "On reviewing the results of damage survey in respect of the claims, it became apparent that most of the action to minimize loss were taken by the loss adjustors with the prior agreement of La Nacional."),
+      [
+        { text: text("Al revisar los resultados", "On reviewing the results"), emphasis: true },
+        { text: text(" de la inspección de daños respecto de los reclamos, se hizo evidente que la mayoría de las acciones para minimizar las pérdidas fueron tomadas por los ajustadores con el acuerdo previo de La Nacional.", " of damage survey in respect of the claims, it became apparent that most of the action to minimize loss were taken by the loss adjustors with the prior agreement of La Nacional.") },
+      ],
     ],
     reference: text("The Salvage Association · Londres · Marine Project Cargo & Damage Survey Report · Ing. Carlos Quevedo, SEA Loss Adjusters", "The Salvage Association · London · Marine Project Cargo & Damage Survey Report · Eng. Carlos Quevedo, SEA Loss Adjusters"),
   },
