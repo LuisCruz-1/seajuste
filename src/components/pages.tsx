@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown, ArrowLeft, ArrowUpRight, Check, FileText, Mail, MapPin, MessageCircle, Phone, ShieldCheck } from "lucide-react";
-import { authorizations, cases, clients, company, companyHistory, companyHistoryDocuments, services, team, type CaseStudy, type Service } from "@/lib/content";
+import { authorizations, cases, clients, company, companyHistory, companyHistoryDocuments, team, type CaseStudy, type Service } from "@/lib/content";
 import { copy } from "@/lib/copy";
 import { consultationDetails, heroCoverageAdditionalClasses, heroCoverageLabels, heroInterventionRows, heroSlides } from "@/lib/hero-slides";
 import { aboutAnchors, formatMoney, href, t, type Locale } from "@/lib/i18n";
@@ -12,7 +12,7 @@ import { ContactForm } from "./contact-form";
 import { Gallery } from "./gallery";
 import { HomeHero } from "./home-hero";
 import { PdfDocument } from "./pdf-document";
-import { Breadcrumbs, ButtonLink, ClientLogos, ContactBand, Methodology, PageHero, Photo, SectionHeading, ServiceCard, ServiceIcon, toCaseCard } from "./site";
+import { Breadcrumbs, ButtonLink, ClientLogos, ContactBand, Methodology, PageHero, Photo, SectionHeading, ServiceIcon, toCaseCard } from "./site";
 
 export function HomePage({ locale }: { locale: Locale }) {
   const settledCases = cases.filter((item) => item.value);
@@ -70,11 +70,6 @@ export function AboutPage({ locale }: { locale: Locale }) {
       <PdfDocument document={document.pdf} title={t(document.title, locale)} actionLabel={c.historyOpen} locale={locale} />
     </article>
   </div></section>)}</div>;
-}
-
-export function ServicesPage({ locale }: { locale: Locale }) {
-  const c = copy[locale];
-  return <><PageHero locale={locale} section="services" eyebrow={c.servicesEyebrow} title={c.servicesTitle} description={c.servicesIntro} /><section className="section"><div className="container"><div className="service-feature"><Photo name="electrical-testing" alt={locale === "es" ? "Pruebas de campo de equipos eléctricos" : "Field testing of electrical equipment"} /><div><span className="eyebrow">{c.coreLabel}</span><h2>{t(services[0].title, locale)}</h2><p>{t(services[0].summary, locale)}</p><ul className="check-list">{services[0].scope.slice(0, 3).map((scope, index) => <li key={index}><Check size={17} aria-hidden="true" />{t(scope, locale)}</li>)}</ul><ButtonLink to={href(locale, "services", "adjusting")}>{c.viewService}</ButtonLink></div></div><div className="service-grid primary-services">{services.filter((service) => service.featured && service.id !== "adjusting").map((service) => <ServiceCard service={service} locale={locale} key={service.id} />)}</div></div></section><section className="section section-tint"><div className="container"><SectionHeading title={c.complementaryTitle} description={c.complementaryIntro} /><div className="service-grid">{services.filter((service) => !service.featured).map((service) => <ServiceCard key={service.id} service={service} locale={locale} />)}</div></div></section><section className="section coverage-section"><div className="container"><SectionHeading title={c.coverageTitle} description={c.coverageIntro} /><div className="coverage-tags">{authorizations.map((authorization, index) => <span key={index}>{t(authorization, locale)}</span>)}<span>{locale === "es" ? "Fenómenos de la naturaleza" : "Natural perils"}</span></div></div></section><Methodology locale={locale} /><ContactBand locale={locale} /></>;
 }
 
 export function ServicePage({ locale, service }: { locale: Locale; service: Service }) {

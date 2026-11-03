@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
-import { AboutPage, ContactPage, ExperiencePage, ServicesPage, TeamPage } from "@/components/pages";
+import { AboutPage, ContactPage, ExperiencePage, TeamPage } from "@/components/pages";
 import { PrivacyPage, privacyMetadata } from "@/components/privacy-page";
+import { ServicesPage } from "@/components/services-page";
 import { copy } from "@/lib/copy";
 import { getSection, isLocale, privacySlugs, sectionKeys, sections, type Section } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
