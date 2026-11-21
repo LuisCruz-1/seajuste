@@ -11,6 +11,12 @@ La integración en archivos compartidos se limita a resolver las rutas, los
 metadatos, el cambio de idioma y las entradas de Experiencia en el sitemap.
 Se conservan las doce URLs de detalle que ya existían.
 
+La ampliación de noviembre conserva también las siete URLs añadidas en la
+primera revisión. El catálogo actual reúne **40 fichas bilingües**, frente a las
+19 iniciales. La revisión de los ocho archivos de `INTERVENCIONES FALTANTES/`,
+la correspondencia de los 35 registros y las reservas fotográficas se detallan en
+[ampliacion-noviembre-2026.md](./ampliacion-noviembre-2026.md).
+
 No se han ejecutado pruebas, lint, build, recorridos del sitio ni capturas de la
 web, conforme a la instrucción vigente. Las imágenes de revisión fueron hojas
 de contacto y reproducciones de los documentos de origen, no capturas del sitio.
@@ -77,10 +83,13 @@ Las rutas siguientes son relativas a la carpeta de origen.
 - Fotografías originales sueltas de maquinaria y cigüeñales: registro técnico
   sin asignarles un buque, modelo o siniestro no identificado.
 
-## Selección pública
+## Selección pública inicial
 
-Se presentan **19 fichas**, que reúnen casos, inspecciones y registros técnicos.
-No se anuncia esta cifra como número de siniestros independientes ni de éxitos.
+La primera revisión presentó **19 fichas**, que reunían casos, inspecciones y
+registros técnicos. La tabla conserva esa selección inicial como antecedente;
+la ampliación posterior añade 21 fichas y precisa Jaramijó como motor 5.
+Ninguna de estas cifras se anuncia como número de siniestros independientes
+confirmados ni de éxitos.
 
 | Ficha | Criterio y fuente principal |
 | --- | --- |
@@ -157,11 +166,14 @@ brochure y resultados históricos.
 7. **Modelos supuestos.** No se identifica la bomba histórica como Flowserve WDX
    por semejanza de manuales. No se asigna una variante 3516C ni una ficha de
    fabricante a las fotografías navales sin verificación.
-8. **Antecedentes por completar.** Papallacta, trigo a granel, trabajos genéricos
-   para La Nacional, los registros incompletos de La Propicia / Manta II /
-   Guangopolo, líneas de transmisión y varios transformadores quedan fuera de
-   nuevas fichas de siniestro acreditado. Requieren relacionar contrato, informe,
-   imágenes y autorización. El inventario preliminar no sustituye esos documentos.
+8. **Antecedentes por completar.** La reserva inicial sobre La Propicia, Manta II,
+   Guangopolo, transmisión y varios transformadores se reconsideró en la
+   ampliación de noviembre: se incorporan como referencias históricas con límites
+   expresos, no como nuevas indemnizaciones acreditadas. Papallacta, trigo a
+   granel y trabajos genéricos para La Nacional siguen sin individualizarse.
+   Paute/Pelton y boroscopía tampoco se convierten en encargos independientes por
+   la sola mención de fotografías o de un procedimiento. El inventario preliminar
+   no sustituye contratos, informes, actas ni autorización.
 9. **Historia ya desarrollada.** Paute / The Salvage Association, gestiones en
    Londres y acta de finiquito de ex INECEL no se vuelven a desarrollar como
    bloques duplicados de Nosotros ni se suman a los cuatro casos publicados.
@@ -176,3 +188,7 @@ brochure y resultados históricos.
   y mantenimiento posterior.
 - No se publican firmas del contrato, cuentas, honorarios, documentación de
   reclamación íntegra ni datos personales del Excel.
+- La ampliación agrega una fotografía de la portada del informe de Milagro de
+  2010 y un extracto de identificación en PDF/WebP, sin el listado de personas.
+  La vista de Milagro ya existente se reutiliza solo como referencia de
+  instalación, no como fotografía del evento de 2006.

@@ -2,7 +2,7 @@ import type { Localized } from "../i18n";
 import type { ExperienceId } from "./routes";
 
 export type ExperienceSpecialty = "energy" | "engineering" | "marine" | "interruption";
-export type ExperienceEquipment = "turbines" | "transformers" | "engines" | "boilers" | "barges" | "machinery" | "infrastructure" | "vehicles";
+export type ExperienceEquipment = "turbines" | "transformers" | "engines" | "boilers" | "transmission" | "barges" | "machinery" | "infrastructure" | "vehicles";
 export type ExperienceKind = "claim" | "survey" | "technical";
 
 export type ExperienceImage = {
