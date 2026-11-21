@@ -1,3 +1,5 @@
+import { experienceHref, getExperienceId } from "./experience/routes";
+
 export const locales = ["es", "en"] as const;
 export type Locale = (typeof locales)[number];
 export type Localized = { es: string; en: string };
@@ -72,6 +74,7 @@ export function translatePath(pathname: string, target: Locale): string {
   if (!isLocale(language)) return href(target);
   if (sectionSlug === privacySlugs[language] && !detailSlug) return privacyHref(target);
   const section = sectionSlug ? getSection(language, sectionSlug) : undefined;
+  if (section === "experience" && detailSlug) return experienceHref(target, getExperienceId(language, detailSlug));
   const detail = section && detailSlug ? getDetail(language, section, detailSlug) : undefined;
   return href(target, section, detail);
 }

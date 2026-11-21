@@ -1,10 +1,12 @@
 import { notFound } from "next/navigation";
-import { AboutPage, ContactPage, ExperiencePage, TeamPage } from "@/components/pages";
+import { AboutPage, ContactPage, TeamPage } from "@/components/pages";
+import { ExperiencePage } from "@/components/experience/experience-page";
 import { PrivacyPage, privacyMetadata } from "@/components/privacy-page";
 import { ServicesPage } from "@/components/services-page";
 import { copy } from "@/lib/copy";
 import { getSection, isLocale, privacySlugs, sectionKeys, sections, type Section } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
+import { experienceMetadata } from "@/lib/experience/metadata";
 
 type Props = { params: Promise<{ locale: string; section: string }> };
 const views = { about: AboutPage, services: ServicesPage, experience: ExperiencePage, team: TeamPage, contact: ContactPage };
@@ -22,6 +24,7 @@ export async function generateMetadata({ params }: Props) {
   if (slug === privacySlugs[locale]) return privacyMetadata(locale);
   const section = getSection(locale, slug);
   if (!section) notFound();
+  if (section === "experience") return experienceMetadata(locale);
   const c = copy[locale];
   return pageMetadata(locale, c.nav[section], c[introKeys[section]], section);
 }
