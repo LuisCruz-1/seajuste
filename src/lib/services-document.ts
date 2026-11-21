@@ -6,11 +6,11 @@ type ServiceDocumentSpecialty = {
   title: Localized;
   subtitle: Localized;
   note?: Localized;
-  description: Localized;
+  description: Localized | Localized[];
   photos: ServiceDocumentPhoto[];
 };
 
-// Content and photograph order follow the eight-page servicios.pdf reference.
+// Based on the eight-page servicios.pdf reference, with subsequent editorial updates.
 export const servicesDocument = {
   introduction: {
     title: text("Peritaje técnico-legal de reclamos y siniestros", "Technical and legal surveying of claims and losses"),
@@ -58,15 +58,16 @@ export const servicesDocument = {
   consultation: {
     motto: text("Rigor técnico.\nConfianza que permanece.", "Technical rigor.\nTrust that endures."),
     trust: text("Confianza mutua", "Mutual trust"),
-    title: text("Conversemos sobre el alcance de su consulta", "Let’s discuss the scope of your enquiry"),
+    title: text("¿En qué podemos ayudarte?", "How can we help you?"),
+    action: text("Contáctenos", "Contact us"),
     paragraphs: [
       text(
-        "Cada reclamo o siniestro requiere una evaluación acorde con su naturaleza, complejidad y oportunidad de intervención. Si se trata de un evento reciente, una comunicación temprana puede facilitar la coordinación de una inspección y la documentación de evidencias. Si el reclamo ya está en curso, podríamos revisar inicialmente sus antecedentes y la documentación disponible para identificar el tipo de asistencia técnico-legal que podría resultar pertinente, dentro del alcance de nuestras competencias profesionales.",
-        "Each claim or loss requires an assessment suited to its nature, complexity and the timing of our involvement. For a recent event, early communication can help coordinate an inspection and the documentation of evidence. If a claim is already ongoing, we could initially review its background and the available documentation to identify the type of technical and legal assistance that may be appropriate within our professional competence.",
+        "Cuéntenos el motivo de su consulta o necesidad.",
+        "Tell us about your enquiry or what you need.",
       ),
       text(
-        "Compártanos sus inquietudes y los datos esenciales del caso. A partir de esa información podríamos definir los siguientes pasos y, de ser conveniente, coordinar una reunión profesional. La recepción y revisión preliminar de la consulta no supone por sí sola la aceptación del encargo ni la prestación de asesoría especializada; cualquier trabajo posterior se acordará previamente en cuanto a alcance y honorarios.",
-        "Share your questions and the essential details of the case. Based on that information, we could define the next steps and, where appropriate, arrange a professional meeting. Receiving and preliminarily reviewing an enquiry does not, by itself, constitute acceptance of the assignment or the provision of specialist advice; the scope and fees of any subsequent work will be agreed in advance.",
+        "Estamos disponibles para conocer su requerimiento y evaluar la mejor manera de atenderlo.",
+        "We are available to understand your requirements and assess the best way to assist you.",
       ),
     ],
   },
@@ -77,13 +78,19 @@ export const serviceDocumentSpecialties: ServiceDocumentSpecialty[] = [
     id: "engineering",
     title: text("Engineering for complex claims", "Engineering for complex claims"),
     subtitle: text("Ingeniería para reclamos y siniestros complejos", "Engineering for complex claims and losses"),
-    description: text(
-      "Investigamos siniestros que comprometen maquinaria, equipos electromecánicos, instalaciones industriales e infraestructura. Reconstruimos las circunstancias del evento, analizamos mecanismos de falla y causas, evaluamos daños directos y alternativas de reparación o reposición, y examinamos costos y tiempos de recuperación. Según la naturaleza del caso, integramos inspecciones, ensayos de materiales, pruebas eléctricas o mecánicas, registros operativos y especialistas complementarios. El resultado es un análisis verificable, documentado y compatible con el alcance técnico del ajuste.",
-      "We investigate losses involving machinery, electromechanical equipment, industrial facilities and infrastructure. We reconstruct the circumstances of the event, analyse failure mechanisms and causes, assess direct damage and repair or replacement options, and examine recovery costs and timescales. Depending on the case, we integrate inspections, materials testing, electrical or mechanical tests, operating records and complementary specialists. The result is a verifiable, documented analysis consistent with the technical scope of loss adjusting.",
-    ),
+    description: [
+      text(
+        "Realizamos peritajes e investigaciones técnicas de siniestros que afectan maquinaria industrial, motores y generadores instalados en tierra, equipos electromecánicos, instalaciones, edificios e infraestructura. Analizamos las circunstancias del evento, sus posibles causas y la extensión de los daños, así como las alternativas de reparación, recuperación o reposición y la evaluación de las pérdidas.",
+        "We carry out surveys and technical investigations of losses affecting industrial machinery, land-based engines and generators, electromechanical equipment, facilities, buildings and infrastructure. We analyse the circumstances of the event, its possible causes and the extent of the damage, as well as repair, recovery or replacement options and the assessment of losses.",
+      ),
+      text(
+        "Según la naturaleza del caso, incorporamos inspecciones, pruebas y análisis especializados cuando resultan necesarios. Nuestros informes integran criterios de ingeniería, evidencia documentada y evaluación de las condiciones de la póliza de seguro aplicable.",
+        "Depending on the nature of the case, we incorporate inspections, specialist testing and analysis where necessary. Our reports combine engineering criteria, documented evidence and an assessment of the terms and conditions of the applicable insurance policy.",
+      ),
+    ],
     photos: [
       { image: "overturned-machinery", caption: text("Volcamiento de maquinaria", "Overturned machinery"), alt: text("Maquinaria pesada volcada en un terreno de trabajo", "Heavy machinery overturned on a work site") },
-      { image: "transformer-fire", caption: text("Incendio transformador de potencia", "Power transformer fire"), alt: text("Intervención de extinción en un transformador de potencia incendiado", "Firefighting response at a burning power transformer") },
+      { image: "industrial-engines", caption: text("Motores industriales", "Industrial engines"), alt: text("Motor industrial con panel de control", "Industrial engine with a control panel") },
       { image: "structural-damage", caption: text("Daño estructural de edificio", "Structural building damage"), alt: text("Grietas en la fachada y estructura de un edificio", "Cracks in a building’s facade and structure") },
     ],
   },
@@ -107,16 +114,22 @@ export const serviceDocumentSpecialties: ServiceDocumentSpecialty[] = [
     title: text("Marine: hull & machinery – cargo / project cargo", "Marine: hull & machinery – cargo / project cargo"),
     subtitle: text("Casco, maquinaria, transporte y carga de proyecto", "Hull, machinery, transport and project cargo"),
     note: text("Survey & ajuste de siniestros", "Survey & loss adjusting"),
-    description: text(
-      "Realizamos evaluaciones técnicas relacionadas con daños en casco y maquinaria naval, mercancías transportadas y equipos industriales de alto valor. Según el encargo, intervenimos en inspecciones de carga, descarga, izaje, transporte terrestre, montaje y puesta en servicio, documentando condiciones de manipulación, daños, causas y alternativas de reparación o recuperación. En cargas de proyecto —como transformadores y turbogeneradores— integramos criterios logísticos y electromecánicos. Se diferencia expresamente el alcance de un survey preventivo o de seguimiento del ajuste de un siniestro.",
-      "We carry out technical assessments relating to damage to hull and marine machinery, goods in transit and high-value industrial equipment. Depending on the assignment, we undertake surveys during loading, unloading, lifting, land transport, assembly and commissioning, documenting handling conditions, damage, causes and repair or recovery options. For project cargo —such as transformers and turbogenerators— we integrate logistical and electromechanical criteria. The scope of a preventive or monitoring survey is expressly distinguished from the adjustment of a loss.",
-    ),
+    description: [
+      text(
+        "Realizamos peritajes e investigaciones técnicas de siniestros que afectan embarcaciones, su casco, motores de propulsión marina, maquinaria y equipos de a bordo. Evaluamos las circunstancias y posibles causas de las averías, la extensión de los daños, las alternativas de reparación o reposición y sus efectos sobre la operación de la embarcación. Asimismo, atendemos, reclamaciones relacionadas con responsabilidades marítimas (P&I).",
+        "We carry out surveys and technical investigations of losses affecting vessels, their hulls, marine propulsion engines, machinery and onboard equipment. We assess the circumstances and possible causes of breakdowns, the extent of damage, repair or replacement options and their effects on vessel operations. We also handle claims relating to marine liabilities (P&I).",
+      ),
+      text(
+        "Desarrollamos inspecciones de carga (surveys) y evaluaciones de pérdidas relacionadas con el transporte marítimo de mercancías, equipos industriales y cargas de proyecto, incluidas operaciones de embarque, descarga, izaje y transporte asociado. Cuando corresponde, examinamos aspectos técnicos de salvamento y documentamos evidencias relevantes para eventuales acciones de recobro o subrogación.",
+        "We carry out cargo surveys and loss assessments relating to the maritime transport of goods, industrial equipment and project cargo, including loading, unloading, lifting and associated transport operations. Where appropriate, we examine technical aspects of salvage and document evidence relevant to potential recovery or subrogation actions.",
+      ),
+    ],
     photos: [
-      { image: "onboard-unloading", caption: text("Descarga a bordo", "Onboard unloading"), alt: text("Izaje de una turbina Siemens desde un buque con una grúa portuaria", "Lifting a Siemens turbine from a vessel with a port crane") },
+      { image: "onboard-unloading", caption: text("Descarga de a bordo", "Unloading from the vessel"), alt: text("Izaje de una turbina Siemens desde un buque con una grúa portuaria", "Lifting a Siemens turbine from a vessel with a port crane") },
       { image: "platform-unloading", caption: text("Descarga en plataforma", "Platform unloading"), alt: text("Descarga de una turbina sobre una plataforma de transporte terrestre", "Unloading a turbine onto a road transport platform") },
-      { image: "project-transformer", caption: text("Transformador de potencia", "Power transformer"), alt: text("Inspección de un transformador con daños durante el transporte", "Survey of a transformer damaged during transport") },
+      { image: "project-transformer", caption: text("Siniestro transformador a bordo", "Transformer loss on board"), alt: text("Inspección de un transformador con daños durante el transporte", "Survey of a transformer damaged during transport") },
       { image: "port-crane", caption: text("Maniobra grúa portuaria", "Port crane operation"), alt: text("Grúa móvil durante una maniobra de carga en puerto", "Mobile crane during a port cargo operation") },
-      { image: "onboard-turbines", caption: text("Estiba de turbinas a bordo", "Turbines stowed on board"), alt: text("Equipos industriales embalados y estibados en la bodega de un buque", "Packed industrial equipment stowed in a vessel’s hold") },
+      { image: "marine-propulsion-engine", caption: text("Motor de propulsión marino", "Marine propulsion engine"), alt: text("Motor de propulsión marino", "Marine propulsion engine") },
       { image: "power-barge", caption: text("Generator power barge", "Generator power barge"), alt: text("Barcazas de generación eléctrica atracadas en puerto", "Power generation barges moored at port") },
     ],
   },

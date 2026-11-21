@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Cpu, Medal, ShieldCheck, BadgeCheck } from "lucide-react";
 import { t, type Locale } from "@/lib/i18n";
 import { heroCoveragePhotos, heroInterventionPhotos, heroProjectPhotos, type HeroSlide } from "@/lib/hero-slides";
+import transformerDamage from "../../public/images/projects/ramos-transformer-damage.webp";
 
 export function HeroBrandVisual({ kind, locale }: { kind: HeroSlide["visual"]; locale: Locale }) {
   const es = locale === "es";
@@ -11,7 +12,7 @@ export function HeroBrandVisual({ kind, locale }: { kind: HeroSlide["visual"]; l
     const statistics = [
       { value: "38+", label: es ? "Años de experiencia\nen seguros" : "Years of experience\nin insurance" },
       { value: "18", label: es ? "Ramos de seguros\nautorizados" : "Authorised\ninsurance classes" },
-      { value: "18", label: es ? "Especialistas en\nnuestro equipo" : "Specialists\nin our team" },
+      { value: "16", label: es ? "Especialistas en\nnuestro equipo" : "Specialists\nin our team" },
     ];
     return <div className="hero-trust-scene">
       <div className="trust-scene-mark"><Image className="trust-scene-seal" src="/images/brand/manos-texto.png" alt={es ? "Confianza mutua" : "Mutual trust"} fill sizes="(max-width: 760px) 80vw, 38vw" preload /></div>
@@ -23,7 +24,7 @@ export function HeroBrandVisual({ kind, locale }: { kind: HeroSlide["visual"]; l
   if (kind === "coverage") {
     return <div className="hero-coverage-gallery">
       <div className="hero-project-mosaic">{heroProjectPhotos.map(({ image, alt }) => <div className="hero-project-photo" key={image}><Image src={`/images/projects/${image}.webp`} alt={t(alt, locale)} fill sizes="(max-width: 760px) calc(50vw - 64px), (max-width: 1100px) 20vw, 22vw" /></div>)}</div>
-      <div className="hero-coverage-proof">{heroCoveragePhotos.map(({ image, alt }) => <div key={image}><Image src={`/images/projects/${image}.webp`} alt={t(alt, locale)} fill sizes="(max-width: 760px) 64px, (max-width: 1100px) 84px, 110px" /></div>)}</div>
+      <div className="hero-coverage-proof">{heroCoveragePhotos.map(({ image, alt }) => <div key={image}><Image src={image === "ramos-transformer-damage" ? transformerDamage : `/images/projects/${image}.webp`} alt={t(alt, locale)} fill sizes="(max-width: 760px) 64px, (max-width: 1100px) 84px, 110px" /></div>)}</div>
     </div>;
   }
 

@@ -7,7 +7,8 @@ export type HeroSlide = {
   motto?: string;
   accent?: string;
   statement?: string;
-  contactPrompt?: string;
+  contactPrompt?: { title: string; paragraphs: string[] };
+  showContact?: boolean;
   threshold?: string;
   description?: string;
   highlights?: string[];
@@ -54,7 +55,7 @@ export const heroInterventionPhotos = [
   { slot: "tg5", image: "intervention-tg5", caption: text("Unidad TG5", "TG5 unit"), alt: text("Intervención técnica en el generador de la unidad TG5", "Technical intervention on the TG5 generator") },
   { slot: "tv1", image: "intervention-tv1", caption: text("Unidad TV1", "TV1 unit"), alt: text("Turbina de la unidad TV1 en planta", "TV1 turbine at the power plant") },
   { slot: "tg4", image: "intervention-tg4", caption: text("Unidad TG4", "TG4 unit"), alt: text("Detalle del rotor y álabes de la unidad TG4", "TG4 rotor and turbine blade detail") },
-  { slot: "damage", image: "intervention-artefacta-damage", caption: text("Artefacta · Daños", "Artefacta · Damage"), alt: text("Daños documentados en un local de Artefacta", "Documented damage at an Artefacta retail property") },
+  { slot: "damage", image: "artefacta-damage", caption: text("Artefacta · Daños", "Artefacta · Damage"), alt: text("Daños documentados en un local de Artefacta", "Documented damage at an Artefacta retail property") },
 ];
 
 export const heroInterventionRows: { id: DetailId; equipment: Localized; unit: Localized; location: Localized }[] = [
@@ -66,17 +67,17 @@ export const heroInterventionRows: { id: DetailId; equipment: Localized; unit: L
 
 export const consultationDetails: Record<Locale, NonNullable<HeroSlide["consultation"]>> = {
   es: {
-    title: "Conversemos sobre el alcance de su consulta",
+    title: "¿En qué podemos ayudarte?",
     paragraphs: [
-      "Compártanos sus inquietudes y una descripción de las características del reclamo o siniestro. Con la información inicial y los antecedentes disponibles, podríamos identificar el alcance de su requerimiento y la documentación técnica necesaria para un análisis preliminar.",
-      "Cuando la naturaleza o complejidad del caso lo justifique, coordinaremos una reunión profesional para examinar sus particularidades y definir los siguientes pasos.",
+      "Cuéntenos el motivo de su consulta o necesidad.",
+      "Estamos disponibles para conocer su requerimiento y evaluar la mejor manera de atenderlo.",
     ],
   },
   en: {
-    title: "Let’s discuss the scope of your enquiry",
+    title: "How can we help you?",
     paragraphs: [
-      "Share your questions and a description of the claim or loss. With the initial information and available background, we could identify the scope of your request and the technical documentation needed for a preliminary assessment.",
-      "When the nature or complexity of the case calls for it, we will arrange a professional meeting to examine its particulars and define the next steps.",
+      "Tell us about your enquiry or what you need.",
+      "We are available to understand your requirements and assess the best way to assist you.",
     ],
   },
 };
@@ -117,25 +118,27 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
       visual: "turbine",
       topic: "SERVICIOS RELEVANTES",
       title: "Servicios relevantes",
-      statement: "Reclamos & siniestros de alta complejidad",
+      statement: "SURVEY\nRECLAMOS & SINIESTROS\nALTA COMPLEJIDAD",
       services: [
         { label: "Engineering for complex claims", detail: "engineering" },
         { label: "Energy & power loss adjusting", detail: "energy" },
         { label: "Marine: hull & machinery · cargo", detail: "marine" },
         { label: "Business interruption | Lucro cesante", detail: "interruption" },
       ],
-      contactPrompt: "Si necesita más información de nuestros servicios.",
+      showContact: true,
     },
+    interventionSlides.es,
     {
       visual: "coverage",
       topic: "PÓLIZAS",
       title: "Ramos de seguros autorizados",
-      statement: "Ingeniería forense & causa raíz\nReclamos & siniestros",
-      contactPrompt: "Si necesita más información de nuestros servicios.",
-    },
-    {
-      ...interventionSlides.es,
-      consultation: { ...consultationDetails.es, paragraphs: consultationDetails.es.paragraphs.slice(0, 1) },
+      contactPrompt: {
+        title: "¿En qué podemos ayudarte?",
+        paragraphs: [
+          "Cuéntenos el motivo de su consulta o necesidad.",
+          "Estamos disponibles para conocer su requerimiento y evaluar la mejor manera de atenderlo.",
+        ],
+      },
     },
   ],
   en: [
@@ -150,25 +153,27 @@ export const heroSlides: Record<Locale, HeroSlide[]> = {
       visual: "turbine",
       topic: "KEY SERVICES",
       title: "Key services",
-      statement: "High-complexity claims & losses",
+      statement: "SURVEY\nCLAIMS & LOSSES\nHIGH COMPLEXITY",
       services: [
         { label: "Engineering for complex claims", detail: "engineering" },
         { label: "Energy & power loss adjusting", detail: "energy" },
         { label: "Marine: hull & machinery · cargo", detail: "marine" },
         { label: "Business interruption", detail: "interruption" },
       ],
-      contactPrompt: "If you need more information about our services.",
+      showContact: true,
     },
+    interventionSlides.en,
     {
       visual: "coverage",
       topic: "POLICIES",
       title: "Authorised insurance classes",
-      statement: "Forensic engineering & root cause analysis\nClaims & losses",
-      contactPrompt: "If you need more information about our services.",
-    },
-    {
-      ...interventionSlides.en,
-      consultation: { ...consultationDetails.en, paragraphs: consultationDetails.en.paragraphs.slice(0, 1) },
+      contactPrompt: {
+        title: "How can we help you?",
+        paragraphs: [
+          "Tell us about your enquiry or what you need.",
+          "We are available to understand your requirements and assess the best way to assist you.",
+        ],
+      },
     },
   ],
 };

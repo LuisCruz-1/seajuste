@@ -294,15 +294,17 @@ export const team = [
   { id: "ricardo-gallegos", name: "Ricardo Gallegos", role: text("Ingeniero en petróleos", "Petroleum engineer"), specialty: text("Petróleo y ciencias de la tierra", "Petroleum & earth sciences"), background: text("Ex decano de Ciencias de la Tierra · ESPOL", "Former Dean of Earth Sciences · ESPOL") },
   { id: "marco-leiva", name: "Marco Leiva", role: text("Ingeniero naval · Capitán de Navío SP", "Naval engineer · Retired Navy Captain"), specialty: text("Ingeniería naval", "Naval engineering"), background: text("Armada del Ecuador", "Ecuadorian Navy") },
   { id: "jorge-loor", name: "Jorge Loor", role: text("Magíster en Administración de Empresas", "Master’s degree in Business Administration"), specialty: text("Poliductos, oleoductos y terminales", "Product pipelines, oil pipelines & terminals"), background: text("Ex gerente de Transportes · EP Petroecuador", "Former Transport Manager · EP Petroecuador") },
-  { id: "carla-garcia", name: "Carla García L.", role: text("Ingeniera agrícola", "Agricultural engineer"), specialty: text("Sector agropecuario", "Agricultural sector"), background: text("Ex directora ejecutiva · Asociación Zamorano", "Former Executive Director · Asociación Zamorano") },
+  { id: "ernesto-falconi", name: "Ernesto Falconí", role: text("Ingeniero mecánico", "Mechanical engineer"), specialty: text("Motores marinos", "Marine engines"), background: "" },
   { id: "josue-gavilanez", name: "Josué Gavilánez", role: text("Ingeniero mecánico", "Mechanical engineer"), specialty: text("Turbogeneradores", "Turbogenerators"), background: text("Ex CELEC", "Former CELEC") },
   { id: "ana-zambrano", name: "Ana Zambrano", role: text("Ingeniera química", "Chemical engineer"), specialty: text("Calderas y sistemas de vapor", "Boilers & steam systems"), background: "" },
-  { id: "cristian-chauca", name: "Cristian Chauca", role: text("Magíster en Ciencias Ambientales", "Master’s degree in Environmental Sciences"), specialty: text("Ciencias ambientales", "Environmental sciences"), background: "" },
+  { id: "pedro-eras", name: "Pedro Eras", role: text("Ingeniero mecánico", "Mechanical engineer"), specialty: text("Motores diésel y generadores", "Diesel engines & generators"), background: "" },
   { id: "andres-coronel", name: "Andrés Coronel", role: text("Máster en Ingeniería en Seguridad contra Incendios", "Master’s degree in Fire Safety Engineering"), specialty: text("Protección contra incendios", "Fire protection"), background: text("Miembro NFPA", "NFPA member") },
   { id: "gustavo-gonzaga", name: "Gustavo Gonzaga", role: text("Ingeniero eléctrico", "Electrical engineer"), specialty: text("Sistemas de potencia", "Power systems"), background: text("Ex gerente E.E. Milagro", "Former E.E. Milagro Manager") },
   { id: "manuel-patino", name: "Manuel Patiño", role: text("Ingeniero mecánico", "Mechanical engineer"), specialty: text("Equipo y maquinaria", "Plant & machinery"), background: text("Ex gerente de Servicios · IIASA–Caterpillar", "Former Services Manager · IIASA–Caterpillar") },
   { id: "emily-quevedo", name: "Emily Quevedo", role: text("Economista", "Economist"), specialty: text("Lucro cesante y seguros", "Business interruption & insurance"), background: "" },
   { id: "pablo-ramirez", name: "Pablo Ramírez", role: text("Abogado", "Lawyer"), specialty: text("Soporte legal en seguros", "Insurance legal support"), background: "" },
+  { id: "carla-garcia", name: "Carla García L.", role: text("Ingeniera agrícola", "Agricultural engineer"), specialty: text("Sector agropecuario", "Agricultural sector"), background: text("Ex directora ejecutiva · Asociación Zamorano", "Former Executive Director · Asociación Zamorano") },
+  { id: "cristian-chauca", name: "Cristian Chauca", role: text("Magíster en Ciencias Ambientales", "Master’s degree in Environmental Sciences"), specialty: text("Ciencias ambientales", "Environmental sciences"), background: "" },
 ];
 
 export const companyHistory = {
@@ -325,13 +327,13 @@ type CompanyHistoryDocument = {
   section: "review" | "claims" | "reinsurance";
   date: string;
   endDate?: string;
-  dateLabel: Localized;
+  dateLabel?: Localized;
   pdf: typeof aboutPdfs.history;
   title: Localized;
   details: { heading?: Localized; text: CompanyHistoryText }[];
   excerpts?: CompanyHistoryText[];
   settlement?: number;
-  reference: Localized;
+  reference?: Localized;
 };
 
 export const companyHistoryDocuments: CompanyHistoryDocument[] = [
@@ -341,43 +343,53 @@ export const companyHistoryDocuments: CompanyHistoryDocument[] = [
     title: text("Proyecto hidroeléctrico Paute · Fase B", "Paute hydroelectric project · Phase B"),
     details: [{ text: text("Informe de inspección de daños de carga marítima del Proyecto Hidroeléctrico Paute para The Salvage Association, Londres. La documentación menciona al Ing. Carlos Quevedo, SEA Loss Adjusters, y recoge la intervención de los ajustadores en el acceso a los buques, la inspección y el registro fotográfico de los equipos, así como en las acciones para minimizar las pérdidas con el acuerdo previo de La Nacional.", "Marine project cargo damage survey report for the Paute Hydroelectric Project, prepared for The Salvage Association, London. The records name engineer Carlos Quevedo, SEA Loss Adjusters, and describe the adjusters’ role in gaining access to vessels, surveying and photographing equipment, and taking loss-minimisation measures with La Nacional’s prior agreement.") }],
     excerpts: [
-      text("G.I.E. señaló dificultades para acceder al puerto y a los buques que llegaban a Guayaquil. Esto no pareció afectar a los ajustadores S.E.A., quienes no solo lograron acceder a los buques, sino que tomaron fotografías de los equipos en las bodegas.", "G.I.E. claimed that they had difficulty in obtaining access to the Port and had no access to vessels arriving at Guayaquil. This did not seem to effect the loss Adjustors S.E.A. who not only managed to obtain access to the vessels but took photographs of equipment in ship hold."),
+      [
+        { text: text("G.I.E. señaló dificultades para acceder al puerto y a los buques que llegaban a Guayaquil. Esto no pareció afectar a los ", "G.I.E. claimed that they had difficulty in obtaining access to the Port and had no access to vessels arriving at Guayaquil. This did not seem to effect the ") },
+        { text: text("ajustadores S.E.A., quienes no solo lograron acceder a los buques, sino que tomaron fotografías de los equipos en las bodegas.", "loss Adjustors S.E.A. who not only managed to obtain access to the vessels but took photographs of equipment in ship hold."), emphasis: true },
+      ],
       [
         { text: text("Al revisar los resultados", "On reviewing the results"), emphasis: true },
-        { text: text(" de la inspección de daños respecto de los reclamos, se hizo evidente que la mayoría de las acciones para minimizar las pérdidas fueron tomadas por los ajustadores con el acuerdo previo de La Nacional.", " of damage survey in respect of the claims, it became apparent that most of the action to minimize loss were taken by the loss adjustors with the prior agreement of La Nacional.") },
+        { text: text(" de la inspección de daños respecto de los reclamos, se hizo evidente que ", " of damage survey in respect of the claims, it became apparent that ") },
+        { text: text("la mayoría de las acciones para minimizar las pérdidas fueron tomadas por los ajustadores", "most of the action to minimize loss were taken by the loss adjustors"), emphasis: true },
+        { text: text(" con el acuerdo previo de La Nacional.", " with the prior agreement of La Nacional.") },
       ],
     ],
     reference: text("The Salvage Association · Londres · Marine Project Cargo & Damage Survey Report · Ing. Carlos Quevedo, SEA Loss Adjusters", "The Salvage Association · London · Marine Project Cargo & Damage Survey Report · Eng. Carlos Quevedo, SEA Loss Adjusters"),
   },
   {
-    id: "transelectric-2000", section: "claims", date: "2000-02-01", endDate: "2000-03-28", dateLabel: text("1 de febrero y 28 de marzo de 2000", "1 February and 28 March 2000"),
+    id: "transelectric-2000", section: "claims", date: "2000-02-01", endDate: "2000-03-28",
     pdf: aboutPdfs.london,
     title: text("Gestión de reclamos en el mercado reasegurador de Londres", "Claims coordination in the London reinsurance market"),
     details: [
       {
-        heading: text("Memorando N.º 09-00 · Comisión de servicio al exterior", "Memorandum No. 09-00 · Overseas assignment"),
+        heading: text("Memorando N.º 09-00 del secretario general de Transelectric S.A. · Comisión de servicio al exterior", "Memorandum No. 09-00 from Transelectric S.A.’s secretary general · Overseas assignment"),
         text: [
-          { text: text("El 1 de febrero de 2000, el Directorio de Transelectric S.A. autorizó el viaje a Londres de su ", "On 1 February 2000, Transelectric S.A.’s board authorised its ") },
-          { text: text("Presidente ejecutivo", "Executive president"), emphasis: true },
-          { text: text(", en compañía del ", " to travel to London with ") },
-          { text: text("Ing. Carlos Quevedo", "engineer Carlos Quevedo"), emphasis: true },
-          { text: text(", gerente de SEAJUSTE, para gestionar ante reaseguradores y ajustadores internacionales la recuperación de valores de siniestros de autotransformadores.", ", SEAJUSTE’s manager, to pursue recovery of autotransformer loss claims with international reinsurers and adjusters.") },
+          { text: text("El 1 de febrero de 2000, el Directorio de Transelectric S.A. autorizó el ", "On 1 February 2000, Transelectric S.A.’s board authorised its executive president ") },
+          { text: text("viaje a Londres", "to travel to London"), emphasis: true },
+          { text: text(" de su presidente ejecutivo, en compañía del ", " with ") },
+          { text: text("Ing. Carlos Quevedo, gerente de SEAJUSTE", "engineer Carlos Quevedo, SEAJUSTE’s manager"), emphasis: true },
+          { text: text(", para gestionar ante reaseguradores y ajustadores internacionales la recuperación de valores de siniestros de autotransformadores.", ", to pursue recovery of autotransformer loss claims with international reinsurers and adjusters.") },
         ],
       },
-      { heading: text("Correo del 28 de marzo de 2000 · AON Group Ltd., Londres", "Email dated 28 March 2000 · AON Group Ltd., London"), text: text("La comunicación dirigida a Energy Claims Division de AON Group Ltd., Londres, detalla en tres numerales los puntos sobre el trámite e indemnización de reclamos que se tratarían en una reunión de trabajo en sus oficinas. El correo fue copiado al Ing. Carlos Quevedo, SEAJUSTE S.A.", "Correspondence addressed to the Energy Claims Division of AON Group Ltd., London, sets out three numbered points concerning claims handling and settlement for discussion at a working meeting in its offices. Engineer Carlos Quevedo, SEAJUSTE S.A., was copied on the email.") },
+      {
+        heading: text("Correo del 28 de marzo de 2000 dirigido a Energy Claims Division · AON Group Ltd., Londres", "Email dated 28 March 2000 addressed to Energy Claims Division · AON Group Ltd., London"),
+        text: [
+          { text: text("La comunicación dirigida a Energy Claims Division de AON Group Ltd., Londres, detalla en tres numerales los puntos sobre el trámite e indemnización de reclamos que se tratarían en una reunión de trabajo en sus oficinas. ", "Correspondence addressed to the Energy Claims Division of AON Group Ltd., London, sets out three numbered points concerning claims handling and settlement for discussion at a working meeting in its offices. ") },
+          { text: text("El correo fue copiado al Ing. Carlos Quevedo, SEAJUSTE S.A.", "Engineer Carlos Quevedo, SEAJUSTE S.A., was copied on the email."), emphasis: true },
+        ],
+      },
     ],
-    reference: text("Transelectric S.A. · Memorando N.º 09-00 y correspondencia con Energy Claims Division, AON Group Ltd.", "Transelectric S.A. · Memorandum No. 09-00 and correspondence with Energy Claims Division, AON Group Ltd."),
   },
   {
-    id: "settlement-2000", section: "reinsurance", date: "2000-03", dateLabel: text("Marzo de 2000", "March 2000"),
+    id: "settlement-2000", section: "reinsurance", date: "2000-03",
     pdf: aboutPdfs.settlement,
     title: text("Gestiones en el mercado reasegurador · Reclamos y siniestros del ex INECEL", "Reinsurance market coordination · Former INECEL claims and losses"),
     details: [
-      { heading: text("Acta de finiquito y renuncia", "Release and settlement agreement"), text: text("Documento de marzo de 2000 relativo a reclamos del ex Instituto Ecuatoriano de Electrificación (INECEL) y del Fondo de Solidaridad. Registra el acuerdo con el mercado de reaseguradores de Londres para el cierre de reclamos de generación y transmisión eléctrica.", "March 2000 document concerning claims of the former Instituto Ecuatoriano de Electrificación (INECEL) and the Solidarity Fund. It records an agreement with the London reinsurance market to settle power generation and transmission claims.") },
+      { text: text("Documento de marzo de 2000 relativo a reclamos del ex Instituto Ecuatoriano de Electrificación (INECEL). Por intermedio del Fondo de Solidaridad se firma el Acta de Finiquito y Renuncia con el mercado de reaseguradores de Londres para el cierre de reclamos de generación y transmisión de energía eléctrica.", "March 2000 document concerning claims of the former Instituto Ecuatoriano de Electrificación (INECEL). Through the Solidarity Fund, the release and settlement agreement was signed with the London reinsurance market to settle claims relating to electricity generation and transmission.") },
       { heading: text("Intervinientes", "Participants"), text: text("Progreso Compañía de Seguros y Reaseguros S.A.; el mercado de reaseguradores de Londres; el Fondo de Solidaridad, representado por el vicepresidente de la República del Ecuador. Presidentes Ejecutivos de: Hidropaute S.A., Hidroagoyán S.A., Hidropucará S.A., Termoesmeraldas S.A., Termopichincha S.A., Electroguayas S.A. , Transelectric S.A. y SEAJUSTE S.A. empresa contratada que intervino por el sector eléctrico.", "Progreso Compañía de Seguros y Reaseguros S.A.; the London reinsurance market; the Solidarity Fund, represented by Ecuador’s vice president. Executive Presidents of: Hidropaute S.A., Hidroagoyán S.A., Hidropucará S.A., Termoesmeraldas S.A., Termopichincha S.A., Electroguayas S.A. and Transelectric S.A. SEAJUSTE S.A., the company contracted to act on behalf of the electricity sector.") },
     ],
     settlement: 1294981,
-    reference: text("Acta de finiquito y renuncia · Fondo de Solidaridad · Sector eléctrico", "Release and settlement agreement · Solidarity Fund · Electricity sector"),
+    reference: text("Acta de finiquito y renuncia · Fondo de Solidaridad · Sector eléctrico · SEAJUSTE y Mercado Reasegurador", "Release and settlement agreement · Solidarity Fund · Electricity sector · SEAJUSTE and Reinsurance Market"),
   },
 ];
 

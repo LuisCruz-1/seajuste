@@ -57,9 +57,9 @@ export function AboutPage({ locale }: { locale: Locale }) {
     <SectionHeading title={c.historySections[document.section]} description={document.section === "review" ? c.historyIntro : undefined} />
     <article className="history-document-card" id={document.id} aria-labelledby={`${document.id}-title`}>
       <div className="history-document-copy">
-        <time dateTime={document.date}>{t(document.dateLabel, locale)}</time>
+        {document.dateLabel && <time dateTime={document.date}>{t(document.dateLabel, locale)}</time>}
         <h3 id={`${document.id}-title`}>{t(document.title, locale)}</h3>
-        <p className="history-document-reference">{t(document.reference, locale)}</p>
+        {document.reference && <p className="history-document-reference">{t(document.reference, locale)}</p>}
         {document.details.map((detail, index) => <div className="history-document-detail" key={index}>
           {detail.heading && <h4>{t(detail.heading, locale)}</h4>}
           <p>{Array.isArray(detail.text) ? detail.text.map((part, partIndex) => part.emphasis ? <strong key={partIndex}>{t(part.text, locale)}</strong> : t(part.text, locale)) : t(detail.text, locale)}</p>
@@ -149,7 +149,6 @@ export function TeamPage({ locale }: { locale: Locale }) {
       </div>
     </section>
     <div className="container workgroup-note"><p>{c.teamNote}</p></div>
-    <ContactBand locale={locale} />
   </div>;
 }
 

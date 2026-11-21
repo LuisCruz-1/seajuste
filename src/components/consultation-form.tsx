@@ -45,7 +45,7 @@ export function ConsultationForm({ locale, whatsapp, submitLabel, onPrepared, on
     {sections.map((section) => {
       const single = section.fields.length === 1;
       return <section className={`consultation-section consultation-${section.id}`} key={section.id} aria-labelledby={single ? `${id}-${section.fields[0].name}-label` : `${id}-${section.id}-title`}>
-        {!single && <h3 id={`${id}-${section.id}-title`}>{t(section.title, locale)}</h3>}
+        {!single && <h3 id={`${id}-${section.id}-title`} className={section.id === "contact" ? "sr-only" : undefined}>{t(section.title, locale)}</h3>}
         {section.description && <p className="consultation-section-intro">{t(section.description, locale)}</p>}
         <div className="form-fields">{section.fields.map((field) => <ConsultationField key={field.name} field={field} prefix={id} locale={locale} answers={answers} onChange={change} />)}</div>
       </section>;

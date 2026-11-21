@@ -105,6 +105,14 @@ export function HomeHero({ locale, slides, insuranceClasses, settlementSummary, 
                     <HeroBrandVisual kind={slide.visual} locale={locale} />
                     <span className="inspection-corner corner-one" aria-hidden="true" /><span className="inspection-corner corner-two" aria-hidden="true" />
                   </div>
+                  {slide.visual === "intervention" && <aside className="hero-reinsurance-card">
+                    <div className="hero-reinsurance-copy">
+                      <h3>{es ? <>Gestiones en el<br />MERCADO REASEGURADOR</> : "Reinsurance market coordination"}</h3>
+                      <p>{es ? "Reclamos y siniestro EXINECEL" : "Former INECEL claims and losses"}</p>
+                      <p className="hero-reinsurance-institution">{es ? "Instituto ecuatoriano de electrificación" : "Ecuadorian Institute of Electrification"}</p>
+                    </div>
+                    <p className="hero-reinsurance-total"><span>{es ? "Valor total indemnizado" : "Total settlement amount"}</span><strong title={formatMoney(1_294_981, locale)}><span className="hero-reinsurance-currency">USD</span><span>{new Intl.NumberFormat(es ? "es-EC" : "en-US", { maximumFractionDigits: 6 }).format(1_294_981 / 1_000_000)}<span className="hero-reinsurance-unit">M</span></span></strong></p>
+                  </aside>}
                   {slide.consultation && <section className="hero-consultation-note" aria-labelledby={`hero-consultation-title-${index}`}>
                     <h3 id={`hero-consultation-title-${index}`}>{slide.consultation.title}</h3>
                     {slide.consultation.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
@@ -137,17 +145,22 @@ export function HomeHero({ locale, slides, insuranceClasses, settlementSummary, 
                     {slide.accent && <p className="hero-primary-statement">{slide.accent}</p>}
                     {slide.services && <ul className="hero-service-list">{slide.services.map(({ label, detail }) => <li key={detail}><Link href={href(locale, "services", detail)}><span>{label}</span><ArrowUpRight size={16} aria-hidden="true" /></Link></li>)}</ul>}
                   </>}
-                  <div className="hero-conversion">
+                  {(slide.visual === "trust" || slide.visual === "intervention" || slide.statement || slide.showContact) && <div className="hero-conversion">
+                    {slide.visual === "intervention" && <Link className="button hero-consult-action hero-intervention-action" href={`${href(locale, "contact")}#consulta`}>{es ? "Contáctenos" : "Contact us"}<ArrowUpRight size={17} aria-hidden="true" /></Link>}
                     {slide.visual === "trust" || slide.visual === "intervention" ? <Link href={href(locale, "experience")} className="hero-settlement" aria-label={es ? `Ver ${caseCountLabel} casos destacados: USD ${settlementFigure} millones en indemnizaciones` : `View ${caseCountLabel} featured cases: USD ${settlementFigure} million in settlements`}>
                       <p className="hero-settlement-amount" aria-hidden="true"><span className="hero-settlement-currency">USD</span><strong>{settlementFigure}<span className="hero-settlement-unit">M</span></strong></p>
-                      <div className="hero-settlement-copy">
+                      {slide.visual === "trust" && <div className="hero-settlement-copy">
                         <p className="hero-settlement-caption">{settlementCaption}</p>
                         {slide.closing && <p className="hero-intervention-closing">{slide.closing}</p>}
-                      </div>
+                      </div>}
                     </Link> : slide.statement && <div className="hero-message-panel"><p>{slide.statement}</p></div>}
-                  </div>
+                    {slide.showContact && <Link className="button hero-contact-action" href={href(locale, "contact")}>{es ? "Contáctenos" : "Contact us"}<ArrowUpRight size={17} aria-hidden="true" /></Link>}
+                  </div>}
                   {slide.contactPrompt && <div className="hero-service-contact">
-                    <p>{slide.contactPrompt}</p>
+                    <div className="hero-service-contact-copy">
+                      <h3>{slide.contactPrompt.title}</h3>
+                      {slide.contactPrompt.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                    </div>
                     <Link className="button hero-contact-action" href={href(locale, "contact")}>{es ? "Contáctenos" : "Contact us"}<ArrowUpRight size={17} aria-hidden="true" /></Link>
                   </div>}
                 </div>
